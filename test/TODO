@@ -1,7 +1,15 @@
 ### SOON
-
+    make malloc and free output optional for debug
+    add define macros as vk/misc maybe ?
+    get rid of static objects ...
 
 ### NOW
-
+    store handles that has been set to a structure so they wont get garbage collected !
+        setrům ve struktuře chybí check na null!
+        setry možná ._." kopírují na některých místech data místo ukazatelů ???
 
 ### DONE
+some fixes
+    VkString - replaced getString with toString + added constructor accepting VkChar as parameter
+    fixed structure, union and info parser bug (pointer count was set too late)
+    fixed inheritance for Pointer.Array

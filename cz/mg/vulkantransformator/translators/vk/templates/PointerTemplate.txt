@@ -14,7 +14,7 @@
             super(vkmemory, vkaddress);
         }
 
-        public static class Array extends Pointer implements cz.mg.collections.array.ReadonlyArray<Pointer> {
+        public static class Array extends %%VKNAME%%.Pointer implements cz.mg.collections.array.ReadonlyArray<Pointer> {
             private final int count;
 
             public Array(int count) {

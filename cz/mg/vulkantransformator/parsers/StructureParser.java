@@ -29,9 +29,9 @@ public class StructureParser implements Parser {
                 for(i = i + 1; i < lines.count(); i++){
                     line = lines.get(i);
                     if(line.startsWith("    ")){
+                        int pointerCount = StringUtilities.count(line, '*');
                         line = DatatypeConverter.removeConsts(line);
                         parts = StringUtilities.split(line, "* ;[]");
-                        int pointerCount = StringUtilities.count(line, '*');
                         String arrayCount = parts.length == 3 ? parts[2] : null;
                         c.getFields().addLast(new CField(parts[0], parts[1], pointerCount, arrayCount));
                     } else break;

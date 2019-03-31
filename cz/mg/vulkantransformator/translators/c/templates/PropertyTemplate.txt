@@ -13,3 +13,4 @@ void Java_%%CVKPACKAGE%%_%%VKNAME%%_set%VKPROPERTYNAME%(JNIEnv* env, jclass jc, 
     %%CNAME%%* o = (%%CNAME%%*)jniLongToPointer(address);
     memcpy(%A%o->%CPROPERTYNAME%, jniLongToPointer(valueAddress), sizeof(o->%CPROPERTYNAME%));
 }
+

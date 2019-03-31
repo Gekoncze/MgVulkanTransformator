@@ -3,7 +3,7 @@ package cz.mg.vulkantransformator;
 
 public class Configuration {
     public static final String DEFAULT_VULKAN_CORE_PATH = "";
-    public static final String DEFAULT_OUTPUT_DIRECTORY_PATH = "/home/me/Plocha/Java/MgVulkanTest/src";
+    public static final String DEFAULT_OUTPUT_DIRECTORY_PATH = "/home/me/Plocha/Java/MgVulkan/src";
 
     public static final String PATH_C = "c/cz/mg/vulkan";
     public static final String PATH_Vk = "cz/mg/vulkan/vk";
