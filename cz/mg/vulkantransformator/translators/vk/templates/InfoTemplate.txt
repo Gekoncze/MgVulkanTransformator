@@ -1,0 +1,18 @@
+%%DOCUMENTATION%%
+public class %%VKNAME%% extends VkObject {
+%%CONSTRUCTORSIZEOF%%
+
+    public %%VKNAME%%(%PARAMETERS%) {
+        super(sizeof());
+%SET%
+%SETS%
+    }
+
+%PROPERTIES%
+
+    public static native long sizeof();
+
+%%ARRAY%%
+
+%%POINTER%%
+}

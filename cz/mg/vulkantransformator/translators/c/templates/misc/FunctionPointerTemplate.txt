@@ -1,0 +1,32 @@
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_sizeof(JNIEnv* env, jclass jc)
+{
+    (void)env;
+    (void)jc;
+    return sizeof(PFN_vkVoidFunction);
+}
+
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getValue(JNIEnv* env, jclass jc, jlong address)
+{
+    (void)env;
+    (void)jc;
+    PFN_vkVoidFunction* pointerAddress = (PFN_vkVoidFunction*)jniLongToPointer(address);
+    return jniFunctionPointerToLong(*pointerAddress);
+}
+
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValue(JNIEnv* env, jclass jc, jlong address, jlong value)
+{
+    (void)env;
+    (void)jc;
+    PFN_vkVoidFunction* pointerAddress = (PFN_vkVoidFunction*)jniLongToPointer(address);
+    *pointerAddress = jniLongToFunctionPointer(value);
+}
+
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_load(JNIEnv* env, jclass jc, jlong address, jlong instance, jlong string)
+{
+    (void)env;
+    (void)jc;
+    PFN_vkVoidFunction* pointerAddress = (PFN_vkVoidFunction*)jniLongToPointer(address);
+    char* stringAddress = (char*)jniLongToPointer(string);
+    VkInstance* instanceAddress = (VkInstance*)jniLongToPointer(instance);
+    *pointerAddress = vkGetInstanceProcAddr(*instanceAddress, stringAddress);
+}

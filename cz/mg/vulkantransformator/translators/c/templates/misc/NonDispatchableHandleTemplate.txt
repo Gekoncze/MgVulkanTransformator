@@ -1,0 +1,22 @@
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkNonDispatchableHandle)
+
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_sizeof(JNIEnv* env, jclass jc)
+{
+    (void)env;
+    (void)jc;
+    return sizeof(%%CNAME%%);
+}
+
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getValue(JNIEnv* env, jclass jc, jlong address)
+{
+    (void)env;
+    (void)jc;
+    return (jlong) *((%%CNAME%%*)jniLongToPointer(address));
+}
+
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValue(JNIEnv* env, jclass jc, jlong address, jlong value)
+{
+    (void)env;
+    (void)jc;
+    *((%%CNAME%%*)jniLongToPointer(address)) = (%%CNAME%%) value;
+}

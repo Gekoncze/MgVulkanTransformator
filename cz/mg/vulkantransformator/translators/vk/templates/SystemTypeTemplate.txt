@@ -1,0 +1,29 @@
+public class %%VKNAME%% extends VkObject {
+%%CONSTRUCTORSIZEOF%%
+
+    public %%VKNAME%%(%JAVATYPE% value) {
+        super(sizeof());
+        setValue(value);
+    }
+
+    public %JAVATYPE% getValue(){
+        return getValue(getVkAddress());
+    }
+
+    public void setValue(%JAVATYPE% value){
+        setValue(getVkAddress(), value);
+    }
+
+    public static native long sizeof();
+    protected static native %JAVATYPE% getValue(long vkaddress);
+    protected static native void setValue(long vkaddress, %JAVATYPE% value);
+
+    @Override
+    public String toString() {
+        return "" + getValue();
+    }
+
+%%ARRAY%%
+
+%%POINTER%%
+}

@@ -1,0 +1,21 @@
+%%DOCUMENTATION%%
+public class %%VKNAME%% extends VkFlagBits {
+%FIELDS%
+
+%%CONSTRUCTOR%%
+
+    public %%VKNAME%%(int value) {
+        setValue(value);
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+%CASES%
+        return s + "(0x" + Integer.toHexString(getValue()) + ")";
+    }
+
+%%ARRAY%%
+
+%%POINTER%%
+}

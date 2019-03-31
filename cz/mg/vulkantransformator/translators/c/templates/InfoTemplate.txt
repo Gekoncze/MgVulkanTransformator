@@ -1,0 +1,8 @@
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_sizeof(JNIEnv* env, jclass jc)
+{
+    (void)env;
+    (void)jc;
+    return sizeof(%%CNAME%%);
+}
+
+%PROPERTIES%

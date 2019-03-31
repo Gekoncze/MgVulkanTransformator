@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_malloc(JNIEnv* env, jclass jc, jlong size)
+{
+    (void)env;
+    (void)jc;
+
+    if(size < 1) size = 1;
+    void* pointer = malloc((size_t)size);
+    if(pointer == NULL) jniThrowException(env, "malloc failed");
+    jlong address = jniPointerToLong(pointer);
+    printf("MALLOC %p %li\n", pointer, size);
+    fflush(stdout);
+    return address;
+}
+
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_free(JNIEnv* env, jclass jc, jlong address)
+{
+    (void)env;
+    (void)jc;
+
+    void* pointer = jniLongToPointer(address);
+    printf("FREE %p\n", pointer);
+    fflush(stdout);
+    free(pointer);
+}

@@ -1,0 +1,22 @@
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_sizeof(JNIEnv* env, jclass jc)
+{
+    (void)env;
+    (void)jc;
+    return sizeof(%%CNAME%%);
+}
+
+%JNITYPE% Java_%%CVKPACKAGE%%_%%VKNAME%%_getValue(JNIEnv* env, jclass jc, jlong address)
+{
+    (void)env;
+    (void)jc;
+    %JNITYPE% value;
+    memcpy(&value, (%%CNAME%%*)jniLongToPointer(address), sizeof(%%CNAME%%));
+    return value;
+}
+
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValue(JNIEnv* env, jclass jc, jlong address, %JNITYPE% value)
+{
+    (void)env;
+    (void)jc;
+    memcpy((%%CNAME%%*)jniLongToPointer(address), &value, sizeof(%%CNAME%%));
+}

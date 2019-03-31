@@ -1,0 +1,23 @@
+/**
+ *  @see <a href="https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/">khronos documentation</a>
+ **/
+public class Vk {
+    private VkInstance instance = null;
+
+    public Vk(){
+    }
+
+    public VkInstance getInstance(){
+        return instance;
+    }
+
+    public void setInstance(VkInstance instance){
+        this.instance = instance;
+    }
+
+%DEFINES%
+
+%FUNCTIONS%
+
+%CONSTANTS%
+}

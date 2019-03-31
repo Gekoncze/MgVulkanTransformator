@@ -1,0 +1,10 @@
+import cz.mg.resourcemanager.ResourceManager;
+
+public class %%VKNAME%% extends ResourceManager {
+    private static %%VKNAME%% instance = null;
+
+    public static %%VKNAME%% getInstance() {
+        if(instance == null) instance = new %%VKNAME%%();
+        return instance;
+    }
+}

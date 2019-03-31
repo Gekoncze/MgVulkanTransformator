@@ -1,0 +1,11 @@
+    public %%VKNAME%%() {
+        super(sizeof());
+    }
+
+    public %%VKNAME%%(VkMemory vkmemory) {
+        super(sizeof(), vkmemory);
+    }
+
+    public %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+        super(sizeof(), vkmemory, vkaddress);
+    }

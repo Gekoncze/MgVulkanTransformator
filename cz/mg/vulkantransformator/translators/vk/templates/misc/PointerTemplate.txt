@@ -1,0 +1,39 @@
+public class %%VKNAME%% extends VkObject {
+    public static final long NULL = 0;
+
+    public %%VKNAME%%() {
+        super(sizeof());
+    }
+
+    public %%VKNAME%%(long value) {
+        super(sizeof());
+        setValue(value);
+    }
+
+    public %%VKNAME%%(VkMemory vkmemory) {
+        super(sizeof(), vkmemory);
+    }
+
+    public %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+        super(sizeof(), vkmemory, vkaddress);
+    }
+
+    public long getValue() {
+        return getValue(getVkAddress());
+    }
+
+    public void setValue(long value) {
+        setValue(getVkAddress(), value);
+    }
+
+    public static native long sizeof();
+    private static native long getValue(long vkaddress);
+    private static native void setValue(long vkaddress, long value);
+
+    @Override
+    public String toString() {
+        return "0x" + Long.toHexString(getValue());
+    }
+
+%%ARRAY%%
+}

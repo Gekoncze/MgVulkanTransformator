@@ -1,0 +1,20 @@
+%%DOCUMENTATION%%
+public class %%VKNAME%% extends VkEnum {
+%FIELDS%
+
+%%CONSTRUCTOR%%
+
+    public %%VKNAME%%(int value) {
+        setValue(value);
+    }
+
+    @Override
+    public String toString() {
+%CASES%
+        return "UNKNOWN";
+    }
+
+%%ARRAY%%
+
+%%POINTER%%
+}

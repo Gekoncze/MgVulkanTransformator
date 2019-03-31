@@ -1,0 +1,10 @@
+    public %VKPROPERTYTYPEGET% get%VKPROPERTYNAMEC%() {
+        return new %VKPROPERTYTYPEGET%(getVkMemory(), get%VKPROPERTYNAMEC%(getVkAddress())%COUNT%);
+    }
+
+    public void set%VKPROPERTYNAMEC%(%VKPROPERTYTYPE% %VKPROPERTYNAME%) {
+        set%VKPROPERTYNAMEC%(getVkAddress(), %VKPROPERTYNAME%.getVkAddress());
+    }
+
+    private static native long get%VKPROPERTYNAMEC%(long address);
+    private static native void set%VKPROPERTYNAMEC%(long address, long %VKPROPERTYNAME%);

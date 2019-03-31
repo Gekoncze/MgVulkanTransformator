@@ -1,0 +1,37 @@
+public class %%VKNAME%% extends VkChar {
+    public %%VKNAME%%(String string) {
+        super(new VkMemory(string.length() * VkChar.sizeof() + 1));
+        for(int i = 0; i < string.length(); i++) VkChar.setValue(getVkAddress()+i*VkChar.sizeof(), (byte) string.charAt(i));
+        VkChar.setValue(getVkAddress()+(string.length())*VkChar.sizeof(), (byte) 0);
+    }
+
+    public %%VKNAME%%(VkMemory vkmemory) {
+        super(vkmemory);
+    }
+
+    public %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+        super(vkmemory, vkaddress);
+    }
+
+    public String getString() {
+        StringBuilder sb = new StringBuilder();
+        int c = count(getVkAddress());
+        for(int i = 0; i < c; i++) sb.append((char)VkChar.getValue(getVkAddress()+i*VkChar.sizeof()));
+        return sb.toString();
+    }
+
+    private static native int count(long vkaddress);
+
+    public static class Array extends VkPointer.Array {
+        private final %%VKNAME%%[] array;
+
+        public Array(String[] strings) {
+            super(strings.length);
+            this.array = new %%VKNAME%%[strings.length];
+            for(int i = 0; i < strings.length; i++){
+                this.array[i] = new %%VKNAME%%(strings[i]);
+                get(i).setValue(this.array[i].getVkAddress());
+            }
+        }
+    }
+}

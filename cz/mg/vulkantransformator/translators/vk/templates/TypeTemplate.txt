@@ -1,0 +1,12 @@
+%%DOCUMENTATION%%
+public class %%VKNAME%% extends %VKTYPE% {
+%%CONSTRUCTOR%%
+
+    public %%VKNAME%%(int value) {
+        setValue(value);
+    }
+
+%%ARRAY%%
+
+%%POINTER%%
+}

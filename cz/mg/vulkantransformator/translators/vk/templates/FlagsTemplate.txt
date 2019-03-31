@@ -1,0 +1,12 @@
+%%DOCUMENTATION%%
+public class %%VKNAME%% extends VkFlags {
+%%CONSTRUCTOR%%
+
+    public %%VKNAME%%(int value) {
+        setValue(value);
+    }
+
+%%ARRAY%%
+
+%%POINTER%%
+}

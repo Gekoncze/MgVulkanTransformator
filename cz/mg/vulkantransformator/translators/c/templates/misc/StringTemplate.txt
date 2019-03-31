@@ -1,0 +1,7 @@
+jint Java_%%CVKPACKAGE%%_%%VKNAME%%_count(JNIEnv* env, jclass jc, jlong address)
+{
+    (void)env;
+    (void)jc;
+    char* array = (char*)jniLongToPointer(address);
+    return (jint) strlen(array);
+}
