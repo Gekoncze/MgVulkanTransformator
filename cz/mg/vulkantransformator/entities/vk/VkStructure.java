@@ -5,7 +5,7 @@ import cz.mg.collections.list.chainlist.ChainList;
 
 public class VkStructure implements VkEntity {
     private final String name;
-    private final ChainList<VkField> fields = new ChainList<>();
+    private final ChainList<VkVariable> fields = new ChainList<>();
 
     public VkStructure(String name) {
         this.name = name;
@@ -16,7 +16,7 @@ public class VkStructure implements VkEntity {
         return name;
     }
 
-    public ChainList<VkField> getFields() {
+    public ChainList<VkVariable> getFields() {
         return fields;
     }
 }

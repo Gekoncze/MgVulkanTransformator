@@ -13,8 +13,6 @@ import cz.mg.vulkantransformator.utilities.FileUtilities;
 
 
 public class Transformator {
-    public static Transformator LAST_INSTANCE = null;
-
     private final ChainList<EntityTriplet> entities = new CachedChainList<>();
     private final String vulkanCoreFilePath;
     private final String outputDitectoryPath;

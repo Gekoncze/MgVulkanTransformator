@@ -1,11 +1,11 @@
 package cz.mg.vulkantransformator.converters;
 
 import cz.mg.vulkantransformator.entities.c.CFunction;
-import cz.mg.vulkantransformator.entities.c.CParameter;
+import cz.mg.vulkantransformator.entities.c.CVariable;
 import cz.mg.vulkantransformator.entities.vk.VkFunction;
-import cz.mg.vulkantransformator.entities.vk.VkParameter;
+import cz.mg.vulkantransformator.entities.vk.VkVariable;
 import cz.mg.vulkantransformator.entities.vulkan.VulkanFunction;
-import cz.mg.vulkantransformator.entities.vulkan.VulkanParameter;
+import cz.mg.vulkantransformator.entities.vulkan.VulkanVariable;
 
 
 public class FunctionConverter implements Converter<CFunction, VkFunction, VulkanFunction> {
@@ -15,17 +15,18 @@ public class FunctionConverter implements Converter<CFunction, VkFunction, Vulka
                 convert(c.getReturnType()),
                 TypenameConverter.cTypenameToVk(c.getName())
         );
-        for(CParameter parameter : c.getParameters()){
-            vk.getParameters().addLast(convert(parameter));
+        for(CVariable Variable : c.getParameters()){
+            vk.getParameters().addLast(convert(Variable));
         }
         return vk;
     }
 
-    public static VkParameter convert(CParameter param){
-        return new VkParameter(
+    public static VkVariable convert(CVariable param){
+        return new VkVariable(
                 DatatypeConverter.cDatatypeToVk(param.getTypename(), param.getPointerCount(), null),
                 param.getName(),
-                param.isVoid()
+                param.getPointerCount(),
+                param.getArrayCount()
         );
     }
 
@@ -35,17 +36,16 @@ public class FunctionConverter implements Converter<CFunction, VkFunction, Vulka
                 convert(vk.getReturnType()),
                 TypenameConverter.vkTypenameToV(vk.getName())
         );
-        for(VkParameter parameter : vk.getParameters()){
-            vulkan.getParameters().addLast(convert(parameter));
+        for(VkVariable Variable : vk.getParameters()){
+            vulkan.getVariables().addLast(convert(Variable));
         }
         return vulkan;
     }
 
-    public static VulkanParameter convert(VkParameter parameter){
-        return new VulkanParameter(
-                TypenameConverter.vkTypenameToV(parameter.getTypename()),
-                parameter.getName(),
-                parameter.isEmpty()
+    public static VulkanVariable convert(VkVariable Variable){
+        return new VulkanVariable(
+                TypenameConverter.vkTypenameToV(Variable.getTypename()),
+                Variable.getName()
         );
     }
 }

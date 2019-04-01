@@ -1,7 +1,5 @@
 %%DOCUMENTATION%%
 public class %%VKNAME%% extends %VKBASE% {
-    public static final %%VKNAME%% NULL = new %%VKNAME%%(VkPointer.NULL);
-
 %%CONSTRUCTOR%%
 
     public %%VKNAME%%(long handle) {

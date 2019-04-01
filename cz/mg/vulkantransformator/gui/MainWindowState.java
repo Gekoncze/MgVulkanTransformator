@@ -68,7 +68,6 @@ public class MainWindowState {
         transformator.setEnabled(EXTENSION, window.jCheckBoxExtensions.isSelected());
         transformator.setEnabled(DEFINE, window.jCheckBoxDefines.isSelected());
         transformator.setEnabled(MISC, window.jCheckBoxMisc.isSelected());
-        Transformator.LAST_INSTANCE = transformator;
         return transformator;
     }
 

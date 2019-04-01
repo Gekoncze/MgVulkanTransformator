@@ -1,15 +1,19 @@
 ### SOON
     make malloc and free output optional for debug
     add define macros as vk/misc maybe ?
-    get rid of static objects ...
 
 ### NOW
-    store handles that has been set to a structure so they wont get garbage collected !
-        setrům ve struktuře chybí check na null!
-        setry možná ._." kopírují na některých místech data místo ukazatelů ???
+
 
 ### DONE
-some fixes
-    VkString - replaced getString with toString + added constructor accepting VkChar as parameter
-    fixed structure, union and info parser bug (pointer count was set too late)
-    fixed inheritance for Pointer.Array
+Structure, VkPointer and VkObject fixes and improvements
+    fixed setters and getters copying data instead of pointers in structures
+    simplified getters
+    structures now store objects that has been set so their memory wont get freed automatically
+    added constructor to arrays accepting object and count
+    merged entities: VkParameter and VkField as VkVariable
+    got rid of static objects that caused ResourceManager to get stuck on exit
+    removed unused sizeof field from vkobject
+    added check for null in structures
+    removed console output from vkmemory
+    added some macros to vk

@@ -3,7 +3,7 @@ package cz.mg.vulkantransformator.parsers;
 import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.converters.DatatypeConverter;
 import cz.mg.vulkantransformator.entities.c.CEntity;
-import cz.mg.vulkantransformator.entities.c.CField;
+import cz.mg.vulkantransformator.entities.c.CVariable;
 import cz.mg.vulkantransformator.entities.c.CInfo;
 import cz.mg.vulkantransformator.utilities.StringUtilities;
 
@@ -33,7 +33,7 @@ public class InfoParser implements Parser {
                         line = DatatypeConverter.removeConsts(line);
                         parts = StringUtilities.split(line, "* ;[]");
                         String arrayCount = parts.length == 3 ? parts[2] : null;
-                        c.getFields().addLast(new CField(parts[0], parts[1], pointerCount, arrayCount));
+                        c.getFields().addLast(new CVariable(parts[0], parts[1], pointerCount, arrayCount));
                     } else break;
                 }
                 return c;

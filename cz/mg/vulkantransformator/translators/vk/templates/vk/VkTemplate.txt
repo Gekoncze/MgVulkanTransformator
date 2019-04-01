@@ -15,6 +15,25 @@ public class Vk {
         this.instance = instance;
     }
 
+    public static int VK_MAKE_VERSION(int major, int minor, int patch){
+        return (((major) << 22) | ((minor) << 12) | (patch));
+    }
+
+    public static int VK_VERSION_MAJOR(int version){
+        return ((int)(version) >> 22);
+    }
+
+    public static int VK_VERSION_MINOR(int version){
+        return (((int)(version) >> 12) & 0x3ff);
+    }
+
+    public static int VK_VERSION_PATCH(int version){
+        return ((int)(version) & 0xfff);
+    }
+
+    public static int VK_API_VERSION_1_0 = VK_MAKE_VERSION(1, 0, 0);
+    public static int VK_API_VERSION_1_1 = VK_MAKE_VERSION(1, 1, 0);
+
 %DEFINES%
 
 %FUNCTIONS%

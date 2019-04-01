@@ -20,3 +20,20 @@ void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValue(JNIEnv* env, jclass jc, jlong addre
     void** pointerAddress = (void**)jniLongToPointer(address);
     *pointerAddress = jniLongToPointer(value);
 }
+
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getNullValue(JNIEnv* env, jclass jc)
+{
+    (void)env;
+    (void)jc;
+    return jniPointerToLong(NULL);
+}
+
+void* null;
+
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getNullAddress(JNIEnv* env, jclass jc)
+{
+    (void)env;
+    (void)jc;
+    null = NULL;
+    return jniPointerToLong(&null);
+}

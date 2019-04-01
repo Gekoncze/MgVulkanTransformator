@@ -5,7 +5,7 @@ import cz.mg.collections.list.chainlist.ChainList;
 
 public class VulkanStructure implements VulkanEntity {
     private final String name;
-    private final ChainList<VulkanField> fields = new ChainList<>();
+    private final ChainList<VulkanVariable> fields = new ChainList<>();
 
     public VulkanStructure(String name) {
         this.name = name;
@@ -16,7 +16,7 @@ public class VulkanStructure implements VulkanEntity {
         return name;
     }
 
-    public ChainList<VulkanField> getFields() {
+    public ChainList<VulkanVariable> getFields() {
         return fields;
     }
 }

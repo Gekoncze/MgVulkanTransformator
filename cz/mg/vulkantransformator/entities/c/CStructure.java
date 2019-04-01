@@ -5,7 +5,7 @@ import cz.mg.collections.list.chainlist.ChainList;
 
 public class CStructure implements CEntity {
     private final String name;
-    private final ChainList<CField> fields = new ChainList<>();
+    private final ChainList<CVariable> fields = new ChainList<>();
 
     public CStructure(String name) {
         this.name = name;
@@ -16,7 +16,7 @@ public class CStructure implements CEntity {
         return name;
     }
 
-    public ChainList<CField> getFields() {
+    public ChainList<CVariable> getFields() {
         return fields;
     }
 }

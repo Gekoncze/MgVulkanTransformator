@@ -2,13 +2,10 @@ package cz.mg.vulkantransformator.translators.vk;
 
 import cz.mg.collections.list.chainlist.CachedChainList;
 import cz.mg.collections.list.chainlist.ChainList;
-import cz.mg.vulkantransformator.Transformator;
 import cz.mg.vulkantransformator.entities.EntityTriplet;
 import cz.mg.vulkantransformator.entities.FunctionTriplet;
-import cz.mg.vulkantransformator.entities.HandleTriplet;
-import cz.mg.vulkantransformator.entities.c.CParameter;
 import cz.mg.vulkantransformator.entities.vk.VkFunction;
-import cz.mg.vulkantransformator.entities.vk.VkParameter;
+import cz.mg.vulkantransformator.entities.vk.VkVariable;
 
 
 public class VkFunctionTranslator extends VkTranslator {
@@ -24,54 +21,42 @@ public class VkFunctionTranslator extends VkTranslator {
         );
     }
 
-    public static String genParameters(ChainList<VkParameter> parameters, VkParameter rvalParameter){
+    public static String genParameters(ChainList<VkVariable> parameters, VkVariable rvalParameter){
         ChainList<String> params = new CachedChainList<>();
-        for(VkParameter parameter : parameters) params.addLast(genParameter(parameter));
+        for(VkVariable parameter : parameters) params.addLast(genParameter(parameter));
         if(!rvalParameter.isEmpty()) params.addLast(genParameter(rvalParameter));
         return params.toString(", ");
     }
 
-    public static String genParameter(VkParameter parameter){
+    public static String genParameter(VkVariable parameter){
         return parameter.getTypename() + " " + parameter.getName();
     }
 
-    public static String genArguments(ChainList<VkParameter> parameters, VkParameter rvalParameter){
+    public static String genArguments(ChainList<VkVariable> parameters, VkVariable rvalParameter){
         ChainList<String> args = new CachedChainList<>();
-        for(VkParameter parameter : parameters) args.addLast(genArgument(parameter));
+        for(VkVariable parameter : parameters) args.addLast(genArgument(parameter));
         if(!rvalParameter.isEmpty()) args.addLast(genArgument(rvalParameter));
         String leadingComma = args.count() > 0 ? ", " : "";
         return leadingComma + args.toString(", ");
     }
 
-    public static String genArgument(VkParameter parameter){
-        if(isHandle(parameter.getTypename())){
-            return parameter.getName() + " != null ? " + parameter.getName() + ".getVkAddress() : " + parameter.getTypename() + ".NULL.getVkAddress()";
+    public static String genArgument(VkVariable parameter){
+        if(parameter.isValue()){
+            return parameter.getName() + " != null ? " + parameter.getName() + ".getVkAddress() : VkPointer.NULL_ADDRESS";
         } else {
             return parameter.getName() + " != null ? " + parameter.getName() + ".getVkAddress() : VkPointer.NULL";
         }
     }
 
-    private static boolean isHandle(String typename){
-        if(typename.endsWith(".Pointer") || typename.endsWith(".Array")) return false;
-        for(EntityTriplet entity : Transformator.LAST_INSTANCE.getEntities()){
-            if(entity.getVk() != null){
-                if(entity.getVk().getName().equals(typename)){
-                    return entity instanceof HandleTriplet;
-                }
-            }
-        }
-        throw new RuntimeException("Could not find " + typename);
-    }
-
-    public static String genJavaParameters(ChainList<VkParameter> parameters, VkParameter rvalParameter){
+    public static String genJavaParameters(ChainList<VkVariable> parameters, VkVariable rvalParameter){
         ChainList<String> params = new CachedChainList<>();
-        for(VkParameter parameter : parameters) params.addLast(genJavaParameter(parameter));
+        for(VkVariable parameter : parameters) params.addLast(genJavaParameter(parameter));
         if(!rvalParameter.isEmpty()) params.addLast(genJavaParameter(rvalParameter));
         String leadingComma = params.count() > 0 ? ", " : "";
         return leadingComma + params.toString(", ");
     }
 
-    public static String genJavaParameter(VkParameter parameter){
+    public static String genJavaParameter(VkVariable parameter){
         return "long " + parameter.getName();
     }
 }

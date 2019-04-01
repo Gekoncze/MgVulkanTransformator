@@ -4,7 +4,7 @@ import cz.mg.collections.list.chainlist.CachedChainList;
 import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.entities.EntityTriplet;
 import cz.mg.vulkantransformator.entities.InfoTriplet;
-import cz.mg.vulkantransformator.entities.vk.VkField;
+import cz.mg.vulkantransformator.entities.vk.VkVariable;
 import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
@@ -33,8 +33,8 @@ public class VkInfoTranslator extends VkTranslator {
         return vkNameUpper;
     }
 
-    private ChainList<VkField> reduce(ChainList<VkField> fields){
-        ChainList<VkField> reduced = new CachedChainList<>(fields);
+    private ChainList<VkVariable> reduce(ChainList<VkVariable> fields){
+        ChainList<VkVariable> reduced = new CachedChainList<>(fields);
         reduced.removeFirst();
         return reduced;
     }

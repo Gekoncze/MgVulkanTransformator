@@ -1,5 +1,6 @@
 public class %%VKNAME%% extends VkObject {
-    public static final long NULL = 0;
+    public static final long NULL = getNullValue();
+    public static final long NULL_ADDRESS = getNullAddress();
 
     public %%VKNAME%%() {
         super(sizeof());
@@ -11,11 +12,11 @@ public class %%VKNAME%% extends VkObject {
     }
 
     public %%VKNAME%%(VkMemory vkmemory) {
-        super(sizeof(), vkmemory);
+        super(vkmemory);
     }
 
     public %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
-        super(sizeof(), vkmemory, vkaddress);
+        super(vkmemory, vkaddress);
     }
 
     public long getValue() {
@@ -29,6 +30,8 @@ public class %%VKNAME%% extends VkObject {
     public static native long sizeof();
     private static native long getValue(long vkaddress);
     private static native void setValue(long vkaddress, long value);
+    private static native long getNullValue();
+    private static native long getNullAddress();
 
     @Override
     public String toString() {

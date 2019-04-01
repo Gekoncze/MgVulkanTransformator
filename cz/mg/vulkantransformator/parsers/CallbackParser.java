@@ -3,7 +3,7 @@ package cz.mg.vulkantransformator.parsers;
 import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.entities.c.CEntity;
 import cz.mg.vulkantransformator.entities.c.CCallback;
-import cz.mg.vulkantransformator.entities.c.CParameter;
+import cz.mg.vulkantransformator.entities.c.CVariable;
 import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
@@ -63,7 +63,7 @@ public class CallbackParser implements Parser {
                 for(i = i + 1; i < lines.count(); i++){
                     line = lines.get(i);
                     if(line.startsWith("    ")){
-                        CParameter p = FunctionParser.parseParameter(line);
+                        CVariable p = FunctionParser.parseParameter(line);
                         if(p != null) c.getParameters().addLast(p);
                     } else break;
                 }

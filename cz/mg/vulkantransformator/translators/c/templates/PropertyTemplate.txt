@@ -3,7 +3,7 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_get%VKPROPERTYNAME%(JNIEnv* env, jclass jc,
     (void)env;
     (void)jc;
     %%CNAME%%* o = (%%CNAME%%*)jniLongToPointer(address);
-    return jniPointerToLong(&(o->%CPROPERTYNAME%));
+    return jniPointerToLong(%A1%o->%CPROPERTYNAME%);
 }
 
 void Java_%%CVKPACKAGE%%_%%VKNAME%%_set%VKPROPERTYNAME%(JNIEnv* env, jclass jc, jlong address, jlong valueAddress)
@@ -11,6 +11,7 @@ void Java_%%CVKPACKAGE%%_%%VKNAME%%_set%VKPROPERTYNAME%(JNIEnv* env, jclass jc, 
     (void)env;
     (void)jc;
     %%CNAME%%* o = (%%CNAME%%*)jniLongToPointer(address);
-    memcpy(%A%o->%CPROPERTYNAME%, jniLongToPointer(valueAddress), sizeof(o->%CPROPERTYNAME%));
+    void* valuePointer = jniLongToPointer(valueAddress);
+    memcpy(%A2%o->%CPROPERTYNAME%, %A3%valuePointer, sizeof(o->%CPROPERTYNAME%));
 }
 

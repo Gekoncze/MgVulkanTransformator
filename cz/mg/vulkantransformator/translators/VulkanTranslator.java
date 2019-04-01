@@ -7,7 +7,7 @@ import cz.mg.vulkantransformator.EntityGroup;
 import cz.mg.vulkantransformator.entities.*;
 import cz.mg.vulkantransformator.entities.c.CEntity;
 import cz.mg.vulkantransformator.entities.vk.VkFunction;
-import cz.mg.vulkantransformator.entities.vk.VkParameter;
+import cz.mg.vulkantransformator.entities.vk.VkVariable;
 import cz.mg.vulkantransformator.entities.vk.VkValue;
 import cz.mg.vulkantransformator.translators.c.templates.TemplatesC;
 import cz.mg.vulkantransformator.translators.vk.templates.TemplatesVk;
@@ -117,25 +117,25 @@ public class VulkanTranslator {
         return StringUtilities.replaceLast(documentationTemplate.replace("%%CNAME%%", entity.getName()), "\n", "");
     }
 
-    private static String genParameters(ChainList<VkParameter> parameters, VkParameter returnParameter){
+    private static String genParameters(ChainList<VkVariable> parameters, VkVariable returnParameter){
         ChainList<String> params = new CachedChainList<>();
-        for(VkParameter parameter : parameters) params.addLast(genParameter(parameter));
+        for(VkVariable parameter : parameters) params.addLast(genParameter(parameter));
         if(!returnParameter.isEmpty()) params.addLast(genParameter(returnParameter));
         return params.toString(", ");
     }
 
-    private static String genParameter(VkParameter parameter){
+    private static String genParameter(VkVariable parameter){
         return parameter.getTypename() + " " + parameter.getName();
     }
 
-    private static String genArguments(ChainList<VkParameter> parameters, VkParameter returnParameter){
+    private static String genArguments(ChainList<VkVariable> parameters, VkVariable returnParameter){
         ChainList<String> args = new CachedChainList<>();
-        for(VkParameter parameter : parameters) args.addLast(genArgument(parameter));
+        for(VkVariable parameter : parameters) args.addLast(genArgument(parameter));
         if(!returnParameter.isEmpty()) args.addLast(genArgument(returnParameter));
         return args.toString(", ");
     }
 
-    private static String genArgument(VkParameter parameter){
+    private static String genArgument(VkVariable parameter){
         return parameter.getName();
     }
 

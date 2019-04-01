@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 
-jlong jniPointerToLong(void* p)
+jlong jniPointerToLong(const void* p)
 {
     if(sizeof(void*) > sizeof(jlong)) return 0;
     jlong l;

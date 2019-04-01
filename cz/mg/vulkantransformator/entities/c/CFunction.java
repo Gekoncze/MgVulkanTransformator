@@ -4,16 +4,16 @@ import cz.mg.collections.list.chainlist.ChainList;
 
 
 public class CFunction implements CEntity {
-    private final CParameter returnType;
+    private final CVariable returnType;
     private final String name;
-    private final ChainList<CParameter> parameters = new ChainList<>();
+    private final ChainList<CVariable> parameters = new ChainList<>();
 
-    public CFunction(CParameter returnType, String name) {
+    public CFunction(CVariable returnType, String name) {
         this.returnType = returnType;
         this.name = name;
     }
 
-    public CParameter getReturnType() {
+    public CVariable getReturnType() {
         return returnType;
     }
 
@@ -22,7 +22,7 @@ public class CFunction implements CEntity {
         return name;
     }
 
-    public ChainList<CParameter> getParameters() {
+    public ChainList<CVariable> getParameters() {
         return parameters;
     }
 }
