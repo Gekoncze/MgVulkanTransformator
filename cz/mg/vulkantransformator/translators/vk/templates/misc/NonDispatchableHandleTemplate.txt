@@ -1,4 +1,4 @@
-public class %%VKNAME%% extends VkObject {
+public class %%VKNAME%% extends VkHandle {
     public %%VKNAME%%() {
         super(sizeof());
     }
@@ -16,10 +16,12 @@ public class %%VKNAME%% extends VkObject {
         super(vkmemory, vkaddress);
     }
 
+    @Override
     public long getValue(){
         return (long) getValue(getVkAddress());
     }
 
+    @Override
     public void setValue(long value){
         setValue(getVkAddress(), value);
     }

@@ -1,0 +1,13 @@
+public class VulkanPointer extends VulkanObject {
+    public static final long NULL = VkPointer.NULL;
+
+%%CONSTRUCTOR%%
+
+    public long getValue(){
+        return getVk().getValue();
+    }
+
+    public void setValue(long value){
+        getVk().setValue(value);
+    }
+}

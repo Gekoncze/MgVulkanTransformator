@@ -2,7 +2,7 @@
 public class %%VKNAME%% extends %BASE% {
 %%CONSTRUCTOR%%
 
-    public %%VKNAME%%(int value) {
+    public %%VKNAME%%(%JAVATYPE% value) {
         setValue(value);
     }
 

@@ -52,7 +52,7 @@ public class Transformator {
         clearDirectories();
         createDirectories();
         addSystemTypeEntities();
-        addTypeEntities();
+        addAditionalTypeEntities();
         addMiscEntities();
         parseEntities();
         saveEntities();
@@ -65,9 +65,10 @@ public class Transformator {
         }
     }
 
-    private void addTypeEntities(){
-        entities.addLast(convertEntity(new CType("int32_t", "VkEnum")));
-        entities.addLast(convertEntity(new CType("int32_t", "VkFlagBits")));
+    private void addAditionalTypeEntities(){
+        for(String[] aditionalType : Configuration.ADITIONAL_TYPES){
+            entities.addLast(convertEntity(new CType(aditionalType[0], aditionalType[1])));
+        }
     }
 
     private void addMiscEntities(){

@@ -6,8 +6,11 @@
         wrap vk result functions with checks throwing vulkan exception
         pair handles with create / destroy functions into auto-closeable classes
 
-    problém u get vk s dědičností ... nelze používat extends anebo je třeba nějak ošetřit, například generovat vícero verzí
-
 ### DONE
-Vulkan level implementation PART #3
-    fixed inheritance issues
+Vulkan level implementation PART #4
+    added handle translator + template
+    (for previous commit: added VulkanObject template)
+    added VulkanPointer template
+    added VulkanFunctionPointer template
+    added vk and vulkan Handle template
+    fixed vktype parametric constructor
