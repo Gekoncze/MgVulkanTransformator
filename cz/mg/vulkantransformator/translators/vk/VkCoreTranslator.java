@@ -1,4 +1,4 @@
-package cz.mg.vulkantransformator.translators;
+package cz.mg.vulkantransformator.translators.vk;
 
 import cz.mg.collections.list.chainlist.CachedChainList;
 import cz.mg.collections.list.chainlist.ChainList;
@@ -7,65 +7,31 @@ import cz.mg.vulkantransformator.EntityGroup;
 import cz.mg.vulkantransformator.entities.*;
 import cz.mg.vulkantransformator.entities.c.CEntity;
 import cz.mg.vulkantransformator.entities.vk.VkFunction;
-import cz.mg.vulkantransformator.entities.vk.VkVariable;
 import cz.mg.vulkantransformator.entities.vk.VkValue;
-import cz.mg.vulkantransformator.translators.c.templates.TemplatesC;
+import cz.mg.vulkantransformator.entities.vk.VkVariable;
 import cz.mg.vulkantransformator.translators.vk.templates.TemplatesVk;
 import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
-public class VulkanTranslator {
-    private static final String cDefineTemplate = TemplatesC.load("vk/Define");
+public class VkCoreTranslator {
     private static final String vkDefineStringTemplate = "    public static final String %DEFINENAME% = %DEFINEVALUE%;";
     private static final String vkDefineTemplate = "    public static final long %DEFINENAME% = %%VKGETNAME%%();\n    private static native long %%VKGETNAME%%();";
-    private static final String vkFunctionTemplate = TemplatesVk.load("vk/Function");
+    private static final String vkFunctionTemplate = TemplatesVk.load("core/Function");
     private static final String vkValueTemplate = "    public static final int %VALUENAME% = %VALUE%;";
-    private static final String documentationTemplate = TemplatesVk.load("vk/Documentation");
-
-    public static String translate(EntityGroup group, ChainList<EntityTriplet> entities){
-        switch (group){
-            case C: return translateC(entities);
-            case VK: return translateVk(entities);
-            case VULKAN: return translateVulkan(entities);
-            default: throw new UnsupportedOperationException("" + group);
-        }
-    }
-
-    public static String translateC(ChainList<EntityTriplet> entities){
-        return TemplatesC.load("Header") + genDefinesC(entities);
-    }
-
-    private static String genDefinesC(ChainList<EntityTriplet> entities){
-        ChainList<String> defines = new CachedChainList<>();
-        for(EntityTriplet entity : entities){
-            if(entity instanceof DefineTriplet){
-                DefineTriplet define = (DefineTriplet) entity;
-                if(!define.isString()){
-                    defines.addLast(cDefineTemplate
-                            .replace("%%CVKPACKAGE%%", genPackageCvk())
-                            .replace("%%VKGETNAME%%", genVkGetName(define))
-                            .replace("%%CNAME%%", define.getC().getName())
-                    );
-                }
-            }
-        }
-        return defines.toString("\n");
-    }
-
-    public static String genPackageCvk(){
-        return Configuration.getPath(EntityGroup.VK).replace("/", "_");
-    }
-
-    public static String genVkGetName(DefineTriplet define){
-        return "get" + StringUtilities.upperCaseToCammelCase(define.getC().getName());
-    }
+    private static final String documentationTemplate = TemplatesVk.load("core/Documentation");
+    private static final String headerTemplate = TemplatesVk.load("parts/Header");
+    private static final String coreTemplate = TemplatesVk.load("core/Core");
 
     public static String translateVk(ChainList<EntityTriplet> entities){
-        return (TemplatesVk.load("Header") + TemplatesVk.load("vk/Vk"))
+        return (headerTemplate + coreTemplate)
                 .replace("%DEFINES%", genDefinesVk(entities))
                 .replace("%FUNCTIONS%", genFunctionsVk(entities))
                 .replace("%CONSTANTS%", genConstantsVk(entities))
                 .replace("%%PACKAGE%%", genPackage());
+    }
+
+    public static String genVkGetName(DefineTriplet define){
+        return "get" + StringUtilities.upperCaseToCammelCase(define.getC().getName());
     }
 
     private static String genPackage(){
@@ -162,9 +128,5 @@ public class VulkanTranslator {
         return vkValueTemplate
                 .replace("%VALUENAME%", value.getName())
                 .replace("%VALUE%", name + "." + value.getName());
-    }
-
-    public static String translateVulkan(ChainList<EntityTriplet> entities){
-        return null;
     }
 }

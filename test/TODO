@@ -1,19 +1,16 @@
 ### SOON
-    make malloc and free output optional for debug
-    add define macros as vk/misc maybe ?
+
 
 ### NOW
-
+    Vulkan level implementation
+        wrap vk result functions with checks throwing vulkan exception
+        pair handles with create / destroy functions into auto-closeable classes
 
 ### DONE
-Structure, VkPointer and VkObject fixes and improvements
-    fixed setters and getters copying data instead of pointers in structures
-    simplified getters
-    structures now store objects that has been set so their memory wont get freed automatically
-    added constructor to arrays accepting object and count
-    merged entities: VkParameter and VkField as VkVariable
-    got rid of static objects that caused ResourceManager to get stuck on exit
-    removed unused sizeof field from vkobject
-    added check for null in structures
-    removed console output from vkmemory
-    added some macros to vk
+Cleanup + some early oop level classes and templates
+    moved some files around in new packages
+    renamed some packages
+    added some oop level classes and templates
+    renamed VulkanTranslator to CoreTranslator and divided it into C, Vk and Vulkan parts
+    simplified Translator, VkTranslator
+    moved all loaded templates into static final fields or maps

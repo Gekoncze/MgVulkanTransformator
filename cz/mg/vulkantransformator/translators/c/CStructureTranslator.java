@@ -9,7 +9,7 @@ import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
 public class CStructureTranslator extends CTranslator {
-    private static final String propertyTemplate = TemplatesC.load("Property");
+    private static final String propertyTemplate = TemplatesC.load("parts/Property");
 
     @Override
     public String genCode(EntityTriplet e, String template) {

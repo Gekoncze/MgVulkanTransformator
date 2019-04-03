@@ -10,6 +10,12 @@ import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
 public abstract class VkTranslator extends Translator {
+    public static final String documentationTemplate = StringUtilities.replaceLast(TemplatesVk.load("parts/Documentation"), "\n", "");
+    public static final String arrayTemplate = StringUtilities.replaceLast(TemplatesVk.load("parts/Array"), "\n", "");
+    public static final String pointerTemplate = StringUtilities.replaceLast(TemplatesVk.load("parts/Pointer"), "\n", "");
+    public static final String constructorTemplate = TemplatesVk.load("parts/Constructor");
+    public static final String constructorSizeofTemplate = TemplatesVk.load("parts/ConstructorSizeof");
+
     public VkTranslator() {
         super(EntityGroup.VK);
     }
@@ -18,32 +24,16 @@ public abstract class VkTranslator extends Translator {
     public String genCode(EntityTriplet entity, String template) {
         return super.genCode(entity, template
                 .replace("%%PACKAGE%%", genPackage())
-                .replace("%%DOCUMENTATION%%", genDocumentation())
-                .replace("%%ARRAY%%", genArrayVk(entity))
-                .replace("%%POINTER%%", genPointerVk(entity))
-                .replace("%%CONSTRUCTOR%%", TemplatesVk.load("Constructor"))
-                .replace("%%CONSTRUCTORSIZEOF%%", TemplatesVk.load("ConstructorSizeof"))
+                .replace("%%DOCUMENTATION%%", documentationTemplate)
+                .replace("%%ARRAY%%", arrayTemplate)
+                .replace("%%POINTER%%", pointerTemplate)
+                .replace("%%CONSTRUCTOR%%", constructorTemplate)
+                .replace("%%CONSTRUCTORSIZEOF%%", constructorSizeofTemplate)
         );
     }
 
     private String genPackage(){
         return Configuration.getPath(getGroup()).replace("/", ".");
-    }
-
-    private String genDocumentation(){
-        return StringUtilities.replaceLast(TemplatesVk.load("Documentation"), "\n", "");
-    }
-
-    private final String genArrayVk(EntityTriplet e){
-        String template = TemplatesVk.load("Array").replace("%%VKNAME%%", e.getVk().getName());
-        template = StringUtilities.replaceLast(template, "\n", "");
-        return template;
-    }
-
-    private final String genPointerVk(EntityTriplet e){
-        String template = TemplatesVk.load("Pointer").replace("%%VKNAME%%", e.getVk().getName());
-        template = StringUtilities.replaceLast(template, "\n", "");
-        return template;
     }
 
     public static VkTranslator create(EntityType type){

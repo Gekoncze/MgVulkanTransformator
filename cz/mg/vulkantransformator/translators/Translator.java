@@ -10,10 +10,16 @@ import cz.mg.vulkantransformator.translators.vk.templates.TemplatesVk;
 import cz.mg.vulkantransformator.translators.vulkan.VulkanTranslator;
 import cz.mg.vulkantransformator.translators.vulkan.templates.TemplatesVulkan;
 import cz.mg.vulkantransformator.utilities.StringUtilities;
+import java.util.HashMap;
 
 
 public abstract class Translator {
-    private static final String importStaticTemplate = "import static %%IMPORT%%.*;";
+    private static final String cHeaderTemplate = TemplatesC.load("parts/Header");
+    private static final String vkHeaderTemplate = TemplatesVk.load("parts/Header");
+    private static final String vulkanHeaderTemplate = TemplatesVulkan.load("parts/Header");
+    private static final HashMap<String, String> entityTemplateC = new HashMap<>();
+    private static final HashMap<String, String> entityTemplateVk = new HashMap<>();
+    private static final HashMap<String, String> entityTemplateVulkan = new HashMap<>();
     private final EntityGroup group;
 
     public Translator(EntityGroup group) {
@@ -33,15 +39,34 @@ public abstract class Translator {
 
     public String translate(EntityTriplet entity){
         try {
-            return genCode(entity, loadHeader() + loadTemplate(entity.getEntityType()));
+            return genCode(entity, getHeaderTemplate() + getEntityTemplate(entity.getEntityType()));
         } catch (RuntimeException e){
             throw new RuntimeException(getClass().getSimpleName() + " could not translate entity " + entity.getClass().getSimpleName() + " (" + entity.getEntityType() + ")", e);
         }
     }
 
-    private String loadTemplate(EntityType type){
+    private String getEntityTemplate(EntityType type){
+        String name = "entities/" + StringUtilities.upperCaseToCammelCase(type.name());
+        return getOrLoadEntityTemplateC(group, name);
+    }
+
+    private String getOrLoadEntityTemplateC(EntityGroup group, String name){
+        HashMap<String, String> map = getEntityTemplateMap(group);
+        if(!map.containsKey(name)) map.put(name, loadEntityTemplate(group, name));
+        return map.get(name);
+    }
+
+    private HashMap getEntityTemplateMap(EntityGroup group){
+        switch(group){
+            case C: return entityTemplateC;
+            case VK: return entityTemplateVk;
+            case VULKAN: return entityTemplateVulkan;
+            default: throw new UnsupportedOperationException("" + group);
+        }
+    }
+
+    private String loadEntityTemplate(EntityGroup group, String name){
         try {
-            String name = StringUtilities.upperCaseToCammelCase(type.name());
             switch(group){
                 case C: return TemplatesC.load(name);
                 case VK: return TemplatesVk.load(name);
@@ -53,11 +78,11 @@ public abstract class Translator {
         }
     }
 
-    private String loadHeader(){
+    private String getHeaderTemplate(){
         switch(group){
-            case C: return TemplatesC.load("Header");
-            case VK: return TemplatesVk.load("Header");
-            case VULKAN: return TemplatesVulkan.load("Header");
+            case C: return cHeaderTemplate;
+            case VK: return vkHeaderTemplate;
+            case VULKAN: return vulkanHeaderTemplate;
             default: throw new UnsupportedOperationException("" + group);
         }
     }

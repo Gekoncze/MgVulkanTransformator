@@ -1,0 +1,5 @@
+package %%PACKAGE%%;
+
+
+import cz.mg.vulkan.vk.*;
+import static cz.mg.vulkan.vk.Vk.*;

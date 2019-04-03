@@ -9,6 +9,8 @@ import cz.mg.vulkantransformator.translators.vk.templates.TemplatesVk;
 
 
 public class VkUnionTranslator extends VkTranslator {
+    private static final String constructorTemplate = TemplatesVk.load("parts/UnionConstructor");
+
     @Override
     public String genCode(EntityTriplet e, String template) {
         UnionTriplet entity = (UnionTriplet) e;
@@ -25,7 +27,7 @@ public class VkUnionTranslator extends VkTranslator {
     }
 
     public static String constructorToStringVk(VkVariable field){
-        return TemplatesVk.load("UnionConstructor")
+        return constructorTemplate
                 .replace("%VKPROPERTYTYPE%", field.getTypename())
                 .replace("%VKPROPERTYNAME%", field.getName())
                 .replace("%SETTER%", VkStructureTranslator.genSet(field));

@@ -1,0 +1,24 @@
+/**
+ *  @see <a href="https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/">khronos documentation</a>
+ **/
+public class Vulkan {
+    private final Vk vk;
+
+    public Vulkan(){
+        this.vk = new Vk();
+    }
+
+    public Vulkan(Vk vk){
+        this.vk = vk;
+    }
+
+    public Vk getVk(){
+        return vk;
+    }
+
+    %DEFINES%
+
+    %FUNCTIONS%
+
+    %CONSTANTS%
+}

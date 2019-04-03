@@ -6,9 +6,12 @@ import cz.mg.vulkantransformator.EntityType;
 import cz.mg.vulkantransformator.entities.EntityTriplet;
 import cz.mg.vulkantransformator.translators.Translator;
 import cz.mg.vulkantransformator.translators.vulkan.templates.TemplatesVulkan;
+import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
 public abstract class VulkanTranslator extends Translator {
+    private static final String documentationTemplate = StringUtilities.replaceLast(TemplatesVulkan.load("parts/Documentation"), "\n", "");
+
     public VulkanTranslator() {
         super(EntityGroup.VULKAN);
     }
@@ -17,16 +20,12 @@ public abstract class VulkanTranslator extends Translator {
     public String genCode(EntityTriplet entity, String template) {
         return super.genCode(entity, template
                 .replace("%%PACKAGE%%", genPackage())
-                .replace("%%DOCUMENTATION%%", genDocumentation())
+                .replace("%%DOCUMENTATION%%", documentationTemplate)
         );
     }
 
     private String genPackage(){
         return Configuration.getPath(getGroup()).replace("/", ".");
-    }
-
-    private String genDocumentation(){
-        return TemplatesVulkan.load("Documentation");
     }
 
     public static VulkanTranslator create(EntityType type){

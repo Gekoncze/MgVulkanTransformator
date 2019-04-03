@@ -10,7 +10,7 @@ import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
 public class VkStructureTranslator extends VkTranslator {
-    private static final String propertyTemplate = TemplatesVk.load("Property");
+    private static final String propertyTemplate = TemplatesVk.load("parts/Property");
     private static final String setTemplateVk =   "        set%VKPROPERTYNAMEC%(%VKPROPERTYNAME%);";
     private static final String ppTemplate = "private VkObject %VKPROPERTYNAME% = null;";
     private static final String setPPTemplate = "this.%VKPROPERTYNAME% = %VKPROPERTYNAME%;";

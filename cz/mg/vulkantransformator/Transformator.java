@@ -136,7 +136,7 @@ public class Transformator {
                 String base = outputDitectoryPath;
                 String relativePath = Configuration.getPath(group);
                 String filename = "Vk" + getFileExtension(group);
-                String code = VulkanTranslator.translate(group, entities);
+                String code = CoreTranslator.translate(group, entities);
                 if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
             }
         } catch(RuntimeException e){
@@ -188,5 +188,37 @@ public class Transformator {
             }
         }
         return new String[]{ null, null, null };
+    }
+
+    public static void main(String[] args) {
+        Transformator t = new Transformator(null, null);
+        t.parseEntities();
+        for(EntityTriplet entity : t.entities){
+            if(entity instanceof HandleTriplet){
+                System.out.println("HANDLE " + entity.getC().getName());
+            }
+        }
+        for(EntityTriplet entity : t.entities){
+            if(entity instanceof FunctionTriplet && !(entity instanceof CallbackTriplet)){
+                if(entity.getC().getName().contains("Create")){
+                    System.out.print("CREATE " + entity.getC().getName() + ": ");
+                    for(VkVariable parameter : ((VkFunction)entity.getVk()).getParameters()){
+                        System.out.print(parameter.getTypename() + " ");
+                    }
+                    System.out.println();
+                }
+            }
+        }
+        for(EntityTriplet entity : t.entities){
+            if(entity instanceof FunctionTriplet && !(entity instanceof CallbackTriplet)){
+                if(entity.getC().getName().contains("Destroy")){
+                    System.out.print("DESTROY " + entity.getC().getName() + ": ");
+                    for(VkVariable parameter : ((VkFunction)entity.getVk()).getParameters()){
+                        System.out.print(parameter.getTypename() + " ");
+                    }
+                    System.out.println();
+                }
+            }
+        }
     }
 }
