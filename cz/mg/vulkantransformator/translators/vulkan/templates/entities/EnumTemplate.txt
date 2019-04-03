@@ -1,0 +1,16 @@
+%%DOCUMENTATION%%
+public class %%VULKANNAME%% extends VulkanEnum {
+%FIELDS%
+
+%%SUPERCONSTRUCTOR%%
+
+    public %%VULKANNAME%%(int value){
+        super(value);
+    }
+
+    @Override
+    public String toString() {
+%CASES%
+        return "UNKNOWN";
+    }
+}

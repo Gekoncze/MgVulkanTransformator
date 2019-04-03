@@ -20,7 +20,7 @@ public class FlagBitsConverter implements Converter<CFlagBits, VkFlagBits, Vulka
     public VulkanFlagBits convert(VkFlagBits vk) {
         VulkanFlagBits vulkan = new VulkanFlagBits(TypenameConverter.vkTypenameToV(vk.getName()));
         for(VkValue value : vk.getValues()){
-            String newName = TypenameConverter.vkEnumnameToVulkan(value.getName(), vk.getName());
+            String newName = TypenameConverter.vkFlagBitsValueNameToVulkan(value.getName(), vk.getName());
             String newValue = vk.getName() + "." + value.getName();
             vulkan.getValues().addLast(new VulkanValue(newName, newValue));
         }

@@ -20,7 +20,7 @@ public class EnumConverter implements Converter<CEnum, VkEnum, VulkanEnum> {
     public VulkanEnum convert(VkEnum vk) {
         VulkanEnum vulkan = new VulkanEnum(TypenameConverter.vkTypenameToV(vk.getName()));
         for(VkValue value : vk.getValues()){
-            String newName = TypenameConverter.vkEnumnameToVulkan(value.getName(), vk.getName());
+            String newName = TypenameConverter.vkEnumValueNameToVulkan(value.getName(), vk.getName());
             String newValue = vk.getName() + "." + value.getName();
             vulkan.getValues().addLast(new VulkanValue(newName, newValue));
         }

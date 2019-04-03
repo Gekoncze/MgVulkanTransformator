@@ -1,0 +1,17 @@
+%%DOCUMENTATION%%
+public class %%VULKANNAME%% extends VulkanFlagBits {
+%FIELDS%
+
+%%SUPERCONSTRUCTOR%%
+
+    public %%VULKANNAME%%(int value){
+        super(value);
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+%CASES%
+        return s + "(0x" + Integer.toHexString(getValue()) + ")";
+    }
+}

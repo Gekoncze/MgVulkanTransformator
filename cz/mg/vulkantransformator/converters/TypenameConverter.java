@@ -88,7 +88,29 @@ public class TypenameConverter {
         return replaceFirst(cTypename, "Vk", "Vulkan");
     }
 
-    public static String vkEnumnameToVulkan(String vkEnumname, String vkName){
-        return vkEnumname.replaceFirst(StringUtilities.cammelCaseToUpperCase(vkName), "").replaceFirst("VK__", "");
+    public static String vkEnumValueNameToVulkan(String vkEnumname, String vkName){
+        String result = vkEnumname.replaceFirst(StringUtilities.cammelCaseToUpperCase(vkName), "");
+        result = StringUtilities.replaceBegin(result, "VK__", "");
+        result = StringUtilities.replaceBegin(result, "VK_", "");
+        result = StringUtilities.replaceBegin(result, "_", "");
+        result = StringUtilities.replaceBegin(result, "1D", "D1");
+        result = StringUtilities.replaceBegin(result, "2D", "D2");
+        result = StringUtilities.replaceBegin(result, "3D", "D3");
+        return result;
+    }
+
+    public static String vkFlagBitsValueNameToVulkan(String vkEnumname, String vkName){
+        vkName = StringUtilities.replaceBegin(vkName, "Vk", "");
+        vkName = StringUtilities.replaceEnd(vkName, "FlagBits", "");
+        String vulkanName = vkEnumValueNameToVulkan(vkEnumname, vkName);
+        vulkanName = StringUtilities.replaceLast(vulkanName, "_BIT", "");
+        vulkanName = StringUtilities.replaceBegin(vulkanName, "64", "B64");
+        vulkanName = StringUtilities.replaceBegin(vulkanName, "32", "B32");
+        vulkanName = StringUtilities.replaceBegin(vulkanName, "16", "B16");
+        vulkanName = StringUtilities.replaceBegin(vulkanName, "8", "B8");
+        vulkanName = StringUtilities.replaceBegin(vulkanName, "4", "B4");
+        vulkanName = StringUtilities.replaceBegin(vulkanName, "2", "B2");
+        vulkanName = StringUtilities.replaceBegin(vulkanName, "1", "B1");
+        return vulkanName;
     }
 }

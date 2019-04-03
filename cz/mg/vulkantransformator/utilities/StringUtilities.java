@@ -78,6 +78,16 @@ public class StringUtilities {
         return before + with + after;
     }
 
+    public static String replaceBegin(String s, String what, String with){
+        if(!s.startsWith(what)) return s;
+        return replaceFirst(s, what, with);
+    }
+
+    public static String replaceEnd(String s, String what, String with){
+        if(!s.endsWith(what)) return s;
+        return replaceFirst(s, what, with);
+    }
+
     public static int count(String s, char ch){
         int count = 0;
         for(int i = 0; i < s.length(); i++) if(s.charAt(i) == ch) count++;

@@ -7,7 +7,7 @@
         pair handles with create / destroy functions into auto-closeable classes
 
 ### DONE
-Vulkan level implementation PART #1
-    added misc version and exception tempaltes
-    added system type and type translator + templates
-    added some helper templates
+Vulkan level implementation PART #2
+    fixed bug in toString in flag bits classes
+    fixed flag bits and enum value name conversion
+    added flags, flag bits and enum translators + templates
