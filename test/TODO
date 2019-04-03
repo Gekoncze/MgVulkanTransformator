@@ -7,6 +7,5 @@
         pair handles with create / destroy functions into auto-closeable classes
 
 ### DONE
-Vulkan level implementation PART #5
-    added callback translator + template
-    improved typename vk to vulkan conversion
+Vulkan level implementation PART #6
+    fixed poitner and function pointer constructors

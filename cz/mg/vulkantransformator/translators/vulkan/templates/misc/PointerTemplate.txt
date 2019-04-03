@@ -4,6 +4,7 @@ public class VulkanPointer extends VulkanObject {
 %%CONSTRUCTOR%%
 
     public VulkanPointer(long value){
+        this();
         setValue(value);
     }
 
