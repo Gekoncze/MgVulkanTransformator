@@ -7,10 +7,6 @@
         pair handles with create / destroy functions into auto-closeable classes
 
 ### DONE
-Vulkan level implementation PART #4
-    added handle translator + template
-    (for previous commit: added VulkanObject template)
-    added VulkanPointer template
-    added VulkanFunctionPointer template
-    added vk and vulkan Handle template
-    fixed vktype parametric constructor
+Vulkan level implementation PART #5
+    added callback translator + template
+    improved typename vk to vulkan conversion

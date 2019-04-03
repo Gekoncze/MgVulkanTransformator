@@ -3,6 +3,10 @@ public class VulkanPointer extends VulkanObject {
 
 %%CONSTRUCTOR%%
 
+    public VulkanPointer(long value){
+        setValue(value);
+    }
+
     public long getValue(){
         return getVk().getValue();
     }

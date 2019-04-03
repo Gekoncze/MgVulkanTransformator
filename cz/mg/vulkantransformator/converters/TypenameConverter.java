@@ -1,6 +1,8 @@
 package cz.mg.vulkantransformator.converters;
 
 import cz.mg.vulkantransformator.utilities.StringUtilities;
+
+import static cz.mg.vulkantransformator.utilities.StringUtilities.replaceBegin;
 import static cz.mg.vulkantransformator.utilities.StringUtilities.replaceFirst;
 
 
@@ -85,7 +87,9 @@ public class TypenameConverter {
     }
 
     public static String vkTypenameToV(String cTypename){
-        return replaceFirst(cTypename, "Vk", "Vulkan");
+        String result = replaceBegin(cTypename, "Vk", "Vulkan");
+        result = replaceBegin(result, "PFNvk", "PFN");
+        return result;
     }
 
     public static String vkEnumValueNameToVulkan(String vkEnumname, String vkName){

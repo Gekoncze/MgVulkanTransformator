@@ -1,0 +1,8 @@
+%%DOCUMENTATION%%
+public class %%VULKANNAME%% extends VulkanFunctionPointer {
+%%CONSTRUCTOR%%
+
+    public %%VULKANNAME%%(long value){
+        super(value);
+    }
+}
