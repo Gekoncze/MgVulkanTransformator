@@ -34,7 +34,7 @@ public class Configuration {
             new String[]{ "Utilities"               , null                      , null              },
             new String[]{ null                      , "VkResourceManager"       , null              },
             new String[]{ "VkMemory"                , "VkMemory"                , null              },
-            new String[]{ null                      , "VkObject"                , null              },
+            new String[]{ null                      , "VkObject"                , "VulkanObject"    },
             new String[]{ "VkPointer"               , "VkPointer"               , null              },
             new String[]{ "VkString"                , "VkString"                , null              },
             new String[]{ "VkFunctionPointer"       , "VkFunctionPointer"       , null              },

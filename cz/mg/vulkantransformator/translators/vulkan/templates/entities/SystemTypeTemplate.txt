@@ -1,21 +1,16 @@
 %%DOCUMENTATION%%
-public class %%VULKANNAME%% {
-%%BASECONSTRUCTOR%%
+public class %%VULKANNAME%% extends VulkanObject {
+%%CONSTRUCTOR%%
 
     public %%VULKANNAME%%(%JAVATYPE% value){
-        vk = new %%VKNAME%%(value);
+        super(new %%VKNAME%%(value));
     }
 
     public %JAVATYPE% getValue(){
-        return vk.getValue();
+        return getVk().getValue();
     }
 
     public void setValue(%JAVATYPE% value){
-        vk.setValue(value);
-    }
-
-    @Override
-    public String toString(){
-        return vk.toString();
+        getVk().setValue(value);
     }
 }

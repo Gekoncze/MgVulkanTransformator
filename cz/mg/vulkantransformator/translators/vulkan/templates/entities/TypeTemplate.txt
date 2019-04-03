@@ -1,8 +1,8 @@
 %%DOCUMENTATION%%
 public class %%VULKANNAME%% extends %BASE% {
-%%SUPERCONSTRUCTOR%%
+%%CONSTRUCTOR%%
 
     public %%VULKANNAME%%(%JAVATYPE% value){
-        super(value);
+        super(new %%VKNAME%%(value));
     }
 }

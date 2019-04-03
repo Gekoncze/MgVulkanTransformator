@@ -2,10 +2,10 @@
 public class %%VULKANNAME%% extends VulkanFlagBits {
 %FIELDS%
 
-%%SUPERCONSTRUCTOR%%
+%%CONSTRUCTOR%%
 
     public %%VULKANNAME%%(int value){
-        super(value);
+        super(new %%VKNAME%%(value));
     }
 
     @Override
