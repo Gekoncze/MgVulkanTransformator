@@ -2,16 +2,16 @@ package cz.mg.vulkantransformator.entities.vulkan;
 
 
 public class VulkanType implements VulkanEntity {
-    private final String type;
+    private final String base;
     private final String name;
 
-    public VulkanType(String type, String name) {
-        this.type = type;
+    public VulkanType(String base, String name) {
+        this.base = base;
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public String getBase() {
+        return base;
     }
 
     @Override

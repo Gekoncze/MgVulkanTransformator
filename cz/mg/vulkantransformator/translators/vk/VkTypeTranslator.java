@@ -9,7 +9,7 @@ public class VkTypeTranslator extends VkTranslator {
     public String genCode(EntityTriplet e, String template) {
         TypeTriplet entity = (TypeTriplet) e;
         return super.genCode(e, template
-                .replace("%VKTYPE%", entity.getVk().getType())
+                .replace("%BASE%", entity.getVk().getBase())
         );
     }
 }

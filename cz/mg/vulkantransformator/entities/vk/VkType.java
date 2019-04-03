@@ -2,11 +2,11 @@ package cz.mg.vulkantransformator.entities.vk;
 
 
 public class VkType implements VkEntity {
-    private final String type;
+    private final String base;
     private final String name;
 
-    public VkType(String type, String name) {
-        this.type = type;
+    public VkType(String base, String name) {
+        this.base = base;
         this.name = name;
     }
 
@@ -15,7 +15,7 @@ public class VkType implements VkEntity {
         return name;
     }
 
-    public String getType() {
-        return type;
+    public String getBase() {
+        return base;
     }
 }

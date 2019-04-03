@@ -7,10 +7,7 @@
         pair handles with create / destroy functions into auto-closeable classes
 
 ### DONE
-Cleanup + some early oop level classes and templates
-    moved some files around in new packages
-    renamed some packages
-    added some oop level classes and templates
-    renamed VulkanTranslator to CoreTranslator and divided it into C, Vk and Vulkan parts
-    simplified Translator, VkTranslator
-    moved all loaded templates into static final fields or maps
+Vulkan level implementation PART #1
+    added misc version and exception tempaltes
+    added system type and type translator + templates
+    added some helper templates

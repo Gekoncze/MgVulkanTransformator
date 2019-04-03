@@ -17,7 +17,7 @@ public class TypeConverter implements Converter<CType, VkType, VulkanType> {
     @Override
     public VulkanType convert(VkType vk) {
         return new VulkanType(
-                TypenameConverter.vkTypenameToV(vk.getType()),
+                TypenameConverter.vkTypenameToV(vk.getBase()),
                 TypenameConverter.vkTypenameToV(vk.getName())
         );
     }

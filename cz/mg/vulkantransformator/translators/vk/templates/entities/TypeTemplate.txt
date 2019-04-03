@@ -1,5 +1,5 @@
 %%DOCUMENTATION%%
-public class %%VKNAME%% extends %VKTYPE% {
+public class %%VKNAME%% extends %BASE% {
 %%CONSTRUCTOR%%
 
     public %%VKNAME%%(int value) {

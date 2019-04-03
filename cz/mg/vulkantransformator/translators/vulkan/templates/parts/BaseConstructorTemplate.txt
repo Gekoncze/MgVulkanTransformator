@@ -1,0 +1,13 @@
+    private final %%VKNAME%% vk;
+
+    public %%VULKANNAME%%(){
+        this.vk = new %%VKNAME%%();
+    }
+
+    public %%VULKANNAME%%(%%VKNAME%% vk){
+        this.vk = vk;
+    }
+
+    public %%VKNAME%% get%%VKNAME%%(){
+        return vk;
+    }

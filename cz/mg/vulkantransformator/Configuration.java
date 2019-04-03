@@ -31,17 +31,18 @@ public class Configuration {
     };
 
     public static final String[][] MISC_NAMES = new String[][]{
-            new String[]{ "Utilities"               , null                      , null            },
-            new String[]{ null                      , "VkResourceManager"       , null            },
-            new String[]{ "VkMemory"                , "VkMemory"                , null            },
-            new String[]{ null                      , "VkObject"                , null            },
-            new String[]{ "VkPointer"               , "VkPointer"               , null            },
-            new String[]{ "VkString"                , "VkString"                , null            },
-            new String[]{ "VkFunctionPointer"       , "VkFunctionPointer"       , null            },
-            new String[]{ "VkDebug"                 , "VkDebug"                 , null            },
-            new String[]{ "VkDispatchableHandle"    , "VkDispatchableHandle"    , null            },
-            new String[]{ "VkNonDispatchableHandle" , "VkNonDispatchableHandle" , null            },
-            new String[]{ null                      , null                      , "VulkanVersion" },
+            new String[]{ "Utilities"               , null                      , null              },
+            new String[]{ null                      , "VkResourceManager"       , null              },
+            new String[]{ "VkMemory"                , "VkMemory"                , null              },
+            new String[]{ null                      , "VkObject"                , null              },
+            new String[]{ "VkPointer"               , "VkPointer"               , null              },
+            new String[]{ "VkString"                , "VkString"                , null              },
+            new String[]{ "VkFunctionPointer"       , "VkFunctionPointer"       , null              },
+            new String[]{ "VkDebug"                 , "VkDebug"                 , null              },
+            new String[]{ "VkDispatchableHandle"    , "VkDispatchableHandle"    , null              },
+            new String[]{ "VkNonDispatchableHandle" , "VkNonDispatchableHandle" , null              },
+            new String[]{ null                      , null                      , "VulkanVersion"   },
+            new String[]{ null                      , null                      , "VulkanException" },
     };
 
     public static final String getPath(EntityGroup group){

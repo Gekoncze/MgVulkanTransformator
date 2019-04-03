@@ -17,15 +17,15 @@ public class VulkanVersion {
         this(VK_MAKE_VERSION(major, minor, patch));
     }
 
-    public int getMajorVersion(int version){
-        return VK_VERSION_MAJOR(value);
+    public int getMajorVersion(){
+        return VK_VERSION_MAJOR(value.getValue());
     }
 
-    public int getMinorVersion(int version){
-        return VK_VERSION_MINOR(value);
+    public int getMinorVersion(){
+        return VK_VERSION_MINOR(value.getValue());
     }
 
-    public int getPatchVersion(int version){
-        return VK_VERSION_PATCH(value);
+    public int getPatchVersion(){
+        return VK_VERSION_PATCH(value.getValue());
     }
 }

@@ -1,0 +1,6 @@
+    public %%VULKANNAME%%(){
+    }
+
+    public %%VULKANNAME%%(%%VKNAME%% vk){
+        super(vk);
+    }

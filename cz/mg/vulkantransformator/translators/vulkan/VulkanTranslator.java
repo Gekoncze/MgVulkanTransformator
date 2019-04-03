@@ -11,6 +11,8 @@ import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 public abstract class VulkanTranslator extends Translator {
     private static final String documentationTemplate = StringUtilities.replaceLast(TemplatesVulkan.load("parts/Documentation"), "\n", "");
+    private static final String baseConstructorTemplate = StringUtilities.replaceLast(TemplatesVulkan.load("parts/BaseConstructor"), "\n", "");
+    private static final String superConstructorTemplate = StringUtilities.replaceLast(TemplatesVulkan.load("parts/SuperConstructor"), "\n", "");
 
     public VulkanTranslator() {
         super(EntityGroup.VULKAN);
@@ -21,6 +23,8 @@ public abstract class VulkanTranslator extends Translator {
         return super.genCode(entity, template
                 .replace("%%PACKAGE%%", genPackage())
                 .replace("%%DOCUMENTATION%%", documentationTemplate)
+                .replace("%%BASECONSTRUCTOR%%", baseConstructorTemplate)
+                .replace("%%SUPERCONSTRUCTOR%%", superConstructorTemplate)
         );
     }
 
