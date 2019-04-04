@@ -1,0 +1,8 @@
+%%DOCUMENTATION%%
+public class %%VULKANNAME%% extends VulkanObject {
+%%CONSTRUCTOR%%
+
+%CONSTRUCTORS%
+
+%PROPERTIES%
+}

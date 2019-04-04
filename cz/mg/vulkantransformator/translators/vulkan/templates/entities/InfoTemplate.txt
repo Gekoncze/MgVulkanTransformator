@@ -1,0 +1,9 @@
+%%DOCUMENTATION%%
+public class %%VULKANNAME%% extends VulkanObject {
+%%CONSTRUCTOR%%
+    public %%VULKANNAME%%(%PARAMETERS%) {
+        super(new %%VKNAME%%(%ARGUMENTS%));
+    }
+
+%PROPERTIES%
+}

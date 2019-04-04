@@ -1,0 +1,3 @@
+    public %%VULKANNAME%%(%PARAMETER%) {
+        super(new %%VKNAME%%(%ARGUMENT%));
+    }
