@@ -12,6 +12,8 @@ import cz.mg.vulkantransformator.utilities.StringUtilities;
 public abstract class VulkanTranslator extends Translator {
     private static final String documentationTemplate = StringUtilities.replaceLast(TemplatesVulkan.load("parts/Documentation"), "\n", "");
     private static final String constructorTemplate = StringUtilities.replaceLast(TemplatesVulkan.load("parts/Constructor"), "\n", "");
+    private static final String arrayTemplate = StringUtilities.replaceLast(TemplatesVulkan.load("parts/Array"), "\n", "");
+    private static final String pointerTemplate = StringUtilities.replaceLast(TemplatesVulkan.load("parts/Pointer"), "\n", "");
 
     public VulkanTranslator() {
         super(EntityGroup.VULKAN);
@@ -23,6 +25,8 @@ public abstract class VulkanTranslator extends Translator {
                 .replace("%%PACKAGE%%", genPackage())
                 .replace("%%DOCUMENTATION%%", documentationTemplate)
                 .replace("%%CONSTRUCTOR%%", constructorTemplate)
+                .replace("%%ARRAY%%", arrayTemplate)
+                .replace("%%POINTER%%", pointerTemplate)
         );
     }
 

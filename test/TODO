@@ -7,7 +7,10 @@
         pair handles with create / destroy functions into auto-closeable classes
 
         probably arrays, pointers and pointer arrays
+        maybe vk pinter needs another fix ! for getter
 
 ### DONE
-Vulkan level implementation PART #7
-    added structure, union and info translator + templates
+Vulkan level implementation PART #8
+    fixed vkpointer template
+    added array and pointer templates
+    added pointer to vulkan object

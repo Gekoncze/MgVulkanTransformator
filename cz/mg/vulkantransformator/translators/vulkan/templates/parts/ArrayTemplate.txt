@@ -1,0 +1,28 @@
+    public static class Array extends %%VULKANNAME%% implements cz.mg.collections.array.ReadonlyArray<%%VULKANNAME%%> {
+        public Array(%%VKNAME%%.Array a) {
+            super(a);
+        }
+
+        public Array(int count) {
+            this(new %%VKNAME%%.Array(count));
+        }
+
+        public Array(int count, %%VULKANNAME%% o){
+            this(new %%VKNAME%%.Array(count, o.getVk()));
+        }
+
+        @Override
+        public %%VKNAME%%.Array getVk(){
+            return (%%VKNAME%%.Array) super.getVk();
+        }
+
+        @Override
+        public int count(){
+            return getVk().count();
+        }
+
+        @Override
+        public %%VULKANNAME%% get(int i){
+            return new %%VULKANNAME%%(getVk().get(i));
+        }
+    }

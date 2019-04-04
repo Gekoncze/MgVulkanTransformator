@@ -13,4 +13,8 @@ public class %%VULKANNAME%% extends VulkanObject {
     public void setValue(%JAVATYPE% value){
         getVk().setValue(value);
     }
+
+%%ARRAY%%
+
+%%POINTER%%
 }

@@ -5,4 +5,8 @@ public class %%VULKANNAME%% extends VulkanFlags {
     public %%VULKANNAME%%(int value){
         super(new %%VKNAME%%(value));
     }
+
+%%ARRAY%%
+
+%%POINTER%%
 }

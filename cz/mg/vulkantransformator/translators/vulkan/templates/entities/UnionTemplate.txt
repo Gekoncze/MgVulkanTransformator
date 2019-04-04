@@ -5,4 +5,8 @@ public class %%VULKANNAME%% extends VulkanObject {
 %CONSTRUCTORS%
 
 %PROPERTIES%
+
+%%ARRAY%%
+
+%%POINTER%%
 }
