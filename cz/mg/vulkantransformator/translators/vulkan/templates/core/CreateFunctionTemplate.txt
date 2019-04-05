@@ -1,0 +1,7 @@
+    public %RETURN% %VULKANFUNCTIONNAME%(%PARAMETERS%){
+        VulkanResult rval = new VulkanResult();
+        %RETURN% o = new %RETURN%();
+        vk.%VKFUNCTIONNAME%(%ARGUMENTS%, o.getVk(), rval.getVk());
+        if(rval.getValue() != VulkanResult.SUCCESS) throw new VulkanException(rval, "%VKFUNCTIONNAME%");
+        return o;
+    }

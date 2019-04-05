@@ -21,6 +21,8 @@ public class VulkanCoreTranslator {
     private static final String defineTemplate = "    public static final %DEFINETYPE% %DEFINENAME% = %DEFINEVALUE%;";
     private static final String functionTemplate = TemplatesVulkan.load("core/Function");
     private static final String protectedFunctionTemplate = TemplatesVulkan.load("core/ProtectedFunction");
+    private static final String createFunctionTemplate = TemplatesVulkan.load("core/CreateFunction");
+    private static final String enumerateFunctionTemplate = TemplatesVulkan.load("core/EnumerateFunction");
 
     public static String translate(ChainList<EntityTriplet> entities) {
         return (headerTemplate + coreTemplate)
@@ -40,7 +42,7 @@ public class VulkanCoreTranslator {
                 defines.addLast(genDefine((DefineTriplet) entity));
             }
         }
-        return defines.toString("\n\n");
+        return defines.toString("\n");
     }
 
     private static String genDefine(DefineTriplet define){
@@ -54,21 +56,45 @@ public class VulkanCoreTranslator {
         ChainList<String> functions = new CachedChainList<>();
         for(EntityTriplet entity : entities) {
             if (entity instanceof FunctionTriplet && !(entity instanceof CallbackTriplet)) {
-                functions.addLast(genFunction((FunctionTriplet) entity));
+                functions.addLast(genFunction(entities, (FunctionTriplet) entity));
             }
         }
         return functions.toString("\n\n");
     }
 
-    private static String genFunction(FunctionTriplet function){
+    private static String genFunction(ChainList<EntityTriplet> entities, FunctionTriplet function){
         VulkanFunction f = (VulkanFunction) function.getVulkan();
-        if(f.getReturnType().getTypename().equals("VulkanResult")) return genProtectedFunction(function);
-        VulkanFunction v = (VulkanFunction) function.getVulkan();
+        if(f.getReturnType().getTypename().equals("VulkanResult")) return genSpecialFunction(entities, function);
         return functionTemplate
                 .replace("%VULKANFUNCTIONNAME%", genVulkanFunctionName(function))
-                .replace("%PARAMETERS%", genParameters(v.getParameters(), v.getReturnType()))
+                .replace("%PARAMETERS%", genParameters(f.getParameters(), f.getReturnType()))
                 .replace("%VKFUNCTIONNAME%", genVkFunctionName(function))
-                .replace("%ARGUMENTS%", genArguments(v.getParameters(), v.getReturnType()));
+                .replace("%ARGUMENTS%", genArguments(f.getParameters(), f.getReturnType()));
+    }
+
+    private static String genSpecialFunction(ChainList<EntityTriplet> entities, FunctionTriplet function){
+        VulkanFunction v = (VulkanFunction) function.getVulkan();
+        String name = genVulkanFunctionName(function);
+        if(isEnumerateFunction(entities, v, name)) return genEnumerateFunction(function);
+        if(isCreateFunction(entities, v, name)) return genCreateFunction(function);
+        return genProtectedFunction(function);
+    }
+
+    private static boolean isEnumerateFunction(ChainList<EntityTriplet> entities, VulkanFunction v, String name){
+        if(v.getParameters().count() >= 2 && name.startsWith("enumerate")){
+            boolean isBeforeLastNumber = v.getParameters().getLastItem().getPrevious().getTypename().equals("VulkanUInt32");
+            boolean isBeforeLastCount = v.getParameters().getLastItem().getPrevious().getName().endsWith("Count");
+            if(isBeforeLastNumber && isBeforeLastCount) return true;
+        }
+        return false;
+    }
+
+    private static boolean isCreateFunction(ChainList<EntityTriplet> entities, VulkanFunction v, String name){
+        if(v.getParameters().count() >= 1 && name.startsWith("create")){
+            boolean isLastHandle = VulkanHandleTranslator.isHandle(entities, v.getParameters().getLast().getTypename());
+            if(isLastHandle) return true;
+        }
+        return false;
     }
 
     private static String genProtectedFunction(FunctionTriplet function){
@@ -80,10 +106,33 @@ public class VulkanCoreTranslator {
                 .replace("%ARGUMENTS%", genArguments(v.getParameters(), v.getReturnType()));
     }
 
+    private static String genEnumerateFunction(FunctionTriplet function){
+        VulkanFunction v = (VulkanFunction) function.getVulkan();
+        VulkanVariable handle = v.getParameters().getLast();
+        return enumerateFunctionTemplate
+                .replace("%VULKANFUNCTIONNAME%", genVulkanFunctionName(function))
+                .replace("%PARAMETERS%", genParameters(reduce(v.getParameters(), 2), null))
+                .replace("%VKFUNCTIONNAME%", genVkFunctionName(function))
+                .replace("%ARGUMENTS%", genArguments(reduce(v.getParameters(), 2), null))
+                .replace("%RETURN%", handle.getTypename())
+                .replace("%COMMA%", v.getParameters().count() > 2 ? ", " : "");
+    }
+
+    private static String genCreateFunction(FunctionTriplet function){
+        VulkanFunction v = (VulkanFunction) function.getVulkan();
+        VulkanVariable handle = v.getParameters().getLast();
+        return createFunctionTemplate
+                .replace("%VULKANFUNCTIONNAME%", genVulkanFunctionName(function))
+                .replace("%PARAMETERS%", genParameters(reduce(v.getParameters(), 1), null))
+                .replace("%VKFUNCTIONNAME%", genVkFunctionName(function))
+                .replace("%ARGUMENTS%", genArguments(reduce(v.getParameters(), 1), null))
+                .replace("%RETURN%", handle.getTypename());
+    }
+
     public static String genParameters(ChainList<VulkanVariable> parameters, VulkanVariable returnParameter){
         ChainList<String> params = new CachedChainList<>();
         for(VulkanVariable parameter : parameters) params.addLast(genParameter(parameter));
-        if(!returnParameter.isEmpty()) params.addLast(genParameter(returnParameter));
+        if(returnParameter != null) if(!returnParameter.isEmpty()) params.addLast(genParameter(returnParameter));
         return params.toString(", ");
     }
 
@@ -94,12 +143,12 @@ public class VulkanCoreTranslator {
     private static String genArguments(ChainList<VulkanVariable> arguments, VulkanVariable returnParameter){
         ChainList<String> args = new CachedChainList<>();
         for(VulkanVariable argument : arguments) args.addLast(genArgument(argument));
-        if(!returnParameter.isEmpty()) args.addLast(genArgument(returnParameter));
+        if(returnParameter != null) if(!returnParameter.isEmpty()) args.addLast(genArgument(returnParameter));
         return args.toString(", ");
     }
 
     private static String genArgument(VulkanVariable argument){
-        return argument.getName() + ".getVk()";
+        return argument.getName() + " != null ? " + argument.getName() + ".getVk() : null";
     }
 
     public static String genVulkanFunctionName(FunctionTriplet function){
@@ -113,5 +162,11 @@ public class VulkanCoreTranslator {
         VkFunction vk = (VkFunction) function.getVk();
         String name = StringUtilities.replaceBegin(vk.getName(), "PFN", "");
         return name;
+    }
+
+    private static ChainList<VulkanVariable> reduce(ChainList<VulkanVariable> parameters, int count){
+        ChainList<VulkanVariable> params = new CachedChainList<>(parameters);
+        for(int i = 0; i < count; i++) params.removeLast();
+        return params;
     }
 }

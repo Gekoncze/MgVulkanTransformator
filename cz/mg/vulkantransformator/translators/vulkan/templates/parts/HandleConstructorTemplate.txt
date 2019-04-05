@@ -1,4 +1,8 @@
-    public %%VULKANNAME%%(%%VKNAME%% vk){
+    %%VULKANNAME%%(){
+        super(new %%VKNAME%%());
+    }
+
+    %%VULKANNAME%%(%%VKNAME%% vk){
         super(vk);
     }
 

@@ -100,7 +100,7 @@ public class VulkanHandleTranslator extends VulkanTranslator {
         return related;
     }
 
-    private static boolean isHandle(ChainList<EntityTriplet> entities, String vulkanName){
+    public static boolean isHandle(ChainList<EntityTriplet> entities, String vulkanName){
         for(EntityTriplet e : entities) {
             if(e.getVulkan() != null){
                 if (e.getVulkan().getName().equals(vulkanName)) {
