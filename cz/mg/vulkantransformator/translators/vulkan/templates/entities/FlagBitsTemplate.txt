@@ -1,4 +1,3 @@
-%%DOCUMENTATION%%
 public class %%VULKANNAME%% extends VulkanFlagBits {
 %FIELDS%
 

@@ -12,8 +12,8 @@ public class VkFlagBitsTranslator extends VkTranslator {
     private static final String caseTemplate =  "        if(getValue() == %VKVALUENAME%) s += \"%VKVALUENAME%\";";
 
     @Override
-    public String genCode(EntityTriplet e, String template) {
-        return super.genCode(e, template
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
+        return super.genCode(entities, e, template
                 .replace("%FIELDS%", genFields((FlagBitsTriplet) e))
                 .replace("%CASES%", genCases((FlagBitsTriplet) e))
         );

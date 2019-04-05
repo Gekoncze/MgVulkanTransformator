@@ -1,8 +1,7 @@
-%%DOCUMENTATION%%
 public class %%VULKANNAME%% extends VulkanHandle {
 %%CONSTRUCTOR%%
 
-    public %%VULKANNAME%%(int value){
-        super(new %%VKNAME%%(value));
-    }
+%EXTRAS%
+
+%%ARRAY%%
 }

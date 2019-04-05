@@ -13,9 +13,9 @@ public class VulkanStructureTranslator extends VulkanTranslator {
     private static final String propertyTemplate = TemplatesVulkan.load("parts/Property");
 
     @Override
-    public String genCode(EntityTriplet e, String template) {
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
         StructureTriplet entity = (StructureTriplet) e;
-        return super.genCode(e, template
+        return super.genCode(entities, e, template
                 .replace("%PARAMETERS%", genParameters(entity.getVulkan().getFields()))
                 .replace("%ARGUMENTS%", genArguments(entity.getVulkan().getFields()))
                 .replace("%PROPERTIES%", genProperties(entity.getVulkan().getFields()))

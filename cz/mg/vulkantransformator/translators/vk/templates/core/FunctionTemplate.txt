@@ -1,6 +1,5 @@
     private %FUNCTIONTYPENAME% %FUNCTIONNAMEP% = null;
 
-%%DOCUMENTATION%%
     public void %FUNCTIONNAME%(%PARAMETERS%){
         if(%FUNCTIONNAMEP% == null) %FUNCTIONNAMEP% = new %FUNCTIONTYPENAME%(instance);
         %FUNCTIONNAMEP%.call(%ARGUMENTS%);

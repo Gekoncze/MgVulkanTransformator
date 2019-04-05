@@ -1,4 +1,3 @@
-%%DOCUMENTATION%%
 public class %%VKNAME%% extends VkObject {
 %%CONSTRUCTORSIZEOF%%
 

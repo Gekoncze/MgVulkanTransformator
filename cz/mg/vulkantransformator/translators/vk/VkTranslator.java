@@ -1,5 +1,6 @@
 package cz.mg.vulkantransformator.translators.vk;
 
+import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.Configuration;
 import cz.mg.vulkantransformator.EntityGroup;
 import cz.mg.vulkantransformator.EntityType;
@@ -10,7 +11,6 @@ import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
 public abstract class VkTranslator extends Translator {
-    public static final String documentationTemplate = StringUtilities.replaceLast(TemplatesVk.load("parts/Documentation"), "\n", "");
     public static final String arrayTemplate = StringUtilities.replaceLast(TemplatesVk.load("parts/Array"), "\n", "");
     public static final String pointerTemplate = StringUtilities.replaceLast(TemplatesVk.load("parts/Pointer"), "\n", "");
     public static final String constructorTemplate = TemplatesVk.load("parts/Constructor");
@@ -21,10 +21,9 @@ public abstract class VkTranslator extends Translator {
     }
 
     @Override
-    public String genCode(EntityTriplet entity, String template) {
-        return super.genCode(entity, template
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet entity, String template) {
+        return super.genCode(entities, entity, template
                 .replace("%%PACKAGE%%", genPackage())
-                .replace("%%DOCUMENTATION%%", documentationTemplate)
                 .replace("%%ARRAY%%", arrayTemplate)
                 .replace("%%POINTER%%", pointerTemplate)
                 .replace("%%CONSTRUCTOR%%", constructorTemplate)

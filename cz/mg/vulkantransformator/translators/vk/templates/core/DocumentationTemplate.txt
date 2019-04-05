@@ -1,3 +1,0 @@
-    /**
-     *  @see <a href="https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/%%CNAME%%.html">khronos documentation</a>
-     **/

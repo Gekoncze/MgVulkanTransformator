@@ -1,5 +1,6 @@
 package cz.mg.vulkantransformator.translators;
 
+import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.EntityGroup;
 import cz.mg.vulkantransformator.EntityType;
 import cz.mg.vulkantransformator.entities.EntityTriplet;
@@ -30,16 +31,16 @@ public abstract class Translator {
         return group;
     }
 
-    public String genCode(EntityTriplet entity, String template) {
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet entity, String template) {
         return template
                 .replace("%%CNAME%%", entity.getC() != null ? entity.getC().getName() : "")
                 .replace("%%VKNAME%%", entity.getVk() != null ? entity.getVk().getName() : "")
                 .replace("%%VULKANNAME%%", entity.getVulkan() != null ? entity.getVulkan().getName() : "");
     }
 
-    public String translate(EntityTriplet entity){
+    public String translate(ChainList<EntityTriplet> entities, EntityTriplet entity){
         try {
-            return genCode(entity, getHeaderTemplate() + getEntityTemplate(entity.getEntityType()));
+            return genCode(entities, entity, getHeaderTemplate() + getEntityTemplate(entity.getEntityType()));
         } catch (RuntimeException e){
             throw new RuntimeException(getClass().getSimpleName() + " could not translate entity " + entity.getClass().getSimpleName() + " (" + entity.getEntityType() + ")", e);
         }
@@ -96,7 +97,7 @@ public abstract class Translator {
         }
     }
 
-    public static String translate(EntityGroup group, EntityTriplet entity){
-        return Translator.create(group, entity.getEntityType()).translate(entity);
+    public static String translate(EntityGroup group, ChainList<EntityTriplet> entities, EntityTriplet entity){
+        return Translator.create(group, entity.getEntityType()).translate(entities, entity);
     }
 }

@@ -126,7 +126,7 @@ public class Transformator {
             if(entity.get(group) != null){
                 String relativePath = Configuration.getPath(group);
                 String filename = entity.get(group).getName() + getFileExtension(group);
-                String code = Translator.translate(group, entity);
+                String code = Translator.translate(group, entities, entity);
                 FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
             }
         }
@@ -180,9 +180,9 @@ public class Transformator {
                         if(centity.getName().equals(name)){
                             EntityTriplet entity = convertEntity(centity);
                             return new String[]{
-                                    Translator.translate(EntityGroup.C, entity),
-                                    Translator.translate(EntityGroup.VK, entity),
-                                    Translator.translate(EntityGroup.VULKAN, entity)
+                                    Translator.translate(EntityGroup.C, entities, entity),
+                                    Translator.translate(EntityGroup.VK, entities, entity),
+                                    Translator.translate(EntityGroup.VULKAN, entities, entity)
                             };
                         }
                     }

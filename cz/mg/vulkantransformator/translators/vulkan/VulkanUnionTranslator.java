@@ -12,9 +12,9 @@ public class VulkanUnionTranslator extends VulkanTranslator {
     private static final String constructorTemplate = TemplatesVulkan.load("parts/UnionConstructor");
 
     @Override
-    public String genCode(EntityTriplet e, String template) {
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
         UnionTriplet entity = (UnionTriplet) e;
-        return super.genCode(e, template
+        return super.genCode(entities, e, template
                 .replace("%PROPERTIES%", VulkanStructureTranslator.genProperties(entity.getVulkan().getFields()))
                 .replace("%CONSTRUCTORS%", genConstructors(entity.getVulkan().getFields())));
     }

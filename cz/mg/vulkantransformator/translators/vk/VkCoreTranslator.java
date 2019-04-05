@@ -5,7 +5,6 @@ import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.Configuration;
 import cz.mg.vulkantransformator.EntityGroup;
 import cz.mg.vulkantransformator.entities.*;
-import cz.mg.vulkantransformator.entities.c.CEntity;
 import cz.mg.vulkantransformator.entities.vk.VkFunction;
 import cz.mg.vulkantransformator.entities.vk.VkValue;
 import cz.mg.vulkantransformator.entities.vk.VkVariable;
@@ -18,7 +17,6 @@ public class VkCoreTranslator {
     private static final String vkDefineTemplate = "    public static final long %DEFINENAME% = %%VKGETNAME%%();\n    private static native long %%VKGETNAME%%();";
     private static final String vkFunctionTemplate = TemplatesVk.load("core/Function");
     private static final String vkValueTemplate = "    public static final int %VALUENAME% = %VALUE%;";
-    private static final String documentationTemplate = TemplatesVk.load("core/Documentation");
     private static final String headerTemplate = TemplatesVk.load("parts/Header");
     private static final String coreTemplate = TemplatesVk.load("core/Core");
 
@@ -43,14 +41,13 @@ public class VkCoreTranslator {
         for(EntityTriplet entity : entities) {
             if (entity instanceof DefineTriplet) {
                 DefineTriplet define = (DefineTriplet) entity;
-                String documentation = genDocumentation(define.getC());
                 if(define.isString()){
-                    defines.addLast(documentation + "\n" + vkDefineStringTemplate
+                    defines.addLast(vkDefineStringTemplate
                             .replace("%DEFINENAME%", define.getVk().getName())
                             .replace("%DEFINEVALUE%", define.getVk().getValue())
                     );
                 } else {
-                    defines.addLast(documentation + "\n" + vkDefineTemplate
+                    defines.addLast(vkDefineTemplate
                             .replace("%DEFINENAME%", define.getVk().getName())
                             .replace("%%VKGETNAME%%", genVkGetName(define))
                     );
@@ -72,15 +69,10 @@ public class VkCoreTranslator {
                         .replace("%FUNCTIONNAMEP%", function.getC().getName() + "_p")
                         .replace("%PARAMETERS%", genParameters(f.getParameters(), f.getReturnType()))
                         .replace("%ARGUMENTS%", genArguments(f.getParameters(), f.getReturnType()))
-                        .replace("%%DOCUMENTATION%%", genDocumentation(function.getC()))
                 );
             }
         }
         return functions.toString("\n\n");
-    }
-
-    private static String genDocumentation(CEntity entity){
-        return StringUtilities.replaceLast(documentationTemplate.replace("%%CNAME%%", entity.getName()), "\n", "");
     }
 
     private static String genParameters(ChainList<VkVariable> parameters, VkVariable returnParameter){

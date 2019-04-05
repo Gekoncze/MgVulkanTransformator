@@ -1,0 +1,8 @@
+    public %%VULKANNAME%%(%%VKNAME%% vk){
+        super(vk);
+    }
+
+    @Override
+    public %%VKNAME%% getVk(){
+        return (%%VKNAME%%) super.getVk();
+    }

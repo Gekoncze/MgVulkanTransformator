@@ -9,9 +9,9 @@ import cz.mg.vulkantransformator.entities.vulkan.VulkanVariable;
 
 public class VulkanInfoTranslator extends VulkanTranslator {
     @Override
-    public String genCode(EntityTriplet e, String template) {
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
         InfoTriplet entity = (InfoTriplet) e;
-        return super.genCode(e, template
+        return super.genCode(entities, e, template
                 .replace("%PARAMETERS%", VulkanStructureTranslator.genParameters(reduce(entity.getVulkan().getFields())))
                 .replace("%ARGUMENTS%", VulkanStructureTranslator.genArguments(reduce(entity.getVulkan().getFields())))
                 .replace("%PROPERTIES%", VulkanStructureTranslator.genProperties(entity.getVulkan().getFields()))

@@ -10,10 +10,10 @@ import cz.mg.vulkantransformator.entities.vk.VkVariable;
 
 public class VkFunctionTranslator extends VkTranslator {
     @Override
-    public String genCode(EntityTriplet e, String template) {
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
         FunctionTriplet entity = (FunctionTriplet) e;
         VkFunction vk = (VkFunction) entity.getVk();
-        return super.genCode(e, template
+        return super.genCode(entities, e, template
                 .replace("%PARAMETERS%", genParameters(vk.getParameters(), vk.getReturnType()))
                 .replace("%ARGUMENTS%", genArguments(vk.getParameters(), vk.getReturnType()))
                 .replace("%JAVAPARAMETERS%", genJavaParameters(vk.getParameters(), vk.getReturnType()))

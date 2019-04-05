@@ -1,8 +1,9 @@
-%%DOCUMENTATION%%
 public class %%VKNAME%% extends %VKBASE% {
 %%CONSTRUCTOR%%
 
     public %%VKNAME%%(long handle) {
         setValue(handle);
     }
+
+%%ARRAY%%
 }

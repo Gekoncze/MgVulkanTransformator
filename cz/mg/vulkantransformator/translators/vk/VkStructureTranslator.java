@@ -16,9 +16,9 @@ public class VkStructureTranslator extends VkTranslator {
     private static final String setPPTemplate = "this.%VKPROPERTYNAME% = %VKPROPERTYNAME%;";
 
     @Override
-    public String genCode(EntityTriplet e, String template) {
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
         StructureTriplet entity = (StructureTriplet) e;
-        return super.genCode(e, template
+        return super.genCode(entities, e, template
                 .replace("%PARAMETERS%", genParameters(entity.getVk().getFields()))
                 .replace("%SETS%", genSets(entity.getVk().getFields()))
                 .replace("%PROPERTIES%", genPropertiesVk(entity.getVk().getFields()))

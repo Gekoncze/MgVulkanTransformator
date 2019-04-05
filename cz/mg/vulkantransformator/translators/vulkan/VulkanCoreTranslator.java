@@ -8,7 +8,6 @@ import cz.mg.vulkantransformator.entities.CallbackTriplet;
 import cz.mg.vulkantransformator.entities.DefineTriplet;
 import cz.mg.vulkantransformator.entities.EntityTriplet;
 import cz.mg.vulkantransformator.entities.FunctionTriplet;
-import cz.mg.vulkantransformator.entities.c.CEntity;
 import cz.mg.vulkantransformator.entities.vk.VkFunction;
 import cz.mg.vulkantransformator.entities.vulkan.VulkanFunction;
 import cz.mg.vulkantransformator.entities.vulkan.VulkanVariable;
@@ -19,9 +18,8 @@ import cz.mg.vulkantransformator.utilities.StringUtilities;
 public class VulkanCoreTranslator {
     private static final String coreTemplate = TemplatesVulkan.load("core/Core");
     private static final String headerTemplate = TemplatesVulkan.load("parts/Header");
-    private static final String documentationTemplate = TemplatesVulkan.load("core/Documentation");
     private static final String defineTemplate = "    public static final %DEFINETYPE% %DEFINENAME% = %DEFINEVALUE%;";
-    private static final String functionTemplate = TemplatesVulkan.load("core/PlainFunction");
+    private static final String functionTemplate = TemplatesVulkan.load("core/Function");
     private static final String protectedFunctionTemplate = TemplatesVulkan.load("core/ProtectedFunction");
 
     public static String translate(ChainList<EntityTriplet> entities) {
@@ -46,8 +44,7 @@ public class VulkanCoreTranslator {
     }
 
     private static String genDefine(DefineTriplet define){
-        String documentation = genDocumentation(define.getC());
-        return documentation + "\n" + defineTemplate
+        return defineTemplate
                 .replace("%DEFINENAME%", define.getVulkan().getName())
                 .replace("%DEFINEVALUE%", "Vk." + define.getVk().getName())
                 .replace("%DEFINETYPE%", define.isString() ? "String" : "long");
@@ -83,7 +80,7 @@ public class VulkanCoreTranslator {
                 .replace("%ARGUMENTS%", genArguments(v.getParameters(), v.getReturnType()));
     }
 
-    private static String genParameters(ChainList<VulkanVariable> parameters, VulkanVariable returnParameter){
+    public static String genParameters(ChainList<VulkanVariable> parameters, VulkanVariable returnParameter){
         ChainList<String> params = new CachedChainList<>();
         for(VulkanVariable parameter : parameters) params.addLast(genParameter(parameter));
         if(!returnParameter.isEmpty()) params.addLast(genParameter(returnParameter));
@@ -105,7 +102,7 @@ public class VulkanCoreTranslator {
         return argument.getName() + ".getVk()";
     }
 
-    private static String genVulkanFunctionName(FunctionTriplet function){
+    public static String genVulkanFunctionName(FunctionTriplet function){
         VulkanFunction v = (VulkanFunction) function.getVulkan();
         String name = StringUtilities.replaceBegin(v.getName(), "PFN", "");
         name = StringUtilities.replaceBegin(name, "vk", "");
@@ -116,9 +113,5 @@ public class VulkanCoreTranslator {
         VkFunction vk = (VkFunction) function.getVk();
         String name = StringUtilities.replaceBegin(vk.getName(), "PFN", "");
         return name;
-    }
-
-    private static String genDocumentation(CEntity entity){
-        return StringUtilities.replaceLast(documentationTemplate.replace("%%CNAME%%", entity.getName()), "\n", "");
     }
 }

@@ -12,9 +12,9 @@ public class CStructureTranslator extends CTranslator {
     private static final String propertyTemplate = TemplatesC.load("parts/Property");
 
     @Override
-    public String genCode(EntityTriplet e, String template) {
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
         StructureTriplet entity = (StructureTriplet) e;
-        return super.genCode(e, template
+        return super.genCode(entities, e, template
                 .replace("%PROPERTIES%", genPropertiesC(entity.getC().getFields()))
         );
     }

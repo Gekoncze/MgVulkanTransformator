@@ -15,10 +15,10 @@ public class CFunctionTranslator extends CTranslator {
     private static final String returnTemplateC = "%RETURNDATATYPE%* rvalAddress = jniLongToPointer(rval);\n    *rvalAddress = ";
 
     @Override
-    public String genCode(EntityTriplet e, String template) {
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
         FunctionTriplet entity = (FunctionTriplet) e;
         CFunction c = (CFunction) entity.getC();
-        return super.genCode(e, template
+        return super.genCode(entities, e, template
                 .replace("%RETURN%", genReturn(c.getReturnType()))
                 .replace("%PARAMETERS%", genParameters(c.getParameters(), c.getReturnType()))
                 .replace("%ARGUMENTS%", genArguments(c.getParameters()))

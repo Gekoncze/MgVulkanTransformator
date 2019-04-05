@@ -7,9 +7,15 @@
             create / destroy functions into auto-closeable classes
             detect functions with Device as first parameter and current entity handle as second parameter
 
-
+    get rid of get/set value in handle, aswell as constructors
+    make vulkan create functions return new instance
+    make vulkan enumerate functions return new array instance
 
 ### DONE
-Vulkan level implementation PART #10
-    fixed FlagBitsKHR/EXT/NVX/NV value names
-    removed pointers and arrays from handles, flags, enums and flag bits - unused
+Vulkan level implementation PART #11
+    added parameter (entities) for translators for gen method
+    removed useless documentation - it is lost when exported to jar ... -.-
+    put back handle arrays
+    added vulkan core translator + templates (not complete yet though)
+    implemented simple logic for pairing handles with their constructors, destructors and other related functions
+    prepared handles for further oop simplifications

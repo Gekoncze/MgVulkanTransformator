@@ -12,9 +12,9 @@ public class VkUnionTranslator extends VkTranslator {
     private static final String constructorTemplate = TemplatesVk.load("parts/UnionConstructor");
 
     @Override
-    public String genCode(EntityTriplet e, String template) {
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
         UnionTriplet entity = (UnionTriplet) e;
-        return super.genCode(e, template
+        return super.genCode(entities, e, template
                 .replace("%CONSTRUCTORS%", constructorsToStringVk(entity.getVk().getFields()))
                 .replace("%PROPERTIES%", VkStructureTranslator.genPropertiesVk(entity.getVk().getFields()))
         );

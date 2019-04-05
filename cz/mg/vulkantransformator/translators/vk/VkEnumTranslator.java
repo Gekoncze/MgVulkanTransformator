@@ -12,8 +12,8 @@ public class VkEnumTranslator extends VkTranslator {
     private static final String caseTemplate =  "        if(getValue() == %VKVALUENAME%) return \"%VKVALUENAME%\";";
 
     @Override
-    public String genCode(EntityTriplet e, String template) {
-        return super.genCode(e, template
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
+        return super.genCode(entities, e, template
                 .replace("%FIELDS%", genFields((EnumTriplet) e))
                 .replace("%CASES%", genCases((EnumTriplet) e))
         );

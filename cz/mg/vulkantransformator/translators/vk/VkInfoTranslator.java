@@ -12,9 +12,9 @@ public class VkInfoTranslator extends VkTranslator {
     private static final String setTemplateVk = "        setSType(new VkStructureType(VkStructureType.VK_STRUCTURE_TYPE_%VKNAMEUPPER%));";
 
     @Override
-    public String genCode(EntityTriplet e, String template) {
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
         InfoTriplet entity = (InfoTriplet) e;
-        return super.genCode(e, template
+        return super.genCode(entities, e, template
                 .replace("%PARAMETERS%", VkStructureTranslator.genParameters(reduce(entity.getVk().getFields())))
                 .replace("%SET%", genSet(entity))
                 .replace("%SETS%", VkStructureTranslator.genSets(reduce(entity.getVk().getFields())))

@@ -1,5 +1,6 @@
 package cz.mg.vulkantransformator.translators.c;
 
+import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.Configuration;
 import cz.mg.vulkantransformator.EntityGroup;
 import cz.mg.vulkantransformator.EntityType;
@@ -13,8 +14,8 @@ public abstract class CTranslator extends Translator {
     }
 
     @Override
-    public String genCode(EntityTriplet entity, String template){
-        return super.genCode(entity, template
+    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet entity, String template){
+        return super.genCode(entities, entity, template
                 .replace("%%CVKPACKAGE%%", genPackageCvk())
         );
     }
