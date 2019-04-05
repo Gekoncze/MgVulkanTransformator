@@ -5,8 +5,4 @@ public class %%VKNAME%% extends VkFlags {
     public %%VKNAME%%(int value) {
         setValue(value);
     }
-
-%%ARRAY%%
-
-%%POINTER%%
 }

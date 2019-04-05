@@ -5,8 +5,4 @@ public class %%VKNAME%% extends %VKBASE% {
     public %%VKNAME%%(long handle) {
         setValue(handle);
     }
-
-%%ARRAY%%
-
-%%POINTER%%
 }

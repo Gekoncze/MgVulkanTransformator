@@ -14,8 +14,4 @@ public class %%VKNAME%% extends VkFlagBits {
 %CASES%
         return s + "(0x" + Integer.toHexString(getValue()) + ")";
     }
-
-%%ARRAY%%
-
-%%POINTER%%
 }

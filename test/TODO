@@ -7,8 +7,9 @@
             create / destroy functions into auto-closeable classes
             detect functions with Device as first parameter and current entity handle as second parameter
 
+
+
 ### DONE
-Vulkan level implementation PART #9
-    added Vulkan translator + tempaltes
-    wrapped vkresult functions with checks throwing vulkan exception
-    fixed vkvoidfunction to be parsed as callback
+Vulkan level implementation PART #10
+    fixed FlagBitsKHR/EXT/NVX/NV value names
+    removed pointers and arrays from handles, flags, enums and flag bits - unused

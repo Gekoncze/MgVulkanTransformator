@@ -105,6 +105,10 @@ public class TypenameConverter {
 
     public static String vkFlagBitsValueNameToVulkan(String vkEnumname, String vkName){
         vkName = StringUtilities.replaceBegin(vkName, "Vk", "");
+        vkName = StringUtilities.replaceEnd(vkName, "EXT", "");
+        vkName = StringUtilities.replaceEnd(vkName, "KHR", "");
+        vkName = StringUtilities.replaceEnd(vkName, "NVX", "");
+        vkName = StringUtilities.replaceEnd(vkName, "NV", "");
         vkName = StringUtilities.replaceEnd(vkName, "FlagBits", "");
         String vulkanName = vkEnumValueNameToVulkan(vkEnumname, vkName);
         vulkanName = StringUtilities.replaceLast(vulkanName, "_BIT", "");

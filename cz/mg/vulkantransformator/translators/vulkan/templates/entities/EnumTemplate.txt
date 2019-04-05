@@ -13,8 +13,4 @@ public class %%VULKANNAME%% extends VulkanEnum {
 %CASES%
         return "UNKNOWN";
     }
-
-%%ARRAY%%
-
-%%POINTER%%
 }

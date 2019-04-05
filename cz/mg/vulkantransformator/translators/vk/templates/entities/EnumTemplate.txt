@@ -13,8 +13,4 @@ public class %%VKNAME%% extends VkEnum {
 %CASES%
         return "UNKNOWN";
     }
-
-%%ARRAY%%
-
-%%POINTER%%
 }
