@@ -10,6 +10,7 @@ import cz.mg.vulkantransformator.entities.vulkan.*;
 import cz.mg.vulkantransformator.translators.*;
 import cz.mg.vulkantransformator.parsers.*;
 import cz.mg.vulkantransformator.utilities.FileUtilities;
+import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
 public class Transformator {
@@ -136,7 +137,7 @@ public class Transformator {
             for(EntityGroup group : EntityGroup.values()){
                 String base = outputDitectoryPath;
                 String relativePath = Configuration.getPath(group);
-                String filename = "Vk" + getFileExtension(group);
+                String filename = StringUtilities.capitalFirst(group.name().toLowerCase()) + getFileExtension(group);
                 String code = CoreTranslator.translate(group, entities);
                 if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
             }

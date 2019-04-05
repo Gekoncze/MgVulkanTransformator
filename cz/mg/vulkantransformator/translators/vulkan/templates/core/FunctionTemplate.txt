@@ -1,3 +1,0 @@
-    public %RETURN% %VULKANFUNCTIONNAME%(%PARAMETERS%){
-        %R%vk.%VKFUNCTIONNAME%(%ARGUMENTS%);
-    }

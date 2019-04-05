@@ -3,14 +3,12 @@
 
 ### NOW
     Vulkan level implementation
-        wrap vk result functions with checks throwing vulkan exception
-        pair handles with create / destroy functions into auto-closeable classes
-
-        probably arrays, pointers and pointer arrays
-        maybe vk pinter needs another fix ! for getter
+        pair handles with related functions
+            create / destroy functions into auto-closeable classes
+            detect functions with Device as first parameter and current entity handle as second parameter
 
 ### DONE
-Vulkan level implementation PART #8
-    fixed vkpointer template
-    added array and pointer templates
-    added pointer to vulkan object
+Vulkan level implementation PART #9
+    added Vulkan translator + tempaltes
+    wrapped vkresult functions with checks throwing vulkan exception
+    fixed vkvoidfunction to be parsed as callback

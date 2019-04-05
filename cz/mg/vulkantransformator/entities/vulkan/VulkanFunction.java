@@ -6,7 +6,7 @@ import cz.mg.collections.list.chainlist.ChainList;
 public class VulkanFunction implements VulkanEntity {
     private final VulkanVariable returnType;
     private final String name;
-    private final ChainList<VulkanVariable> variables = new ChainList<>();
+    private final ChainList<VulkanVariable> parameters = new ChainList<>();
 
     public VulkanFunction(VulkanVariable returnType, String name) {
         this.returnType = returnType;
@@ -22,7 +22,7 @@ public class VulkanFunction implements VulkanEntity {
         return name;
     }
 
-    public ChainList<VulkanVariable> getVariables() {
-        return variables;
+    public ChainList<VulkanVariable> getParameters() {
+        return parameters;
     }
 }

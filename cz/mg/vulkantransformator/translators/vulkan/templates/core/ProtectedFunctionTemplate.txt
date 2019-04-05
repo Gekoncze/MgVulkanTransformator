@@ -1,4 +1,5 @@
     public void %VULKANFUNCTIONNAME%(%PARAMETERS%){
-        VkResult result = vk.%VKFUNCTIONNAME%(%ARGUMENTS%);
-        if(result.getValue() != VK_SUCCESS) throw new VulkanException(new VulkanResult(result), "%VKFUNCTIONNAME%");
+        if(rval == null) rval = new VulkanResult();
+        vk.%VKFUNCTIONNAME%(%ARGUMENTS%);
+        if(rval.getValue() != VulkanResult.SUCCESS) throw new VulkanException(rval, "%VKFUNCTIONNAME%");
     }

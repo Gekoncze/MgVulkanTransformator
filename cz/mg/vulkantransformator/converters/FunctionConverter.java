@@ -37,7 +37,7 @@ public class FunctionConverter implements Converter<CFunction, VkFunction, Vulka
                 TypenameConverter.vkTypenameToV(vk.getName())
         );
         for(VkVariable Variable : vk.getParameters()){
-            vulkan.getVariables().addLast(convert(Variable));
+            vulkan.getParameters().addLast(convert(Variable));
         }
         return vulkan;
     }

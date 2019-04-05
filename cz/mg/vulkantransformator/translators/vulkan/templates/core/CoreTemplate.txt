@@ -16,9 +16,7 @@ public class Vulkan {
         return vk;
     }
 
-    %DEFINES%
+%DEFINES%
 
-    %FUNCTIONS%
-
-    %CONSTANTS%
+%FUNCTIONS%
 }

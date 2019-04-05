@@ -27,7 +27,7 @@ public class CallbackConverter implements Converter<CCallback, VkCallback, Vulka
                 TypenameConverter.vkTypenameToV(vk.getName())
         );
         for(VkVariable Variable : vk.getParameters()){
-            vulkan.getVariables().addLast(FunctionConverter.convert(Variable));
+            vulkan.getParameters().addLast(FunctionConverter.convert(Variable));
         }
         return vulkan;
     }

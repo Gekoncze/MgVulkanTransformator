@@ -17,4 +17,8 @@ public class VulkanVariable implements VulkanEntity {
     public String getName() {
         return name;
     }
+
+    public boolean isEmpty(){
+        return typename.equals("VulkanObject");
+    }
 }

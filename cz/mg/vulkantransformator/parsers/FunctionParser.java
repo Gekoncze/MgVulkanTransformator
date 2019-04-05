@@ -2,6 +2,7 @@ package cz.mg.vulkantransformator.parsers;
 
 import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.converters.DatatypeConverter;
+import cz.mg.vulkantransformator.entities.c.CCallback;
 import cz.mg.vulkantransformator.entities.c.CFunction;
 import cz.mg.vulkantransformator.entities.c.CEntity;
 import cz.mg.vulkantransformator.entities.c.CVariable;
@@ -44,7 +45,10 @@ public class FunctionParser implements Parser {
 
     private static CFunction parseHeader(String part){
         String[] parts = StringUtilities.split(part, " *");
-        return new CFunction(parseReturn(parts[1]), parseName(parts[3]));
+        CVariable r = parseReturn(parts[1]);
+        String n = parseName(parts[3]);
+        if(n.equals("PFN_vkVoidFunction")) return new CCallback(r, n);
+        return new CFunction(r, n);
     }
 
     public static CVariable parseReturn(String part){
