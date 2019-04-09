@@ -1,14 +1,19 @@
 package cz.mg.vulkantransformator.converters;
 
+import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.EntityType;
 import cz.mg.vulkantransformator.entities.c.CEntity;
 import cz.mg.vulkantransformator.entities.vk.VkEntity;
-import cz.mg.vulkantransformator.entities.vulkan.VulkanEntity;
 
 
-public interface Converter<C extends CEntity, VK extends VkEntity, VULKAN extends VulkanEntity> {
+public interface Converter<C extends CEntity, VK extends VkEntity> {
     public VK convert(C c);
-    public VULKAN convert(VK vk);
+
+    public default ChainList<VK> convert(ChainList<C> cc){
+        ChainList<VK> vv = new ChainList<>();
+        for(C c : cc) vv.addLast(convert(c));
+        return vv;
+    }
 
     public static Converter create(EntityType type){
         switch(type){
@@ -26,5 +31,9 @@ public interface Converter<C extends CEntity, VK extends VkEntity, VULKAN extend
             case DEFINE: return new DefineConverter();
             default: throw new UnsupportedOperationException();
         }
+    }
+
+    public static VkEntity convertEntity(CEntity c){
+        return create(c.getEntityType()).convert(c);
     }
 }

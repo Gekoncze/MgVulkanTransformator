@@ -1,5 +1,8 @@
 package cz.mg.vulkantransformator;
 
+import cz.mg.collections.text.Text;
+
+
 public enum EntityType {
     SYSTEM_TYPE,
     TYPE,
@@ -14,5 +17,11 @@ public enum EntityType {
     FUNCTION,
     EXTENSION,
     DEFINE,
-    MISC
+    MISC,
+    VALUE,
+    VARIABLE;
+
+    public Text getName(){
+        return new Text(name());
+    }
 }

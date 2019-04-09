@@ -4,24 +4,24 @@ import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.Configuration;
 import cz.mg.vulkantransformator.EntityGroup;
 import cz.mg.vulkantransformator.EntityType;
-import cz.mg.vulkantransformator.entities.EntityTriplet;
+import cz.mg.vulkantransformator.entities.vk.VkEntity;
 import cz.mg.vulkantransformator.translators.Translator;
 import cz.mg.vulkantransformator.translators.vk.templates.TemplatesVk;
-import cz.mg.vulkantransformator.utilities.StringUtilities;
+import cz.mg.collections.text.Text;
 
 
 public abstract class VkTranslator extends Translator {
-    public static final String arrayTemplate = StringUtilities.replaceLast(TemplatesVk.load("parts/Array"), "\n", "");
-    public static final String pointerTemplate = StringUtilities.replaceLast(TemplatesVk.load("parts/Pointer"), "\n", "");
-    public static final String constructorTemplate = TemplatesVk.load("parts/Constructor");
-    public static final String constructorSizeofTemplate = TemplatesVk.load("parts/ConstructorSizeof");
+    public static final Text arrayTemplate = TemplatesVk.load("parts/Array").replaceEnd("\n", "");
+    public static final Text pointerTemplate = TemplatesVk.load("parts/Pointer").replaceEnd("\n", "");
+    public static final Text constructorTemplate = TemplatesVk.load("parts/Constructor");
+    public static final Text constructorSizeofTemplate = TemplatesVk.load("parts/ConstructorSizeof");
 
     public VkTranslator() {
         super(EntityGroup.VK);
     }
 
     @Override
-    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet entity, String template) {
+    public Text genCode(ChainList<VkEntity> entities, VkEntity entity, Text template) {
         return super.genCode(entities, entity, template
                 .replace("%%PACKAGE%%", genPackage())
                 .replace("%%ARRAY%%", arrayTemplate)
@@ -31,7 +31,7 @@ public abstract class VkTranslator extends Translator {
         );
     }
 
-    private String genPackage(){
+    private Text genPackage(){
         return Configuration.getPath(getGroup()).replace("/", ".");
     }
 

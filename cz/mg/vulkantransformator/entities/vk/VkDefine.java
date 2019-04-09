@@ -1,20 +1,22 @@
 package cz.mg.vulkantransformator.entities.vk;
 
-public class VkDefine implements VkEntity {
-    private final String name;
-    private final String value;
+import cz.mg.vulkantransformator.entities.c.CDefine;
+import cz.mg.collections.text.Text;
 
-    public VkDefine(String name, String value) {
-        this.name = name;
+
+public class VkDefine extends VkEntity<CDefine> {
+    private final Text value;
+
+    public VkDefine(CDefine c, Text name, Text value) {
+        super(c, name);
         this.value = value;
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public Text getValue() {
+        return value;
     }
 
-    public String getValue() {
-        return value;
+    public boolean isString(){
+        return getC().getValue().startsWith("\"");
     }
 }

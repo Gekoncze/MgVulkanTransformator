@@ -1,19 +1,18 @@
 package cz.mg.vulkantransformator.entities.vk;
 
-public class VkValue {
-    private final String name;
-    private final String value;
+import cz.mg.vulkantransformator.entities.c.CValue;
+import cz.mg.collections.text.Text;
 
-    public VkValue(String name, String value) {
-        this.name = name;
+
+public class VkValue extends VkEntity<CValue> {
+    private final Text value;
+
+    public VkValue(CValue c, Text name, Text value) {
+        super(c, name);
         this.value = value;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getValue() {
+    public Text getValue() {
         return value;
     }
 }

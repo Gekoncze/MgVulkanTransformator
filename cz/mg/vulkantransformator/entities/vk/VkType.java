@@ -1,21 +1,18 @@
 package cz.mg.vulkantransformator.entities.vk;
 
+import cz.mg.vulkantransformator.entities.c.CType;
+import cz.mg.collections.text.Text;
 
-public class VkType implements VkEntity {
-    private final String base;
-    private final String name;
 
-    public VkType(String base, String name) {
+public class VkType extends VkEntity<CType> {
+    private final Text base;
+
+    public VkType(CType c, Text name, Text base) {
+        super(c, name);
         this.base = base;
-        this.name = name;
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public String getBase() {
+    public Text getBase() {
         return base;
     }
 }

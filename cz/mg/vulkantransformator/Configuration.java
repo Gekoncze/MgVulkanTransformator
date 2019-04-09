@@ -1,61 +1,60 @@
 package cz.mg.vulkantransformator;
 
+import cz.mg.collections.text.Text;
+
 
 public class Configuration {
-    public static final String DEFAULT_VULKAN_CORE_PATH = "";
-    public static final String DEFAULT_OUTPUT_DIRECTORY_PATH = "/home/me/Plocha/Java/MgVulkan/src";
+    public static final Text DEFAULT_VULKAN_CORE_PATH = new Text("");
+    public static final Text DEFAULT_OUTPUT_DIRECTORY_PATH = new Text("/home/me/Plocha/Java/MgVulkan/src");
 
-    public static final String PATH_C = "c/cz/mg/vulkan";
-    public static final String PATH_Vk = "cz/mg/vulkan/vk";
-    public static final String PATH_VULKAN = "cz/mg/vulkan";
+    public static final Text PATH_C = new Text("c/cz/mg/vulkan");
+    public static final Text PATH_Vk = new Text("cz/mg/vulkan");
 
-    public static final String[] ROOT_DIRECTORIES = new String[]{
-            "c",
-            "cz"
+    public static final Text[] ROOT_DIRECTORIES = new Text[]{
+            new Text("c"),
+            new Text("cz")
     };
 
-    public static final String[] SYSTEM_TYPES = new String[]{
-            "int8_t",
-            "uint8_t",
-            "int16_t",
-            "uint16_t",
-            "int32_t",
-            "uint32_t",
-            "int64_t",
-            "uint64_t",
-            "size_t",
-            "float",
-            "double",
-            "char",
-            "int",
+    public static final Text[] SYSTEM_TYPES = new Text[]{
+            new Text("int8_t"),
+            new Text("uint8_t"),
+            new Text("int16_t"),
+            new Text("uint16_t"),
+            new Text("int32_t"),
+            new Text("uint32_t"),
+            new Text("int64_t"),
+            new Text("uint64_t"),
+            new Text("size_t"),
+            new Text("float"),
+            new Text("double"),
+            new Text("char"),
+            new Text("int"),
     };
 
-    public static final String[][] MISC_NAMES = new String[][]{
-            new String[]{ "Utilities"               , null                      , null                    },
-            new String[]{ null                      , "VkResourceManager"       , null                    },
-            new String[]{ "VkMemory"                , "VkMemory"                , null                    },
-            new String[]{ null                      , "VkObject"                , "VulkanObject"          },
-            new String[]{ "VkPointer"               , "VkPointer"               , "VulkanPointer"         },
-            new String[]{ "VkString"                , "VkString"                , null                    },
-            new String[]{ "VkFunctionPointer"       , "VkFunctionPointer"       , "VulkanFunctionPointer" },
-            new String[]{ "VkDebug"                 , "VkDebug"                 , null                    },
-            new String[]{ null                      , "VkHandle"                , "VulkanHandle"          },
-            new String[]{ "VkDispatchableHandle"    , "VkDispatchableHandle"    , null                    },
-            new String[]{ "VkNonDispatchableHandle" , "VkNonDispatchableHandle" , null                    },
-            new String[]{ null                      , null                      , "VulkanVersion"         },
-            new String[]{ null                      , null                      , "VulkanException"       },
+    public static final Text[][] MISC_NAMES = new Text[][]{
+            new Text[]{ new Text("Utilities")               , null                                },
+            new Text[]{ null                                , new Text("VkResourceManager")       },
+            new Text[]{ new Text("VkMemory")                , new Text("VkMemory")                },
+            new Text[]{ null                                , new Text("VkObject")                },
+            new Text[]{ new Text("VkPointer")               , new Text("VkPointer")               },
+            new Text[]{ new Text("VkString")                , new Text("VkString")                },
+            new Text[]{ new Text("VkFunctionPointer")       , new Text("VkFunctionPointer")       },
+            new Text[]{ new Text("VkDebug")                 , new Text("VkDebug")                 },
+            new Text[]{ null                                , new Text("VkHandle")                },
+            new Text[]{ new Text("VkDispatchableHandle")    , new Text("VkDispatchableHandle")    },
+            new Text[]{ new Text("VkNonDispatchableHandle") , new Text("VkNonDispatchableHandle") },
+            new Text[]{ null                                , new Text("VkVersion")               },
     };
 
-    public static final String[][] ADITIONAL_TYPES = new String[][]{
-            new String[]{ "int32_t", "VkEnum" },
-            new String[]{ "int32_t", "VkFlagBits" },
+    public static final Text[][] ADITIONAL_TYPES = new Text[][]{
+            new Text[]{ new Text("VkEnum"), new Text("int32_t") },
+            new Text[]{ new Text("VkFlagBits"), new Text("int32_t") },
     };
 
-    public static final String getPath(EntityGroup group){
+    public static final Text getPath(EntityGroup group){
         switch(group){
             case C: return PATH_C;
             case VK: return PATH_Vk;
-            case VULKAN: return PATH_VULKAN;
             default: throw new RuntimeException("Unsupported entity group " + group);
         }
     }

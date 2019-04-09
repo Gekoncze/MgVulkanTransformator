@@ -1,14 +1,16 @@
 package cz.mg.vulkantransformator.entities.c;
 
-public class CSystemType implements CEntity {
-    private final String name;
+import cz.mg.vulkantransformator.EntityType;
+import cz.mg.collections.text.Text;
 
-    public CSystemType(String name) {
-        this.name = name;
+
+public class CSystemType extends CEntity {
+    public CSystemType(Text name) {
+        super(name);
     }
 
     @Override
-    public String getName() {
-        return name;
+    public EntityType getEntityType() {
+        return EntityType.SYSTEM_TYPE;
     }
 }

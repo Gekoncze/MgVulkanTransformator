@@ -1,14 +1,11 @@
 ### SOON
-    there might be problems with static native method calls - would require static library loading always... better would be on Vk creation! for possible error handling or custom library name or something
 
 ### NOW
-    Vulkan level implementation
-        pair handles with related functions
-            create / destroy functions into auto-closeable classes
-            other related functions
+    there might be problems with static native method calls - would require static library loading always... better would be on Vk creation! for possible error handling or custom library name or something
+    decide if to keep "Vk" or "Vulkan" as core name for simplified interface
 
 ### DONE
-Vulkan level implementation PART #12
-    added check for null in vulkan functions
-    made vulkan create functions return new instance
-    made vulkan enumerate functions return new array instance
+Complete rebuild + cleanup + simplifications
+    abandoned vulkan oop layer (will be as separate library)
+    too much to type
+    added simplified vulkan interface

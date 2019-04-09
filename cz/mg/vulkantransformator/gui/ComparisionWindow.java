@@ -109,7 +109,7 @@ public class ComparisionWindow extends javax.swing.JFrame {
         jPanel1Layout.rowWeights = new double[] {0.0, 1.0};
         jPanelC.setLayout(jPanel1Layout);
 
-        jLabel1.setText("C");
+        jLabel1.setText("Car");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;

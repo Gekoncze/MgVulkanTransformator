@@ -1,8 +1,8 @@
 package cz.mg.vulkantransformator.gui;
 
+import cz.mg.collections.text.Text;
 import cz.mg.vulkantransformator.Configuration;
 import cz.mg.vulkantransformator.Transformator;
-import cz.mg.vulkantransformator.utilities.ComponentUtilities;
 import cz.mg.vulkantransformator.utilities.DebugUtilities;
 import javax.swing.*;
 import java.awt.*;
@@ -22,16 +22,16 @@ public class MainWindowState {
         this.window = window;
         window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         window.setLocationRelativeTo(null);
-        window.jTextFieldVulkanCorePath.setText(Configuration.DEFAULT_VULKAN_CORE_PATH);
-        window.jTextFieldOutputDirectory.setText(Configuration.DEFAULT_OUTPUT_DIRECTORY_PATH);
+        window.jTextFieldVulkanCorePath.setText(Configuration.DEFAULT_VULKAN_CORE_PATH.toString());
+        window.jTextFieldOutputDirectory.setText(Configuration.DEFAULT_OUTPUT_DIRECTORY_PATH.toString());
     }
 
-    public String getVulkanCorePath(){
-        return window.jTextFieldVulkanCorePath.getText();
+    public Text getVulkanCorePath(){
+        return new Text(window.jTextFieldVulkanCorePath.getText());
     }
 
-    public String getOutputDirectoryPath(){
-        return window.jTextFieldOutputDirectory.getText();
+    public Text getOutputDirectoryPath(){
+        return new Text(window.jTextFieldOutputDirectory.getText());
     }
 
     public void chooseVulkanCorePath(){
@@ -73,8 +73,8 @@ public class MainWindowState {
 
     public void test(String name){
         try {
-            String[] s = createTransformator().test(name);
-            new ComparisionWindow(s[0], s[1], s[2]).setVisible(true);
+            Text[] s = createTransformator().test(new Text(name));
+            new ComparisionWindow(s[0].toString(), s[1].toString(), s[2].toString()).setVisible(true);
         } catch(Exception e){
             showError(e);
         }

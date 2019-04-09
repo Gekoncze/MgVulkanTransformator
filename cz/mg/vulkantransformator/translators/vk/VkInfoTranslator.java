@@ -2,34 +2,34 @@ package cz.mg.vulkantransformator.translators.vk;
 
 import cz.mg.collections.list.chainlist.CachedChainList;
 import cz.mg.collections.list.chainlist.ChainList;
-import cz.mg.vulkantransformator.entities.EntityTriplet;
-import cz.mg.vulkantransformator.entities.InfoTriplet;
+import cz.mg.collections.text.Text;
+import cz.mg.vulkantransformator.entities.vk.VkEntity;
+import cz.mg.vulkantransformator.entities.vk.VkInfo;
 import cz.mg.vulkantransformator.entities.vk.VkVariable;
-import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
 public class VkInfoTranslator extends VkTranslator {
-    private static final String setTemplateVk = "        setSType(new VkStructureType(VkStructureType.VK_STRUCTURE_TYPE_%VKNAMEUPPER%));";
+    private static final Text setTemplateVk = new Text("        setSType(new VkStructureType(VkStructureType.VK_STRUCTURE_TYPE_%VKNAMEUPPER%));");
 
     @Override
-    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
-        InfoTriplet entity = (InfoTriplet) e;
+    public Text genCode(ChainList<VkEntity> entities, VkEntity e, Text template) {
+        VkInfo vk = (VkInfo) e;
         return super.genCode(entities, e, template
-                .replace("%PARAMETERS%", VkStructureTranslator.genParameters(reduce(entity.getVk().getFields())))
-                .replace("%SET%", genSet(entity))
-                .replace("%SETS%", VkStructureTranslator.genSets(reduce(entity.getVk().getFields())))
-                .replace("%PROPERTIES%", VkStructureTranslator.genPropertiesVk(entity.getVk().getFields()))
+                .replace("%PARAMETERS%", VkStructureTranslator.genParameters(reduce(vk.getFields())))
+                .replace("%SET%", genSet(vk))
+                .replace("%SETS%", VkStructureTranslator.genSets(reduce(vk.getFields())))
+                .replace("%PROPERTIES%", VkStructureTranslator.genPropertiesVk(vk.getFields()))
         );
     }
 
-    private String genSet(InfoTriplet e) {
+    private Text genSet(VkInfo e) {
         return setTemplateVk
                 .replace("%VKNAMEUPPER%", genVkNameUpper(e));
     }
 
-    private String genVkNameUpper(InfoTriplet e){
-        String vkNameUpper = StringUtilities.cammelCaseToUpperCase(e.getVk().getName().replaceFirst("Vk", ""));
-        vkNameUpper = StringUtilities.replaceLast(vkNameUpper, "2", "_2");
+    private Text genVkNameUpper(VkInfo vk){
+        Text vkNameUpper = vk.getName().replaceFirst("Vk", "").cammelToUpper();
+        vkNameUpper = vkNameUpper.replaceLast("2", "_2");
         return vkNameUpper;
     }
 

@@ -1,25 +1,28 @@
 package cz.mg.vulkantransformator.entities.vk;
 
 import cz.mg.collections.list.chainlist.ChainList;
+import cz.mg.vulkantransformator.entities.c.CFunction;
+import cz.mg.collections.text.Text;
 
 
-public class VkFunction implements VkEntity {
+public class VkFunction<C extends CFunction> extends VkEntity<C> {
+    private final Text callName;
     private final VkVariable returnType;
-    private final String name;
-    private final ChainList<VkVariable> parameters = new ChainList<>();
+    private final ChainList<VkVariable> parameters;
 
-    public VkFunction(VkVariable returnType, String name) {
+    public VkFunction(C c, Text name, Text callName, VkVariable returnType, ChainList<VkVariable> parameters) {
+        super(c, name);
+        this.callName = callName;
         this.returnType = returnType;
-        this.name = name;
+        this.parameters = parameters;
+    }
+
+    public Text getCallName() {
+        return callName;
     }
 
     public VkVariable getReturnType() {
         return returnType;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     public ChainList<VkVariable> getParameters() {

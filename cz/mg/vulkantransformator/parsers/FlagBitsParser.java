@@ -1,10 +1,10 @@
 package cz.mg.vulkantransformator.parsers;
 
+import cz.mg.collections.array.Array;
 import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.entities.c.CEntity;
 import cz.mg.vulkantransformator.entities.c.CFlagBits;
-import cz.mg.vulkantransformator.entities.c.CValue;
-import cz.mg.vulkantransformator.utilities.StringUtilities;
+import cz.mg.collections.text.Text;
 
 
 public class FlagBitsParser implements Parser {
@@ -23,23 +23,13 @@ public class FlagBitsParser implements Parser {
         } VkImageUsageFlagBits;
     */
     @Override
-    public CEntity parse(ChainList<String> lines, int i) {
-        String line = lines.get(i);
+    public CEntity parse(ChainList<Text> lines, int i) {
+        Text line = lines.get(i);
         if(!line.startsWith("    ")){
             if(line.startsWith("typedef enum ") && line.contains("FlagBits")){
-                String[] parts = StringUtilities.split(line);
-                CFlagBits c = new CFlagBits(parts[2].replace("{", ""));
-                for(i = i + 1; i < lines.count(); i++){
-                    line = lines.get(i);
-                    if(line.startsWith("    ")){
-                        if(line.contains("_MAX_ENUM")) continue;
-                        parts = StringUtilities.split(line);
-                        if(parts.length == 3){
-                            c.getValues().addLast(new CValue(parts[0], parts[2].replace(",", "")));
-                        }
-                    } else break;
-                }
-                return c;
+                Array<Text> parts = line.split();
+                Text name = parts.get(2).replace("{", "");
+                return new CFlagBits(name, ValueParser.parseValues(parseChildren(lines, i)));
             }
         }
         return null;

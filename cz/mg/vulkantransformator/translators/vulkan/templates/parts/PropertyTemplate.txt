@@ -1,7 +1,0 @@
-    public %PROPERTYTYPE% get%PROPERTYNAMEC%() {
-        return new %PROPERTYTYPE%(getVk().get%PROPERTYNAMEC%());
-    }
-
-    public void set%PROPERTYNAMEC%(%PROPERTYTYPE% %PROPERTYNAME%) {
-        getVk().set%PROPERTYNAMEC%(%PROPERTYNAME%.getVk());
-    }

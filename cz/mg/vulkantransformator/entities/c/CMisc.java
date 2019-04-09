@@ -1,14 +1,16 @@
 package cz.mg.vulkantransformator.entities.c;
 
-public class CMisc implements CEntity {
-    private final String name;
+import cz.mg.vulkantransformator.EntityType;
+import cz.mg.collections.text.Text;
 
-    public CMisc(String name) {
-        this.name = name;
+
+public class CMisc extends CEntity {
+    public CMisc(Text name) {
+        super(name);
     }
 
     @Override
-    public String getName() {
-        return name;
+    public EntityType getEntityType() {
+        return EntityType.MISC;
     }
 }

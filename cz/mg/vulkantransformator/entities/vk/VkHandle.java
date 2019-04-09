@@ -1,15 +1,11 @@
 package cz.mg.vulkantransformator.entities.vk;
 
+import cz.mg.vulkantransformator.entities.c.CHandle;
+import cz.mg.collections.text.Text;
 
-public class VkHandle implements VkEntity {
-    private final String name;
 
-    public VkHandle(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+public class VkHandle extends VkEntity<CHandle> {
+    public VkHandle(CHandle cHandle, Text name) {
+        super(cHandle, name);
     }
 }

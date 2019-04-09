@@ -1,20 +1,23 @@
 package cz.mg.vulkantransformator.entities.c;
 
-public class CType implements CEntity {
-    private final String type;
-    private final String name;
+import cz.mg.vulkantransformator.EntityType;
+import cz.mg.collections.text.Text;
 
-    public CType(String type, String name) {
+
+public class CType extends CEntity {
+    private final Text type;
+
+    public CType(Text name, Text type) {
+        super(name);
         this.type = type;
-        this.name = name;
     }
 
-    public String getType() {
+    public Text getType() {
         return type;
     }
 
     @Override
-    public String getName() {
-        return name;
+    public EntityType getEntityType() {
+        return EntityType.TYPE;
     }
 }

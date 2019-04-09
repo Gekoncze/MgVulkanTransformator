@@ -2,121 +2,118 @@ package cz.mg.vulkantransformator.translators.vk;
 
 import cz.mg.collections.list.chainlist.CachedChainList;
 import cz.mg.collections.list.chainlist.ChainList;
+import cz.mg.collections.text.Text;
 import cz.mg.vulkantransformator.Configuration;
 import cz.mg.vulkantransformator.EntityGroup;
-import cz.mg.vulkantransformator.entities.*;
-import cz.mg.vulkantransformator.entities.vk.VkFunction;
-import cz.mg.vulkantransformator.entities.vk.VkValue;
-import cz.mg.vulkantransformator.entities.vk.VkVariable;
+import cz.mg.vulkantransformator.entities.vk.*;
 import cz.mg.vulkantransformator.translators.vk.templates.TemplatesVk;
-import cz.mg.vulkantransformator.utilities.StringUtilities;
 
 
 public class VkCoreTranslator {
-    private static final String vkDefineStringTemplate = "    public static final String %DEFINENAME% = %DEFINEVALUE%;";
-    private static final String vkDefineTemplate = "    public static final long %DEFINENAME% = %%VKGETNAME%%();\n    private static native long %%VKGETNAME%%();";
-    private static final String vkFunctionTemplate = TemplatesVk.load("core/Function");
-    private static final String vkValueTemplate = "    public static final int %VALUENAME% = %VALUE%;";
-    private static final String headerTemplate = TemplatesVk.load("parts/Header");
-    private static final String coreTemplate = TemplatesVk.load("core/Core");
+    private static final Text vkDefineStringTemplate = new Text("    public static final String %DEFINENAME% = %DEFINEVALUE%;");
+    private static final Text vkDefineTemplate = new Text("    public static final long %DEFINENAME% = %%VKGETNAME%%();\n    private static native long %%VKGETNAME%%();");
+    private static final Text vkFunctionTemplate = TemplatesVk.load("core/Function");
+    private static final Text vkValueTemplate = new Text("    public static final int %VALUENAME% = %VALUE%;");
+    private static final Text headerTemplate = TemplatesVk.load("parts/Header");
+    private static final Text coreTemplate = TemplatesVk.load("core/Core");
 
-    public static String translateVk(ChainList<EntityTriplet> entities){
-        return (headerTemplate + coreTemplate)
+    public static Text translateVk(ChainList<VkEntity> entities){
+        return headerTemplate.append(coreTemplate)
                 .replace("%DEFINES%", genDefinesVk(entities))
                 .replace("%FUNCTIONS%", genFunctionsVk(entities))
                 .replace("%CONSTANTS%", genConstantsVk(entities))
                 .replace("%%PACKAGE%%", genPackage());
     }
 
-    public static String genVkGetName(DefineTriplet define){
-        return "get" + StringUtilities.upperCaseToCammelCase(define.getC().getName());
+    public static Text genVkGetName(VkDefine define){
+        return new Text("get").append(define.getC().getName().upperToCammel());
     }
 
-    private static String genPackage(){
+    private static Text genPackage(){
         return Configuration.getPath(EntityGroup.VK).replace("/", ".");
     }
 
-    private static String genDefinesVk(ChainList<EntityTriplet> entities){
-        ChainList<String> defines = new CachedChainList<>();
-        for(EntityTriplet entity : entities) {
-            if (entity instanceof DefineTriplet) {
-                DefineTriplet define = (DefineTriplet) entity;
+    private static Text genDefinesVk(ChainList<VkEntity> entities){
+        ChainList<Text> defines = new CachedChainList<>();
+        for(VkEntity entity : entities) {
+            if (entity instanceof VkDefine) {
+                VkDefine define = (VkDefine) entity;
                 if(define.isString()){
                     defines.addLast(vkDefineStringTemplate
-                            .replace("%DEFINENAME%", define.getVk().getName())
-                            .replace("%DEFINEVALUE%", define.getVk().getValue())
+                            .replace("%DEFINENAME%", define.getName())
+                            .replace("%DEFINEVALUE%", define.getValue())
                     );
                 } else {
                     defines.addLast(vkDefineTemplate
-                            .replace("%DEFINENAME%", define.getVk().getName())
+                            .replace("%DEFINENAME%", define.getName())
                             .replace("%%VKGETNAME%%", genVkGetName(define))
                     );
                 }
             }
         }
-        return defines.toString("\n\n");
+        return defines.toText("\n\n");
     }
 
-    private static String genFunctionsVk(ChainList<EntityTriplet> entities){
-        ChainList<String> functions = new CachedChainList<>();
-        for(EntityTriplet entity : entities) {
-            if (entity instanceof FunctionTriplet && !(entity instanceof CallbackTriplet)) {
-                FunctionTriplet function = (FunctionTriplet) entity;
-                VkFunction f = (VkFunction) function.getVk();
+    private static Text genFunctionsVk(ChainList<VkEntity> entities){
+        ChainList<Text> functions = new CachedChainList<>();
+        for(VkEntity entity : entities) {
+            if (entity instanceof VkFunction && !(entity instanceof VkCallback)) {
+                VkFunction function = (VkFunction) entity;
+                VkFunction vk = (VkFunction) function;
                 functions.addLast(vkFunctionTemplate
-                        .replace("%FUNCTIONTYPENAME%", function.getVk().getName())
-                        .replace("%FUNCTIONNAME%", function.getC().getName().replaceFirst("PFN_", ""))
+                        .replace("%FUNCTIONTYPENAME%", vk.getName())
+                        .replace("%FUNCTIONNAME%", vk.getCallName())
                         .replace("%FUNCTIONNAMEP%", function.getC().getName() + "_p")
-                        .replace("%PARAMETERS%", genParameters(f.getParameters(), f.getReturnType()))
-                        .replace("%ARGUMENTS%", genArguments(f.getParameters(), f.getReturnType()))
+                        .replace("%PARAMETERS%", genParameters(vk.getParameters(), vk.getReturnType()))
+                        .replace("%ARGUMENTS%", genArguments(vk.getParameters(), vk.getReturnType()))
                 );
             }
         }
-        return functions.toString("\n\n");
+        return new Text(functions.toString("\n\n"));
     }
 
-    private static String genParameters(ChainList<VkVariable> parameters, VkVariable returnParameter){
-        ChainList<String> params = new CachedChainList<>();
+    private static Text genParameters(ChainList<VkVariable> parameters, VkVariable returnParameter){
+        ChainList<Text> params = new CachedChainList<>();
         for(VkVariable parameter : parameters) params.addLast(genParameter(parameter));
         if(!returnParameter.isEmpty()) params.addLast(genParameter(returnParameter));
-        return params.toString(", ");
+        return params.toText(", ");
     }
 
-    private static String genParameter(VkVariable parameter){
-        return parameter.getTypename() + " " + parameter.getName();
+    private static Text genParameter(VkVariable parameter){
+        return parameter.getTypename().append(" ").append(parameter.getName());
     }
 
-    private static String genArguments(ChainList<VkVariable> parameters, VkVariable returnParameter){
-        ChainList<String> args = new CachedChainList<>();
+    private static Text genArguments(ChainList<VkVariable> parameters, VkVariable returnParameter){
+        ChainList<Text> args = new CachedChainList<>();
         for(VkVariable parameter : parameters) args.addLast(genArgument(parameter));
         if(!returnParameter.isEmpty()) args.addLast(genArgument(returnParameter));
-        return args.toString(", ");
+        return args.toText(", ");
     }
 
-    private static String genArgument(VkVariable parameter){
+    private static Text genArgument(VkVariable parameter){
         return parameter.getName();
     }
 
-    private static String genConstantsVk(ChainList<EntityTriplet> entities){
-        ChainList<String> values = new CachedChainList<>();
-        for(EntityTriplet entity : entities) {
-            if (entity instanceof EnumTriplet) {
-                EnumTriplet e = (EnumTriplet) entity;
-                for(VkValue value : e.getVk().getValues()){
-                    values.addLast(genConstantVk(value, e.getVk().getName()));
+    private static Text genConstantsVk(ChainList<VkEntity> entities){
+        ChainList<Text> values = new CachedChainList<>();
+        for(VkEntity entity : entities) {
+            if(entity instanceof VkFlagBits){
+                VkFlagBits f = (VkFlagBits) entity;
+                for(VkValue value : f.getValues()){
+                    values.addLast(genConstantVk(value, f.getName()));
                 }
-            }
-            if(entity instanceof FlagBitsTriplet){
-                FlagBitsTriplet f = (FlagBitsTriplet) entity;
-                for(VkValue value : f.getVk().getValues()){
-                    values.addLast(genConstantVk(value, f.getVk().getName()));
+            } else if (entity instanceof VkEnum) {
+                VkEnum e = (VkEnum) entity;
+                for(Object value : e.getValues()){ // quick fix for bug in either java or intellij idea
+                    VkValue vvalue = (VkValue) value; // quick fix for bug in either java or intellij idea
+                    values.addLast(genConstantVk(vvalue, e.getName()));
                 }
             }
         }
-        return values.toString("\n");
+        return values.toText("\n");
     }
 
-    private static String genConstantVk(VkValue value, String name){
+    private static Text genConstantVk(VkValue value, Text name){
         return vkValueTemplate
                 .replace("%VALUENAME%", value.getName())
                 .replace("%VALUE%", name + "." + value.getName());

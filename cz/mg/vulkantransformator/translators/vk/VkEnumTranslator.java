@@ -2,41 +2,44 @@ package cz.mg.vulkantransformator.translators.vk;
 
 import cz.mg.collections.list.chainlist.CachedChainList;
 import cz.mg.collections.list.chainlist.ChainList;
-import cz.mg.vulkantransformator.entities.EntityTriplet;
-import cz.mg.vulkantransformator.entities.EnumTriplet;
+import cz.mg.vulkantransformator.entities.vk.VkEntity;
+import cz.mg.vulkantransformator.entities.vk.VkEnum;
 import cz.mg.vulkantransformator.entities.vk.VkValue;
+import cz.mg.collections.text.Text;
 
 
 public class VkEnumTranslator extends VkTranslator {
-    private static final String fieldTemplate = "    public static final int %VKVALUENAME% = %VKVALUE%;";
-    private static final String caseTemplate =  "        if(getValue() == %VKVALUENAME%) return \"%VKVALUENAME%\";";
+    private static final Text fieldTemplate = new Text("    public static final int %VKVALUENAME% = %VKVALUE%;");
+    private static final Text caseTemplate =  new Text("        if(getValue() == %VKVALUENAME%) return \"%VKVALUENAME%\";");
 
     @Override
-    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
+    public Text genCode(ChainList<VkEntity> entities, VkEntity e, Text template) {
         return super.genCode(entities, e, template
-                .replace("%FIELDS%", genFields((EnumTriplet) e))
-                .replace("%CASES%", genCases((EnumTriplet) e))
+                .replace("%FIELDS%", genFields((VkEnum) e))
+                .replace("%CASES%", genCases((VkEnum) e))
         );
     }
 
-    private String genFields(EnumTriplet e){
-        ChainList<String> fields = new ChainList<>();
-        for(VkValue value : e.getVk().getValues()){
+    private Text genFields(VkEnum vk){
+        ChainList<Text> fields = new ChainList<>();
+        for(Object value : vk.getValues()){
+            VkValue vvalue = (VkValue) value; // quick fix for java or intellij idea bug
             fields.addLast(fieldTemplate
-                    .replace("%VKVALUENAME%", value.getName())
-                    .replace("%VKVALUE%", value.getValue())
+                    .replace("%VKVALUENAME%", vvalue.getName())
+                    .replace("%VKVALUE%", vvalue.getValue())
             );
         }
-        return fields.toString("\n");
+        return fields.toText("\n");
     }
 
-    private String genCases(EnumTriplet e){
-        ChainList<String> cases = new CachedChainList<>();
-        for(VkValue value : e.getVk().getValues()){
+    private Text genCases(VkEnum vk){
+        ChainList<Text> cases = new CachedChainList<>();
+        for(Object value : vk.getValues()){
+            VkValue vvalue = (VkValue) value; // quick fix for java or intellij idea bug
             cases.addLast(caseTemplate
-                    .replace("%VKVALUENAME%", value.getName())
+                    .replace("%VKVALUENAME%", vvalue.getName())
             );
         }
-        return cases.toString("\n");
+        return cases.toText("\n");
     }
 }

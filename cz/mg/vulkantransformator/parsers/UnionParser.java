@@ -1,11 +1,10 @@
 package cz.mg.vulkantransformator.parsers;
 
+import cz.mg.collections.array.Array;
 import cz.mg.collections.list.chainlist.ChainList;
-import cz.mg.vulkantransformator.converters.DatatypeConverter;
 import cz.mg.vulkantransformator.entities.c.CEntity;
-import cz.mg.vulkantransformator.entities.c.CVariable;
 import cz.mg.vulkantransformator.entities.c.CUnion;
-import cz.mg.vulkantransformator.utilities.StringUtilities;
+import cz.mg.collections.text.Text;
 
 
 public class UnionParser implements Parser {
@@ -19,23 +18,13 @@ public class UnionParser implements Parser {
         } VkSomeUnion;
     */
     @Override
-    public CEntity parse(ChainList<String> lines, int i) {
-        String line = lines.get(i);
+    public CEntity parse(ChainList<Text> lines, int i) {
+        Text line = lines.get(i);
         if(!line.startsWith("    ")){
             if(line.startsWith("typedef union ")){
-                String[] parts = StringUtilities.split(line);
-                CUnion c = new CUnion(parts[2].replace("{", ""));
-                for(i = i + 1; i < lines.count(); i++){
-                    line = lines.get(i);
-                    if(line.startsWith("    ")){
-                        int pointerCount = StringUtilities.count(line, '*');
-                        line = DatatypeConverter.removeConsts(line);
-                        parts = StringUtilities.split(line, "* ;[]");
-                        String arrayCount = parts.length == 3 ? parts[2] : null;
-                        c.getFields().addLast(new CVariable(parts[0], parts[1], pointerCount, arrayCount));
-                    } else break;
-                }
-                return c;
+                Array<Text> parts = line.split();
+                Text name = parts.get(2).replace("{", "");
+                return new CUnion(name, VariableParser.parseFields(parseChildren(lines, i)));
             }
         }
         return null;

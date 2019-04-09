@@ -1,19 +1,23 @@
 package cz.mg.vulkantransformator.entities.c;
 
-public class CValue {
-    private final String name;
-    private final String value;
+import cz.mg.vulkantransformator.EntityType;
+import cz.mg.collections.text.Text;
 
-    public CValue(String name, String value) {
-        this.name = name;
+
+public class CValue extends CEntity {
+    private final Text value;
+
+    public CValue(Text name, Text value) {
+        super(name);
         this.value = value;
     }
 
-    public String getName() {
-        return name;
+    public Text getValue() {
+        return value;
     }
 
-    public String getValue() {
-        return value;
+    @Override
+    public EntityType getEntityType() {
+        return EntityType.VALUE;
     }
 }

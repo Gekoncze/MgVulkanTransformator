@@ -2,6 +2,8 @@ package cz.mg.vulkantransformator.utilities;
 
 import cz.mg.collections.list.chainlist.CachedChainList;
 import cz.mg.collections.list.chainlist.ChainList;
+import cz.mg.collections.text.Text;
+
 import java.io.*;
 import java.nio.file.Files;
 
@@ -32,42 +34,42 @@ public class FileUtilities {
         }
     }
 
-    public static String loadFile(Class location, String name){
+    public static Text loadFile(Class location, String name){
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(location.getResourceAsStream(name)))){
             String text = "";
             String line;
             while((line = reader.readLine()) != null) text += line + "\n";
-            return text;
+            return new Text(text);
         } catch (Exception e) {
             throw new RuntimeException("Could not load file " + name + " at location " + location.getSimpleName() + ": " + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
 
-    public static void saveFile(String path, String content) {
+    public static void saveFile(String path, Text content) {
         if(content == null) return;
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(new File(path)))){
-            bw.write(content);
+            bw.write(content.toString());
             if(!content.endsWith("\n")) bw.write("\n");
         } catch (Exception e){
             throw new RuntimeException("Could not save file " + path + ": " + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
 
-    public static void checkIfExists(String path) {
+    public static void checkIfExists(Text path) {
         try {
-            if(!new File(path).exists()) throw new FileNotFoundException(path);
+            if(!new File(path.toString()).exists()) throw new FileNotFoundException(path.toString());
         } catch (Exception e){
             throw new RuntimeException("Could not find file or directory " + path + ": " + e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
 
-    public static ChainList<String> loadFileLines(String path) {
+    public static ChainList<Text> loadFileLines(Text path) {
         try {
-            ChainList<String> lines = new CachedChainList<>();
-            try(BufferedReader reader = new BufferedReader(new FileReader(new File(path)))){
+            ChainList<Text> lines = new CachedChainList<>();
+            try(BufferedReader reader = new BufferedReader(new FileReader(new File(path.toString())))){
                 String line = "";
                 while((line = reader.readLine()) != null){
-                    lines.addLast(line);
+                    lines.addLast(new Text(line));
                 }
             }
             return lines;
@@ -76,14 +78,14 @@ public class FileUtilities {
         }
     }
 
-    public static ChainList<String> loadFileLines(Class location, String name) {
+    public static ChainList<Text> loadFileLines(Class location, String name) {
         try {
             InputStream stream = location.getResourceAsStream(name);
-            ChainList<String> lines = new CachedChainList<>();
+            ChainList<Text> lines = new CachedChainList<>();
             try(BufferedReader reader = new BufferedReader(new InputStreamReader(stream))){
                 String line = "";
                 while((line = reader.readLine()) != null){
-                    lines.addLast(line);
+                    lines.addLast(new Text(line));
                 }
             }
             return lines;

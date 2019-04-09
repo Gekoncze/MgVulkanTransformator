@@ -1,28 +1,30 @@
 package cz.mg.vulkantransformator.entities.c;
 
 import cz.mg.collections.list.chainlist.ChainList;
+import cz.mg.vulkantransformator.EntityType;
+import cz.mg.collections.text.Text;
 
 
-public class CFunction implements CEntity {
+public class CFunction extends CEntity {
     private final CVariable returnType;
-    private final String name;
-    private final ChainList<CVariable> parameters = new ChainList<>();
+    private final ChainList<CVariable> parameters;
 
-    public CFunction(CVariable returnType, String name) {
+    public CFunction(Text name, CVariable returnType, ChainList<CVariable> parameters) {
+        super(name);
         this.returnType = returnType;
-        this.name = name;
+        this.parameters = parameters;
     }
 
     public CVariable getReturnType() {
         return returnType;
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
     public ChainList<CVariable> getParameters() {
         return parameters;
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return EntityType.FUNCTION;
     }
 }

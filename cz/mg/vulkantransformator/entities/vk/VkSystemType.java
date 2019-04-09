@@ -1,15 +1,11 @@
 package cz.mg.vulkantransformator.entities.vk;
 
+import cz.mg.vulkantransformator.entities.c.CSystemType;
+import cz.mg.collections.text.Text;
 
-public class VkSystemType implements VkEntity {
-    private final String name;
 
-    public VkSystemType(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+public class VkSystemType extends VkEntity<CSystemType> {
+    public VkSystemType(CSystemType c, Text name) {
+        super(c, name);
     }
 }

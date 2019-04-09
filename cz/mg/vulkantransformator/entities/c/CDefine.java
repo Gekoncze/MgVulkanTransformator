@@ -1,20 +1,23 @@
 package cz.mg.vulkantransformator.entities.c;
 
-public class CDefine implements CEntity {
-    private final String name;
-    private final String value;
+import cz.mg.vulkantransformator.EntityType;
+import cz.mg.collections.text.Text;
 
-    public CDefine(String name, String value) {
-        this.name = name;
+
+public class CDefine extends CEntity {
+    private final Text value;
+
+    public CDefine(Text name, Text value) {
+        super(name);
         this.value = value;
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public Text getValue() {
+        return value;
     }
 
-    public String getValue() {
-        return value;
+    @Override
+    public EntityType getEntityType() {
+        return EntityType.DEFINE;
     }
 }

@@ -1,14 +1,11 @@
 package cz.mg.vulkantransformator.entities.vk;
 
-public class VkMisc implements VkEntity {
-    private final String name;
+import cz.mg.vulkantransformator.entities.c.CMisc;
+import cz.mg.collections.text.Text;
 
-    public VkMisc(String name) {
-        this.name = name;
-    }
 
-    @Override
-    public String getName() {
-        return name;
+public class VkMisc extends VkEntity<CMisc> {
+    public VkMisc(CMisc c, Text name) {
+        super(c, name);
     }
 }

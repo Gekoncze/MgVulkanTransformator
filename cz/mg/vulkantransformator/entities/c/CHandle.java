@@ -1,20 +1,23 @@
 package cz.mg.vulkantransformator.entities.c;
 
-public class CHandle implements CEntity {
-    private final String name;
+import cz.mg.vulkantransformator.EntityType;
+import cz.mg.collections.text.Text;
+
+
+public class CHandle extends CEntity {
     private final boolean dispatchable;
 
-    public CHandle(String name, boolean dispatchable) {
-        this.name = name;
+    public CHandle(Text name, boolean dispatchable) {
+        super(name);
         this.dispatchable = dispatchable;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     public boolean isDispatchable() {
         return dispatchable;
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return EntityType.HANDLE;
     }
 }

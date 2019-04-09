@@ -1,37 +1,30 @@
 package cz.mg.vulkantransformator.entities.c;
 
-import cz.mg.vulkantransformator.utilities.StringUtilities;
+import cz.mg.vulkantransformator.EntityType;
+import cz.mg.collections.text.Text;
 
 
-public class CVariable implements CEntity {
-    private final String typename;
-    private final String name;
+public class CVariable extends CEntity {
+    private final Text typename;
     private final int pointerCount;
-    private final String arrayCount;
+    private final Text arrayCount;
 
-    public CVariable(String typename, String name, int pointerCount, String arrayCount) {
-        if(typename.equals("const") || name.equals("const")) throw new RuntimeException("Illegal CParameter: '" + typename + "' '" + name + "'");
+    public CVariable(Text name, Text typename, int pointerCount, Text arrayCount) {
+        super(name);
         if(pointerCount > 2) throw new UnsupportedOperationException();
         this.typename = typename;
-        this.name = name;
         this.pointerCount = pointerCount;
         this.arrayCount = arrayCount;
     }
 
-    public String getTypename() {
+    public Text getTypename() {
         return typename;
     }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
     public int getPointerCount() {
         return pointerCount;
     }
 
-    public String getArrayCount() {
+    public Text getArrayCount() {
         return arrayCount;
     }
 
@@ -39,7 +32,12 @@ public class CVariable implements CEntity {
         return typename.equals("void") && pointerCount == 0;
     }
 
-    public String getDatatype(){
-        return typename + StringUtilities.repeat("*", pointerCount);
+    public Text getDatatype(){
+        return typename.append(Text.repeat("*", pointerCount));
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return EntityType.VARIABLE;
     }
 }

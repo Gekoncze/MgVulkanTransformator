@@ -3,20 +3,19 @@ package cz.mg.vulkantransformator;
 import cz.mg.collections.list.chainlist.CachedChainList;
 import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.converters.Converter;
-import cz.mg.vulkantransformator.entities.*;
+import cz.mg.vulkantransformator.entities.Entity;
 import cz.mg.vulkantransformator.entities.c.*;
 import cz.mg.vulkantransformator.entities.vk.*;
-import cz.mg.vulkantransformator.entities.vulkan.*;
 import cz.mg.vulkantransformator.translators.*;
 import cz.mg.vulkantransformator.parsers.*;
 import cz.mg.vulkantransformator.utilities.FileUtilities;
-import cz.mg.vulkantransformator.utilities.StringUtilities;
+import cz.mg.collections.text.Text;
 
 
 public class Transformator {
-    private final ChainList<EntityTriplet> entities = new CachedChainList<>();
-    private final String vulkanCoreFilePath;
-    private final String outputDitectoryPath;
+    private final ChainList<VkEntity> entities = new CachedChainList<>();
+    private final Text vulkanCoreFilePath;
+    private final Text outputDitectoryPath;
     private final boolean[] enabled = new boolean[EntityType.values().length];
 
     private final Parser[] parsers = new Parser[]{
@@ -33,13 +32,13 @@ public class Transformator {
             new DefineParser()
     };
 
-    public Transformator(String vulkanCoreFilePath, String outputDitectoryPath) {
+    public Transformator(Text vulkanCoreFilePath, Text outputDitectoryPath) {
         this.vulkanCoreFilePath = vulkanCoreFilePath;
         this.outputDitectoryPath = outputDitectoryPath;
         for(int i = 0; i < enabled.length; i++) enabled[i] = true;
     }
 
-    public ChainList<EntityTriplet> getEntities() {
+    public ChainList<VkEntity> getEntities() {
         return entities;
     }
 
@@ -61,29 +60,25 @@ public class Transformator {
     }
 
     private void addSystemTypeEntities(){
-        for(String systemType : Configuration.SYSTEM_TYPES){
+        for(Text systemType : Configuration.SYSTEM_TYPES){
             entities.addLast(convertEntity(new CSystemType(systemType)));
         }
     }
 
     private void addAditionalTypeEntities(){
-        for(String[] aditionalType : Configuration.ADITIONAL_TYPES){
+        for(Text[] aditionalType : Configuration.ADITIONAL_TYPES){
             entities.addLast(convertEntity(new CType(aditionalType[0], aditionalType[1])));
         }
     }
 
     private void addMiscEntities(){
-        for(String[] miscNames : Configuration.MISC_NAMES){
-            entities.addLast(new MiscTriplet(
-                    miscNames[0] != null ? new CMisc(miscNames[0]) : null,
-                    miscNames[1] != null ? new VkMisc(miscNames[1]) : null,
-                    miscNames[2] != null ? new VulkanMisc(miscNames[2]) : null
-            ));
+        for(Text[] miscNames : Configuration.MISC_NAMES){
+            entities.addLast(new VkMisc(new CMisc(miscNames[0]), miscNames[1]));
         }
     }
 
     private void parseEntities(){
-        ChainList<String> lines = getLines();
+        ChainList<Text> lines = getLines();
         for(int i = 0; i < lines.count(); i++){
             if(lines.get(i).startsWith("    ")) continue;
             for(Parser parser : parsers){
@@ -100,45 +95,49 @@ public class Transformator {
         }
     }
 
-    private EntityTriplet convertEntity(CEntity centity){
-        Converter converter = Converter.create(centity.getEntityType());
-        CEntity c = centity;
-        VkEntity vk = converter.convert(c);
-        VulkanEntity vulkan = converter.convert(vk);
-        return EntityTriplet.create(c, vk, vulkan);
+    private VkEntity convertEntity(CEntity c){
+        return Converter.convertEntity(c);
     }
 
     private void saveEntities(){
-        for(EntityTriplet entity : entities){
+        for(VkEntity entity : entities){
             if(enabled[entity.getEntityType().ordinal()]){
                 try {
                     saveEntity(entity);
                 } catch(RuntimeException e){
-                    throw new RuntimeException("Could not save entity " + entity.getEntityName(), e);
+                    throw new RuntimeException("Could not save entity " + entity.getName(), e);
                 }
             }
         }
     }
 
-    private void saveEntity(EntityTriplet entity){
-        String base = outputDitectoryPath;
+    private void saveEntity(VkEntity entity){
+        Text base = outputDitectoryPath;
         for(EntityGroup group : EntityGroup.values()){
-            if(entity.get(group) != null){
-                String relativePath = Configuration.getPath(group);
-                String filename = entity.get(group).getName() + getFileExtension(group);
-                String code = Translator.translate(group, entities, entity);
+            if(get(group, entity).getName() != null){
+                Text relativePath = Configuration.getPath(group);
+                Text filename = get(group, entity).getName().append(getFileExtension(group));
+                Text code = Translator.translate(group, entities, entity);
                 FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
             }
+        }
+    }
+
+    private static Entity get(EntityGroup group, VkEntity e){
+        switch (group){
+            case C: return e.getC();
+            case VK: return e;
+            default: throw new UnsupportedOperationException("" + group);
         }
     }
 
     private void saveVulkan(){
         try {
             for(EntityGroup group : EntityGroup.values()){
-                String base = outputDitectoryPath;
-                String relativePath = Configuration.getPath(group);
-                String filename = StringUtilities.capitalFirst(group.name().toLowerCase()) + getFileExtension(group);
-                String code = CoreTranslator.translate(group, entities);
+                Text base = outputDitectoryPath;
+                Text relativePath = Configuration.getPath(group);
+                Text filename = group.getName().lowerCase().upperFirst().append(getFileExtension(group));
+                Text code = CoreTranslator.translate(group, entities);
                 if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
             }
         } catch(RuntimeException e){
@@ -146,81 +145,47 @@ public class Transformator {
         }
     }
 
-    private String getFileExtension(EntityGroup group){
+    private Text getFileExtension(EntityGroup group){
         switch(group){
-            case C: return ".c";
-            case VK: return ".java";
-            case VULKAN: return ".java";
+            case C: return new Text(".c");
+            case VK: return new Text(".java");
             default: throw new UnsupportedOperationException("" + group);
         }
     }
 
     private void clearDirectories(){
-        String base = outputDitectoryPath;
-        for(String rootDirectory : Configuration.ROOT_DIRECTORIES) FileUtilities.deleteDirectory(base + "/" + rootDirectory);
+        Text base = outputDitectoryPath;
+        for(Text rootDirectory : Configuration.ROOT_DIRECTORIES) FileUtilities.deleteDirectory(base + "/" + rootDirectory);
     }
 
     private void createDirectories(){
-        String base = outputDitectoryPath;
+        Text base = outputDitectoryPath;
         for(EntityGroup group : EntityGroup.values()) FileUtilities.createDirectory(base + "/" + Configuration.getPath(group));
     }
 
-    private ChainList<String> getLines(){
-        if(vulkanCoreFilePath == null || vulkanCoreFilePath.length() == 0) return FileUtilities.loadFileLines(Transformator.class, "vulkan_core.h");
+    private ChainList<Text> getLines(){
+        if(vulkanCoreFilePath == null || vulkanCoreFilePath.count() == 0) return FileUtilities.loadFileLines(Transformator.class, "vulkan_core.h");
         return FileUtilities.loadFileLines(vulkanCoreFilePath);
     }
 
-    public String[] test(String name) {
-        ChainList<String> lines = getLines();
+    public Text[] test(Text name) {
+        ChainList<Text> lines = getLines();
         for(int i = 0; i < lines.count(); i++){
             if(lines.get(i).contains(name)){
                 for(Parser parser : parsers){
                     CEntity centity = parser.parse(lines, i);
                     if(centity != null){
                         if(centity.getName().equals(name)){
-                            EntityTriplet entity = convertEntity(centity);
-                            return new String[]{
+                            VkEntity entity = convertEntity(centity);
+                            return new Text[]{
                                     Translator.translate(EntityGroup.C, entities, entity),
-                                    Translator.translate(EntityGroup.VK, entities, entity),
-                                    Translator.translate(EntityGroup.VULKAN, entities, entity)
+                                    Translator.translate(EntityGroup.VK, entities, entity)
                             };
                         }
                     }
                 }
             }
         }
-        return new String[]{ null, null, null };
-    }
-
-    public static void main(String[] args) {
-        Transformator t = new Transformator(null, null);
-        t.parseEntities();
-        for(EntityTriplet entity : t.entities){
-            if(entity instanceof HandleTriplet){
-                System.out.println("HANDLE " + entity.getC().getName());
-            }
-        }
-        for(EntityTriplet entity : t.entities){
-            if(entity instanceof FunctionTriplet && !(entity instanceof CallbackTriplet)){
-                if(entity.getC().getName().contains("Create")){
-                    System.out.print("CREATE " + entity.getC().getName() + ": ");
-                    for(VkVariable parameter : ((VkFunction)entity.getVk()).getParameters()){
-                        System.out.print(parameter.getTypename() + " ");
-                    }
-                    System.out.println();
-                }
-            }
-        }
-        for(EntityTriplet entity : t.entities){
-            if(entity instanceof FunctionTriplet && !(entity instanceof CallbackTriplet)){
-                if(entity.getC().getName().contains("Destroy")){
-                    System.out.print("DESTROY " + entity.getC().getName() + ": ");
-                    for(VkVariable parameter : ((VkFunction)entity.getVk()).getParameters()){
-                        System.out.print(parameter.getTypename() + " ");
-                    }
-                    System.out.println();
-                }
-            }
-        }
+        return new Text[]{ null, null, null };
     }
 }

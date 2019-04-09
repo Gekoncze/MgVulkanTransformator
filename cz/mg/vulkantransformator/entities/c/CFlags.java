@@ -1,15 +1,16 @@
 package cz.mg.vulkantransformator.entities.c;
 
+import cz.mg.vulkantransformator.EntityType;
+import cz.mg.collections.text.Text;
 
-public class CFlags implements CEntity {
-    private final String name;
 
-    public CFlags(String name) {
-        this.name = name;
+public class CFlags extends CEntity {
+    public CFlags(Text name) {
+        super(name);
     }
 
     @Override
-    public String getName() {
-        return name;
+    public EntityType getEntityType() {
+        return EntityType.FLAGS;
     }
 }

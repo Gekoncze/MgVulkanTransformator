@@ -1,4 +1,4 @@
-package cz.mg.vulkantransformator.utilities;
+package cz.mg.vulkantransformator.gui;
 
 import java.awt.*;
 

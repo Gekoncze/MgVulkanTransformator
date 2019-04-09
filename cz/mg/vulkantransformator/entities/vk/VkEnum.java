@@ -1,19 +1,16 @@
 package cz.mg.vulkantransformator.entities.vk;
 
 import cz.mg.collections.list.chainlist.ChainList;
+import cz.mg.vulkantransformator.entities.c.CEnum;
+import cz.mg.collections.text.Text;
 
 
-public class VkEnum implements VkEntity {
-    private final String name;
-    private final ChainList<VkValue> values = new ChainList<>();
+public class VkEnum<C extends CEnum> extends VkEntity<C> {
+    private final ChainList<VkValue> values;
 
-    public VkEnum(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+    public VkEnum(C c, Text name, ChainList<VkValue> values) {
+        super(c, name);
+        this.values = values;
     }
 
     public ChainList<VkValue> getValues() {

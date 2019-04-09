@@ -4,8 +4,9 @@ import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.vulkantransformator.Configuration;
 import cz.mg.vulkantransformator.EntityGroup;
 import cz.mg.vulkantransformator.EntityType;
-import cz.mg.vulkantransformator.entities.EntityTriplet;
+import cz.mg.vulkantransformator.entities.vk.VkEntity;
 import cz.mg.vulkantransformator.translators.Translator;
+import cz.mg.collections.text.Text;
 
 
 public abstract class CTranslator extends Translator {
@@ -14,13 +15,13 @@ public abstract class CTranslator extends Translator {
     }
 
     @Override
-    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet entity, String template){
+    public Text genCode(ChainList<VkEntity> entities, VkEntity entity, Text template){
         return super.genCode(entities, entity, template
                 .replace("%%CVKPACKAGE%%", genPackageCvk())
         );
     }
 
-    public static String genPackageCvk(){
+    public static Text genPackageCvk(){
         return Configuration.getPath(EntityGroup.VK).replace("/", "_");
     }
 

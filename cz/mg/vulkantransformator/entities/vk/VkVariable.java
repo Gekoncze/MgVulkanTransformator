@@ -1,32 +1,30 @@
 package cz.mg.vulkantransformator.entities.vk;
 
-public class VkVariable implements VkEntity {
-    private final String typename;
-    private final String name;
-    private final int pointerCount;
-    private final String arrayCount;
+import cz.mg.vulkantransformator.entities.c.CVariable;
+import cz.mg.collections.text.Text;
 
-    public VkVariable(String typename, String name, int pointerCount, String arrayCount) {
+
+public class VkVariable extends VkEntity<CVariable> {
+    private final Text typename;
+    private final int pointerCount;
+    private final Text arrayCount;
+
+    public VkVariable(CVariable c, Text name, Text typename, int pointerCount, Text arrayCount) {
+        super(c, name);
         this.typename = typename;
-        this.name = name;
         this.pointerCount = pointerCount;
         this.arrayCount = arrayCount;
     }
 
-    public String getTypename() {
+    public Text getTypename() {
         return typename;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     public int getPointerCount() {
         return pointerCount;
     }
 
-    public String getArrayCount() {
+    public Text getArrayCount() {
         return arrayCount;
     }
 

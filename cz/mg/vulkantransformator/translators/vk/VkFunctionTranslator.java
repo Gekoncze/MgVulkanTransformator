@@ -2,61 +2,60 @@ package cz.mg.vulkantransformator.translators.vk;
 
 import cz.mg.collections.list.chainlist.CachedChainList;
 import cz.mg.collections.list.chainlist.ChainList;
-import cz.mg.vulkantransformator.entities.EntityTriplet;
-import cz.mg.vulkantransformator.entities.FunctionTriplet;
+import cz.mg.collections.text.Text;
+import cz.mg.vulkantransformator.entities.vk.VkEntity;
 import cz.mg.vulkantransformator.entities.vk.VkFunction;
 import cz.mg.vulkantransformator.entities.vk.VkVariable;
 
 
 public class VkFunctionTranslator extends VkTranslator {
     @Override
-    public String genCode(ChainList<EntityTriplet> entities, EntityTriplet e, String template) {
-        FunctionTriplet entity = (FunctionTriplet) e;
-        VkFunction vk = (VkFunction) entity.getVk();
+    public Text genCode(ChainList<VkEntity> entities, VkEntity e, Text template) {
+        VkFunction vk = (VkFunction) e;
         return super.genCode(entities, e, template
                 .replace("%PARAMETERS%", genParameters(vk.getParameters(), vk.getReturnType()))
                 .replace("%ARGUMENTS%", genArguments(vk.getParameters(), vk.getReturnType()))
                 .replace("%JAVAPARAMETERS%", genJavaParameters(vk.getParameters(), vk.getReturnType()))
-                .replace("%FUNCTION%", entity.getC().getName().replaceFirst("PFN_", ""))
+                .replace("%FUNCTION%", vk.getC().getName().replaceFirst("PFN_", ""))
         );
     }
 
-    public static String genParameters(ChainList<VkVariable> parameters, VkVariable rvalParameter){
-        ChainList<String> params = new CachedChainList<>();
+    public static Text genParameters(ChainList<VkVariable> parameters, VkVariable rvalParameter){
+        ChainList<Text> params = new CachedChainList<>();
         for(VkVariable parameter : parameters) params.addLast(genParameter(parameter));
         if(!rvalParameter.isEmpty()) params.addLast(genParameter(rvalParameter));
-        return params.toString(", ");
+        return params.toText(", ");
     }
 
-    public static String genParameter(VkVariable parameter){
-        return parameter.getTypename() + " " + parameter.getName();
+    public static Text genParameter(VkVariable parameter){
+        return parameter.getTypename().append(" ").append(parameter.getName());
     }
 
-    public static String genArguments(ChainList<VkVariable> parameters, VkVariable rvalParameter){
-        ChainList<String> args = new CachedChainList<>();
+    public static Text genArguments(ChainList<VkVariable> parameters, VkVariable rvalParameter){
+        ChainList<Text> args = new CachedChainList<>();
         for(VkVariable parameter : parameters) args.addLast(genArgument(parameter));
         if(!rvalParameter.isEmpty()) args.addLast(genArgument(rvalParameter));
-        String leadingComma = args.count() > 0 ? ", " : "";
-        return leadingComma + args.toString(", ");
+        Text leadingComma = args.count() > 0 ? new Text(", ") : new Text("");
+        return leadingComma.append(args.toText(", "));
     }
 
-    public static String genArgument(VkVariable parameter){
+    public static Text genArgument(VkVariable parameter){
         if(parameter.isValue()){
-            return parameter.getName() + " != null ? " + parameter.getName() + ".getVkAddress() : VkPointer.NULL_ADDRESS";
+            return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.NULL_ADDRESS");
         } else {
-            return parameter.getName() + " != null ? " + parameter.getName() + ".getVkAddress() : VkPointer.NULL";
+            return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.NULL");
         }
     }
 
-    public static String genJavaParameters(ChainList<VkVariable> parameters, VkVariable rvalParameter){
-        ChainList<String> params = new CachedChainList<>();
+    public static Text genJavaParameters(ChainList<VkVariable> parameters, VkVariable rvalParameter){
+        ChainList<Text> params = new CachedChainList<>();
         for(VkVariable parameter : parameters) params.addLast(genJavaParameter(parameter));
         if(!rvalParameter.isEmpty()) params.addLast(genJavaParameter(rvalParameter));
-        String leadingComma = params.count() > 0 ? ", " : "";
-        return leadingComma + params.toString(", ");
+        Text leadingComma = params.count() > 0 ? new Text(", ") : new Text("");
+        return leadingComma.append(params.toText(", "));
     }
 
-    public static String genJavaParameter(VkVariable parameter){
-        return "long " + parameter.getName();
+    public static Text genJavaParameter(VkVariable parameter){
+        return new Text("long ").append(parameter.getName());
     }
 }
