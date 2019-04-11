@@ -2,6 +2,11 @@ public class Vk {
     private VkInstance instance = null;
 
     public Vk(){
+        System.loadLibrary("MgVulkanC");
+    }
+
+    public Vk(String mgVulkanLibraryFilename){
+        System.loadLibrary(mgVulkanLibraryFilename);
     }
 
     public VkInstance getInstance(){

@@ -1,12 +1,10 @@
 ### SOON
 
 ### NOW
-    make library load on Vk creation
+
 
 ### DONE
-Several improvements + simplified core interface
-    changed vk define values to not require native calls
-    fixed vk float defines
-    added vk simplified translator + templates
-    added vk exception template
-    removed unused gui + related code
+Native library load at Vk creation time
+    replaced NULL in pointer with just value of 0
+    replaced NULL_ADDRESS with a native function call
+    added loading of native library in Vk constructor

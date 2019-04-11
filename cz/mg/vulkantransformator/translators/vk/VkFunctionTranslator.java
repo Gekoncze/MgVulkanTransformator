@@ -41,7 +41,7 @@ public class VkFunctionTranslator extends VkTranslator {
 
     public static Text genArgument(VkVariable parameter){
         if(parameter.isValue()){
-            return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.NULL_ADDRESS");
+            return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.getNullAddress()");
         } else {
             return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.NULL");
         }
