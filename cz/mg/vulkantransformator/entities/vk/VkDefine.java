@@ -5,7 +5,7 @@ import cz.mg.collections.text.Text;
 
 
 public class VkDefine extends VkEntity<CDefine> {
-    private final Text value;
+    private Text value;
 
     public VkDefine(CDefine c, Text name, Text value) {
         super(c, name);
@@ -16,7 +16,15 @@ public class VkDefine extends VkEntity<CDefine> {
         return value;
     }
 
+    public void setValue(Text value) {
+        this.value = value;
+    }
+
     public boolean isString(){
         return getC().getValue().startsWith("\"");
+    }
+
+    public boolean isFloat(){
+        return getC().getValue().endsWith("f");
     }
 }

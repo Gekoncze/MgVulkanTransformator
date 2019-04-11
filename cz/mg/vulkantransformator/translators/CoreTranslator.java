@@ -16,4 +16,12 @@ public class CoreTranslator {
             default: throw new UnsupportedOperationException("" + group);
         }
     }
+
+    public static Text translateSimplified(EntityGroup group, ChainList<VkEntity> entities){
+        switch (group){
+            case C: return CCoreTranslator.translateSimplifiedC(entities);
+            case VK: return VkCoreTranslator.translateSimplifiedVk(entities);
+            default: throw new UnsupportedOperationException("" + group);
+        }
+    }
 }

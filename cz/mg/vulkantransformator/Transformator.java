@@ -16,7 +16,6 @@ public class Transformator {
     private final ChainList<VkEntity> entities = new CachedChainList<>();
     private final Text vulkanCoreFilePath;
     private final Text outputDitectoryPath;
-    private final boolean[] enabled = new boolean[EntityType.values().length];
 
     private final Parser[] parsers = new Parser[]{
             new TypeParser(),
@@ -35,15 +34,10 @@ public class Transformator {
     public Transformator(Text vulkanCoreFilePath, Text outputDitectoryPath) {
         this.vulkanCoreFilePath = vulkanCoreFilePath;
         this.outputDitectoryPath = outputDitectoryPath;
-        for(int i = 0; i < enabled.length; i++) enabled[i] = true;
     }
 
     public ChainList<VkEntity> getEntities() {
         return entities;
-    }
-
-    public void setEnabled(EntityType entityType, boolean enabled){
-        this.enabled[entityType.ordinal()] = enabled;
     }
 
     public void run() {
@@ -55,8 +49,9 @@ public class Transformator {
         addAditionalTypeEntities();
         addMiscEntities();
         parseEntities();
+        adaptDefines();
         saveEntities();
-        saveVulkan();
+        saveCore();
     }
 
     private void addSystemTypeEntities(){
@@ -95,18 +90,29 @@ public class Transformator {
         }
     }
 
+    private void adaptDefines(){
+        for(VkEntity entity : entities){
+            if(entity instanceof VkDefine){
+                VkDefine define = (VkDefine) entity;
+                for(Text[] d : Configuration.DEFINE_VALUES){
+                    if(define.getName().equals(d[0])){
+                        define.setValue(d[1]);
+                    }
+                }
+            }
+        }
+    }
+
     private VkEntity convertEntity(CEntity c){
         return Converter.convertEntity(c);
     }
 
     private void saveEntities(){
         for(VkEntity entity : entities){
-            if(enabled[entity.getEntityType().ordinal()]){
-                try {
-                    saveEntity(entity);
-                } catch(RuntimeException e){
-                    throw new RuntimeException("Could not save entity " + entity.getName(), e);
-                }
+            try {
+                saveEntity(entity);
+            } catch(RuntimeException e){
+                throw new RuntimeException("Could not save entity " + entity.getName(), e);
             }
         }
     }
@@ -131,7 +137,7 @@ public class Transformator {
         }
     }
 
-    private void saveVulkan(){
+    private void saveCore(){
         try {
             for(EntityGroup group : EntityGroup.values()){
                 Text base = outputDitectoryPath;
@@ -140,8 +146,15 @@ public class Transformator {
                 Text code = CoreTranslator.translate(group, entities);
                 if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
             }
+            for(EntityGroup group : EntityGroup.values()){
+                Text base = outputDitectoryPath;
+                Text relativePath = Configuration.getPath(group);
+                Text filename = group.getName().lowerCase().upperFirst().append("Simplified").append(getFileExtension(group));
+                Text code = CoreTranslator.translateSimplified(group, entities);
+                if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
+            }
         } catch(RuntimeException e){
-            throw new RuntimeException("Could not save vulkan.", e);
+            throw new RuntimeException("Could not save vulkan core.", e);
         }
     }
 
@@ -166,26 +179,5 @@ public class Transformator {
     private ChainList<Text> getLines(){
         if(vulkanCoreFilePath == null || vulkanCoreFilePath.count() == 0) return FileUtilities.loadFileLines(Transformator.class, "vulkan_core.h");
         return FileUtilities.loadFileLines(vulkanCoreFilePath);
-    }
-
-    public Text[] test(Text name) {
-        ChainList<Text> lines = getLines();
-        for(int i = 0; i < lines.count(); i++){
-            if(lines.get(i).contains(name)){
-                for(Parser parser : parsers){
-                    CEntity centity = parser.parse(lines, i);
-                    if(centity != null){
-                        if(centity.getName().equals(name)){
-                            VkEntity entity = convertEntity(centity);
-                            return new Text[]{
-                                    Translator.translate(EntityGroup.C, entities, entity),
-                                    Translator.translate(EntityGroup.VK, entities, entity)
-                            };
-                        }
-                    }
-                }
-            }
-        }
-        return new Text[]{ null, null, null };
     }
 }

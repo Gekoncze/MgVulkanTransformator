@@ -44,11 +44,23 @@ public class Configuration {
             new Text[]{ new Text("VkDispatchableHandle")    , new Text("VkDispatchableHandle")    },
             new Text[]{ new Text("VkNonDispatchableHandle") , new Text("VkNonDispatchableHandle") },
             new Text[]{ null                                , new Text("VkVersion")               },
+            new Text[]{ null                                , new Text("VkException")             },
     };
 
     public static final Text[][] ADITIONAL_TYPES = new Text[][]{
             new Text[]{ new Text("VkEnum"), new Text("int32_t") },
             new Text[]{ new Text("VkFlagBits"), new Text("int32_t") },
+    };
+
+    public static final Text[][] DEFINE_VALUES = new Text[][]{
+            new Text[]{ new Text("VK_REMAINING_MIP_LEVELS"), new Text("4294967295L") },
+            new Text[]{ new Text("VK_REMAINING_ARRAY_LAYERS"), new Text("4294967295L") },
+            new Text[]{ new Text("VK_WHOLE_SIZE"), new Text("-1L") },
+            new Text[]{ new Text("VK_ATTACHMENT_UNUSED"), new Text("4294967295L") },
+            new Text[]{ new Text("VK_QUEUE_FAMILY_IGNORED"), new Text("4294967295L") },
+            new Text[]{ new Text("VK_SUBPASS_EXTERNAL"), new Text("4294967295L") },
+            new Text[]{ new Text("VK_QUEUE_FAMILY_EXTERNAL"), new Text("4294967294L") },
+            new Text[]{ new Text("VK_QUEUE_FAMILY_FOREIGN_EXT"), new Text("4294967293L") },
     };
 
     public static final Text getPath(EntityGroup group){

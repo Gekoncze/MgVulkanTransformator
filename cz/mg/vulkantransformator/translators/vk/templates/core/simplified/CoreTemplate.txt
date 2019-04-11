@@ -1,19 +1,26 @@
-/**
- *  @see <a href="https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/">khronos documentation</a>
- **/
-public class Vulkan {
-    private final Vk vk;
+public class VkSimplified extends Vk {
+    private final ThreadLocal<VkResult> result = ThreadLocal.withInitial(new java.util.function.Supplier<VkResult>() {
+        @Override
+        public VkResult get() {
+            return new VkResult();
+        }
+    });
 
-    public Vulkan(){
-        this.vk = new Vk();
+    private final ThreadLocal<VkUInt32> count = ThreadLocal.withInitial(new java.util.function.Supplier<VkUInt32>() {
+        @Override
+        public VkUInt32 get() {
+            return new VkUInt32();
+        }
+    });
+
+    private VkAllocationCallbacks pAllocator = null;
+
+    public VkAllocationCallbacks getAllocator() {
+        return pAllocator;
     }
 
-    public Vulkan(Vk vk){
-        this.vk = vk;
-    }
-
-    public Vk getVk(){
-        return vk;
+    public void setAllocator(VkAllocationCallbacks pAllocator) {
+        this.pAllocator = pAllocator;
     }
 
 %FUNCTIONS%

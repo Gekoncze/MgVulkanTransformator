@@ -1,8 +1,0 @@
-jlong Java_%%CVKPACKAGE%%_Vk_%%VKGETNAME%%(JNIEnv* env, jclass jc){
-    (void)env;
-    (void)jc;
-    uint64_t value = %%CNAME%%;
-    jlong rval;
-    memcpy(&rval, &value, sizeof(jlong));
-    return rval;
-}

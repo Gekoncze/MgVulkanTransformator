@@ -1,11 +1,12 @@
 ### SOON
 
 ### NOW
-    there might be problems with static native method calls - would require static library loading always... better would be on Vk creation! for possible error handling or custom library name or something
-    decide if to keep "Vk" or "Vulkan" as core name for simplified interface
+    make library load on Vk creation
 
 ### DONE
-Complete rebuild + cleanup + simplifications
-    abandoned vulkan oop layer (will be as separate library)
-    too much to type
-    added simplified vulkan interface
+Several improvements + simplified core interface
+    changed vk define values to not require native calls
+    fixed vk float defines
+    added vk simplified translator + templates
+    added vk exception template
+    removed unused gui + related code

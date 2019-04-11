@@ -7,6 +7,11 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         state = new MainWindowState(this);
+        jScrollPaneGenerators.setVisible(false);
+        jButtonSelectAll.setVisible(false);
+        jButtonUnselectAll.setVisible(false);
+        pack();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -799,47 +804,47 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void jButtonTypesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTypesActionPerformed
-        state.test(jTextFieldTypes.getText());
+//        state.test(jTextFieldTypes.getText());
     }
 
     private void jButtonEnumsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnumsActionPerformed
-        state.test(jTextFieldEnums.getText());
+//        state.test(jTextFieldEnums.getText());
     }
 
     private void jButtonFlagsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFlagsActionPerformed
-        state.test(jTextFieldFlags.getText());
+//        state.test(jTextFieldFlags.getText());
     }
 
     private void jButtonHandlesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHandlesActionPerformed
-        state.test(jTextFieldHandles.getText());
+//        state.test(jTextFieldHandles.getText());
     }
 
     private void jButtonStructuresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStructuresActionPerformed
-        state.test(jTextFieldStructures.getText());
+//        state.test(jTextFieldStructures.getText());
     }
 
     private void jButtonInfosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateInfosActionPerformed
-        state.test(jTextFieldInfos.getText());
+//        state.test(jTextFieldInfos.getText());
     }
 
     private void jButtonCallbacksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCallbacksActionPerformed
-        state.test(jTextFieldCallbacks.getText());
+//        state.test(jTextFieldCallbacks.getText());
     }
 
     private void jButtonFunctionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInterfaceActionPerformed
-        state.test(jTextFieldFunctions.getText());
+//        state.test(jTextFieldFunctions.getText());
     }
 
     private void jButtonExtensionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExtensionsActionPerformed
-        state.test(jTextFieldExtensions.getText());
+//        state.test(jTextFieldExtensions.getText());
     }
 
     private void jButtonSelectAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelectAllActionPerformed
-        state.selectAll();
+//        state.selectAll();
     }
 
     private void jButtonUnselectAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUnselectAllActionPerformed
-        state.unselectAll();
+//        state.unselectAll();
     }
 
     private void jButtonGenerateSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerateSelectedActionPerformed
@@ -847,27 +852,27 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     private void jButtonFlagBitsActionPerformed(java.awt.event.ActionEvent evt) {
-        state.test(jTextFieldFlagBits.getText());
+//        state.test(jTextFieldFlagBits.getText());
     }
 
     private void jButtonDefinesActionPerformed(java.awt.event.ActionEvent evt) {
-        state.test(jTextFieldDefines.getText());
+//        state.test(jTextFieldDefines.getText());
     }
 
     private void jButtonMiscActionPerformed(java.awt.event.ActionEvent evt) {
-        state.test(jTextFieldMisc.getText());
+//        state.test(jTextFieldMisc.getText());
     }
 
     private void jButtonSystemTypesActionPerformed(java.awt.event.ActionEvent evt) {
-        state.test(jTextFieldSystemTypes.getText());
+//        state.test(jTextFieldSystemTypes.getText());
     }
 
     private void jButtonUnionsActionPerformed(java.awt.event.ActionEvent evt) {
-        state.test(jTextFieldUnions.getText());
+//        state.test(jTextFieldUnions.getText());
     }
 
     private void jButtonArraysActionPerformed(java.awt.event.ActionEvent evt) {
-        state.test(jTextFieldArrays.getText());
+//        state.test(jTextFieldArrays.getText());
     }
 
     public static void main(String args[]) {

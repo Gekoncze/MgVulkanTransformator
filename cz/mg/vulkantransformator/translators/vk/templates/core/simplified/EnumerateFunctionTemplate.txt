@@ -1,14 +1,11 @@
     public %RETURN%.Array %VULKANFUNCTIONNAME%(%PARAMETERS%){
-        VulkanResult rval = new VulkanResult();
-        VulkanUInt32 count = new VulkanUInt32();
+        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%count.get(), null, result.get());
+        if(result.get().getValue() != VK_SUCCESS) throw new VkException(result.get(), "%VKFUNCTIONNAME%");
 
-        vk.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%count.getVk(), null, rval.getVk());
-        if(rval.getValue() != VulkanResult.SUCCESS) throw new VulkanException(rval, "%VKFUNCTIONNAME%");
+        %RETURN%.Array o = new %RETURN%.Array(count.get().getValue());
 
-        %RETURN%.Array o = new %RETURN%.Array(count.getValue());
-
-        vk.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%count.getVk(), o.getVk(), rval.getVk());
-        if(rval.getValue() != VulkanResult.SUCCESS) throw new VulkanException(rval, "%VKFUNCTIONNAME%");
+        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%count.get(), o, result.get());
+        if(result.get().getValue() != VK_SUCCESS) throw new VkException(result.get(), "%VKFUNCTIONNAME%");
 
         return o;
     }

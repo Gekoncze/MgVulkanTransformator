@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.nio.file.Paths;
-import static cz.mg.vulkantransformator.EntityType.*;
 
 
 public class MainWindowState {
@@ -53,53 +52,7 @@ public class MainWindowState {
     }
 
     private Transformator createTransformator(){
-        Transformator transformator = new Transformator(getVulkanCorePath(), getOutputDirectoryPath());
-        transformator.setEnabled(SYSTEM_TYPE, window.jCheckBoxSystemTypes.isSelected());
-        transformator.setEnabled(TYPE, window.jCheckBoxTypes.isSelected());
-        transformator.setEnabled(ENUM, window.jCheckBoxEnums.isSelected());
-        transformator.setEnabled(FLAGS, window.jCheckBoxFlags.isSelected());
-        transformator.setEnabled(FLAG_BITS, window.jCheckBoxFlagBits.isSelected());
-        transformator.setEnabled(HANDLE, window.jCheckBoxHandles.isSelected());
-        transformator.setEnabled(STRUCTURE, window.jCheckBoxStructures.isSelected());
-        transformator.setEnabled(UNION, window.jCheckBoxUnions.isSelected());
-        transformator.setEnabled(INFO, window.jCheckBoxInfos.isSelected());
-        transformator.setEnabled(CALLBACK, window.jCheckBoxCallbacks.isSelected());
-        transformator.setEnabled(FUNCTION, window.jCheckBoxFunctions.isSelected());
-        transformator.setEnabled(EXTENSION, window.jCheckBoxExtensions.isSelected());
-        transformator.setEnabled(DEFINE, window.jCheckBoxDefines.isSelected());
-        transformator.setEnabled(MISC, window.jCheckBoxMisc.isSelected());
-        return transformator;
-    }
-
-    public void test(String name){
-        try {
-            Text[] s = createTransformator().test(new Text(name));
-            new ComparisionWindow(s[0].toString(), s[1].toString(), s[2].toString()).setVisible(true);
-        } catch(Exception e){
-            showError(e);
-        }
-    }
-
-    public void selectAll(){
-        ComponentUtilities.visitAll(window.getContentPane(), new ComponentUtilities.ComponentVisitedListener() {
-            @Override
-            public void onComponentVisited(Component component) {
-                if(component instanceof JCheckBox){
-                    ((JCheckBox)component).setSelected(true);
-                }
-            }
-        });
-    }
-
-    public void unselectAll(){
-        ComponentUtilities.visitAll(window.getContentPane(), new ComponentUtilities.ComponentVisitedListener() {
-            @Override
-            public void onComponentVisited(Component component) {
-                if(component instanceof JCheckBox){
-                    ((JCheckBox)component).setSelected(false);
-                }
-            }
-        });
+        return new Transformator(getVulkanCorePath(), getOutputDirectoryPath());
     }
 
     public void generateSelected(){
