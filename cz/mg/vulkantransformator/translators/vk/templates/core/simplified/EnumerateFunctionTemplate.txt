@@ -1,11 +1,11 @@
     public %RETURN%.Array %VULKANFUNCTIONNAME%(%PARAMETERS%){
-        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%count.get(), null, result.get());
-        if(result.get().getValue() != VK_SUCCESS) throw new VkException(result.get(), "%VKFUNCTIONNAME%");
+        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%resources.count.get(), null, resources.result.get());
+        if(resources.result.get().getValue() != VK_SUCCESS) throw new VkException(resources.result.get(), "%VKFUNCTIONNAME%");
 
-        %RETURN%.Array o = new %RETURN%.Array(count.get().getValue());
+        %RETURN%.Array o = new %RETURN%.Array(resources.count.get().getValue());
 
-        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%count.get(), o, result.get());
-        if(result.get().getValue() != VK_SUCCESS) throw new VkException(result.get(), "%VKFUNCTIONNAME%");
+        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%resources.count.get(), o, resources.result.get());
+        if(resources.result.get().getValue() != VK_SUCCESS) throw new VkException(resources.result.get(), "%VKFUNCTIONNAME%");
 
         return o;
     }

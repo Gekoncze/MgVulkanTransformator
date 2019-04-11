@@ -2,9 +2,4 @@
 
 ### NOW
 
-
 ### DONE
-Native library load at Vk creation time
-    replaced NULL in pointer with just value of 0
-    replaced NULL_ADDRESS with a native function call
-    added loading of native library in Vk constructor

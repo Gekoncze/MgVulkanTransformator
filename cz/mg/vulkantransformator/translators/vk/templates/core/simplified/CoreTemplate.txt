@@ -1,19 +1,45 @@
+import cz.mg.collections.list.chainlist.ChainList;
+
 public class VkSimplified extends Vk {
-    private final ThreadLocal<VkResult> result = ThreadLocal.withInitial(new java.util.function.Supplier<VkResult>() {
-        @Override
-        public VkResult get() {
-            return new VkResult();
-        }
-    });
+    private static class Resources implements AutoCloseable {
+        private final ChainList<VkObject> resources = new ChainList<>();
 
-    private final ThreadLocal<VkUInt32> count = ThreadLocal.withInitial(new java.util.function.Supplier<VkUInt32>() {
-        @Override
-        public VkUInt32 get() {
-            return new VkUInt32();
+        private synchronized VkObject add(VkObject resource){
+            resources.addLast(resource);
+            return resource;
         }
-    });
 
+        public final ThreadLocal<VkResult> result = ThreadLocal.withInitial(new java.util.function.Supplier<VkResult>() {
+            @Override
+            public VkResult get() {
+                return (VkResult) add(new VkResult());
+            }
+        });
+
+        public final ThreadLocal<VkUInt32> count = ThreadLocal.withInitial(new java.util.function.Supplier<VkUInt32>() {
+            @Override
+            public VkUInt32 get() {
+                return (VkUInt32) add(new VkUInt32());
+            }
+        });
+
+        @Override
+        public void close() {
+            try {
+                for(VkObject resource : resources) VkResourceManager.getInstance().forceFree(resource.getVkMemory());
+                resources.clear();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private final Resources resources = new Resources();
     private VkAllocationCallbacks pAllocator = null;
+
+    public VkSimplified() {
+        VkResourceManager.getInstance().add(this, resources);
+    }
 
     public VkAllocationCallbacks getAllocator() {
         return pAllocator;
