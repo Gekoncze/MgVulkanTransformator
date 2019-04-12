@@ -44,6 +44,7 @@ public class Configuration {
             new Text[]{ new Text("VkDispatchableHandle")    , new Text("VkDispatchableHandle")    },
             new Text[]{ new Text("VkNonDispatchableHandle") , new Text("VkNonDispatchableHandle") },
             new Text[]{ null                                , new Text("VkVersion")               },
+            new Text[]{ null                                , new Text("VkVendor")                },
             new Text[]{ null                                , new Text("VkException")             },
     };
 

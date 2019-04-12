@@ -1,5 +1,11 @@
 ### SOON
 
 ### NOW
+    add simplified get methods
 
 ### DONE
+Version, Vendor, VkDebug
+    fixed and improved VkVersion template
+    added VkVendor template
+    fixed VkDebug default report callback + added default debug utils messanger callback
+    replaced malloc with calloc
