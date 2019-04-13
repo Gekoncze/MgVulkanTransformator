@@ -1,3 +1,5 @@
+import cz.mg.collections.list.chainlist.ChainList;
+
 public class %%VKNAME%% extends VkFlagBits {
 %FIELDS%
 
@@ -7,10 +9,14 @@ public class %%VKNAME%% extends VkFlagBits {
         setValue(value);
     }
 
+    public %%VKNAME%%(VkFlags flags) {
+        setValue(flags.getValue());
+    }
+
     @Override
     public String toString() {
-        String s = "";
+        ChainList<String> s = new ChainList<>();
 %CASES%
-        return s + "(0x" + Integer.toHexString(getValue()) + ")";
+        return s.toString(", ") + (s.count() > 0 ? " " : "") + "(0x" + Integer.toHexString(getValue()) + ")";
     }
 }

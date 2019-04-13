@@ -3,12 +3,6 @@
 ### NOW
 
 ### DONE
-More simplified methods + fixes
-    added simplified destroy method template
-    added simplified get method template
-    changed ck exception to store only int value instead of whole vkresult
-    split vk core translator and vk simplified translator in two files
-    added simplified status method template
-    added simplified protected get method template
-    fixed null return types in function call - used sink instead of null address
-    added arrays to enums
+flag bits and vendor fixes and improvements
+    added constructor for vkflags
+    fixed toString

@@ -10,7 +10,7 @@ import cz.mg.vulkantransformator.entities.vk.VkValue;
 
 public class VkFlagBitsTranslator extends VkTranslator {
     private static final Text fieldTemplate = new Text("    public static final int %VKVALUENAME% = %VKVALUE%;");
-    private static final Text caseTemplate =  new Text("        if(getValue() == %VKVALUENAME%) s += \"%VKVALUENAME%\";");
+    private static final Text caseTemplate =  new Text("        if((getValue() & %VKVALUENAME%) != 0) s.addLast(\"%VKVALUENAME%\");");
 
     @Override
     public Text genCode(ChainList<VkEntity> entities, VkEntity e, Text template) {

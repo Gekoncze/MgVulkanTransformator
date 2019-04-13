@@ -1,4 +1,11 @@
 public class VkVendor extends VkUInt32 {
+    public static final int NVIDIA = 0x10DE;
+    public static final int INTEL = 0x8086;
+    public static final int AMD = 0x1002;
+    public static final int ARM = 0x13B5;
+    public static final int QUALCOMM = 0x5143;
+    public static final int IMGTEC = 0x1010;
+
     public VkVendor(){
     }
     
@@ -9,18 +16,21 @@ public class VkVendor extends VkUInt32 {
     public VkVendor(VkUInt32 value){
         this(value.getValue());
     }
+
+    public String getName(){
+        switch(getValue()){
+            case AMD: return "AMD";
+            case NVIDIA: return "NVIDIA";
+            case INTEL: return "INTEL";
+            case ARM: return "ARM";
+            case QUALCOMM: return "QUALCOMM";
+            case IMGTEC: return "IMGTEC";
+            default: return "Unknown";
+        }
+    }
     
     @Override
     public String toString(){
-        String s = "0x" + Integer.toHexString(getValue());
-        switch(getValue()){
-            case 0x1002: s += " (AMD)"; break;
-            case 0x10DE: s += " (NVIDIA)"; break;
-            case 0x8086: s += " (INTEL)"; break;
-            case 0x13B5: s += " (ARM)"; break;
-            case 0x5143: s += " (Qualcomm)"; break;
-            case 0x1010: s += " (ImgTec)"; break;
-        }
-        return s;
+        return getName() + " (0x" + Integer.toHexString(getValue()) + ")";
     }
 }
