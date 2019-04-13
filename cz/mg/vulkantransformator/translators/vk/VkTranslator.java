@@ -30,6 +30,7 @@ public abstract class VkTranslator extends Translator {
                 .replace("%%CONSTRUCTORSIZEOF%%", constructorSizeofTemplate)
                 .replace("%%SPECS%%", genSpecs(entity))
                 .replace("%%ARRAYSPECS%%", genArraySpecs(entity))
+                .replace("%%ARRAYPARTIALSPECS%%", genArrayPartialSpecs(entity))
         );
     }
 
@@ -49,6 +50,16 @@ public abstract class VkTranslator extends Translator {
         } catch(RuntimeException e){
             return new Text("");
         }
+    }
+
+    private Text genArrayPartialSpecs(VkEntity entity){
+        try {
+            if(entity.getEntityType() == EntityType.ENUM || entity.getEntityType() == EntityType.FLAG_BITS || entity.getEntityType() == EntityType.FLAGS){
+                Text filename = new Text("specs/partial/Constant");
+                return TemplatesVk.load(filename).replaceEnd("\n", "");
+            }
+        } catch(RuntimeException e){}
+        return new Text("");
     }
 
     private Text genPackage(){

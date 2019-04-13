@@ -4,7 +4,5 @@
 
 
 ### DONE
-specializations
-    added possibility to add aditional methods/fields to code via specializations
-    specializations are bound to certain entity name (+ aditional one for array)
-    added specializations for integer, float and boolean types
+partial specializations
+    added partial specialization for enums, flags and flag bits

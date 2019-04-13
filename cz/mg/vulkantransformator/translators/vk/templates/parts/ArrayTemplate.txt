@@ -23,6 +23,8 @@
 
 %%ARRAYSPECS%%
 
+%%ARRAYPARTIALSPECS%%
+
         @Override
         public int count(){
             return count;
