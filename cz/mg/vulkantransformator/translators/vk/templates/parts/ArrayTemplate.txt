@@ -21,6 +21,8 @@
             this.count = count;
         }
 
+%%ARRAYSPECS%%
+
         @Override
         public int count(){
             return count;

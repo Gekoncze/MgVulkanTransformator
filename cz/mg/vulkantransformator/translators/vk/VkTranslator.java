@@ -13,8 +13,8 @@ import cz.mg.collections.text.Text;
 public abstract class VkTranslator extends Translator {
     public static final Text arrayTemplate = TemplatesVk.load("parts/Array").replaceEnd("\n", "");
     public static final Text pointerTemplate = TemplatesVk.load("parts/Pointer").replaceEnd("\n", "");
-    public static final Text constructorTemplate = TemplatesVk.load("parts/Constructor");
-    public static final Text constructorSizeofTemplate = TemplatesVk.load("parts/ConstructorSizeof");
+    public static final Text constructorTemplate = TemplatesVk.load("parts/Constructor").replaceEnd("\n", "");
+    public static final Text constructorSizeofTemplate = TemplatesVk.load("parts/ConstructorSizeof").replaceEnd("\n", "");
 
     public VkTranslator() {
         super(EntityGroup.VK);
@@ -28,7 +28,27 @@ public abstract class VkTranslator extends Translator {
                 .replace("%%POINTER%%", pointerTemplate)
                 .replace("%%CONSTRUCTOR%%", constructorTemplate)
                 .replace("%%CONSTRUCTORSIZEOF%%", constructorSizeofTemplate)
+                .replace("%%SPECS%%", genSpecs(entity))
+                .replace("%%ARRAYSPECS%%", genArraySpecs(entity))
         );
+    }
+
+    private Text genSpecs(VkEntity entity){
+        try {
+            Text filename = new Text("specs/").append(entity.getName());
+            return TemplatesVk.load(filename).replaceEnd("\n", "");
+        } catch(RuntimeException e){
+            return new Text("");
+        }
+    }
+
+    private Text genArraySpecs(VkEntity entity){
+        try {
+            Text filename = new Text("specs/").append(entity.getName()).append("Array");
+            return TemplatesVk.load(filename).replaceEnd("\n", "");
+        } catch(RuntimeException e){
+            return new Text("");
+        }
     }
 
     private Text genPackage(){
