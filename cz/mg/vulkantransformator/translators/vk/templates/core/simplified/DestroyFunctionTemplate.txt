@@ -1,0 +1,3 @@
+    public void %VULKANFUNCTIONNAME%(%PARAMETERS%){
+        super.%VKFUNCTIONNAME%(%ARGUMENTS%, pAllocator);
+    }

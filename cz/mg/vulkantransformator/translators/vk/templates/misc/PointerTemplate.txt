@@ -30,6 +30,7 @@ public class %%VKNAME%% extends VkObject {
     private static native long getValue(long vkaddress);
     private static native void setValue(long vkaddress, long value);
     public static native long getNullAddress();
+    public static native long getSinkAddress();
 
     @Override
     public String toString() {

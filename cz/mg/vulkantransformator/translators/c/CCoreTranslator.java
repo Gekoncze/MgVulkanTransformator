@@ -6,11 +6,11 @@ import cz.mg.vulkantransformator.entities.vk.VkEntity;
 
 
 public class CCoreTranslator {
-    public static Text translateC(ChainList<VkEntity> entities){
+    public static Text translate(ChainList<VkEntity> entities){
         return null;
     }
 
-    public static Text translateSimplifiedC(ChainList<VkEntity> entities){
+    public static Text translateSimplified(ChainList<VkEntity> entities){
         return null;
     }
 }

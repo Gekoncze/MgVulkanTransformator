@@ -1,0 +1,5 @@
+    public %RETURN% %VULKANFUNCTIONNAME%(%PARAMETERS%){
+        %RETURN% o = new %RETURN%();
+        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%o);
+        return o;
+    }

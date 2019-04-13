@@ -1,11 +1,14 @@
 ### SOON
 
 ### NOW
-    add simplified get methods
 
 ### DONE
-Version, Vendor, VkDebug
-    fixed and improved VkVersion template
-    added VkVendor template
-    fixed VkDebug default report callback + added default debug utils messanger callback
-    replaced malloc with calloc
+More simplified methods + fixes
+    added simplified destroy method template
+    added simplified get method template
+    changed ck exception to store only int value instead of whole vkresult
+    split vk core translator and vk simplified translator in two files
+    added simplified status method template
+    added simplified protected get method template
+    fixed null return types in function call - used sink instead of null address
+    added arrays to enums

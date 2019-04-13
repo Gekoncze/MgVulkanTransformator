@@ -8,6 +8,13 @@ public class TypenameConverter {
     private static final Text DEFAULT_JAVA_TYPE = new Text("long");
     private static final Text DEFAULT_JNI_TYPE = new Text("jlong");
 
+    private static final String[] EXTENSIONS = new String[]{
+            "EXT",
+            "KHR",
+            "NVX",
+            "NV",
+    };
+
     public static Text cTypenameToVk(Text cTypename){
         Text vkTypename = cSystemTypenameToVk(cTypename);
         if(vkTypename != null) return vkTypename;
@@ -85,5 +92,10 @@ public class TypenameConverter {
             case "void": return new Text("void");
             default: return null;
         }
+    }
+
+    public static Text stripExtensionName(Text name){
+        for(String extension : EXTENSIONS) name = name.replaceLast(extension, "");
+        return name;
     }
 }

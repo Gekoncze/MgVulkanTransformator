@@ -37,3 +37,12 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getNullAddress(JNIEnv* env, jclass jc)
     null = NULL;
     return jniPointerToLong(&null);
 }
+
+void* sink;
+
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getSinkAddress(JNIEnv* env, jclass jc)
+{
+    (void)env;
+    (void)jc;
+    return jniPointerToLong(&sink);
+}

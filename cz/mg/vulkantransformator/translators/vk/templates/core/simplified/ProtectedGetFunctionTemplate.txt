@@ -1,0 +1,6 @@
+    public %RETURN% %VULKANFUNCTIONNAME%(%PARAMETERS%){
+        %RETURN% o = new %RETURN%();
+        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%o, resources.result.get());
+        if(resources.result.get().getValue() != VK_SUCCESS) throw new VkException(resources.result.get(), "%VKFUNCTIONNAME%");
+        return o;
+    }

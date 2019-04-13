@@ -5,22 +5,23 @@ import cz.mg.collections.text.Text;
 import cz.mg.vulkantransformator.EntityGroup;
 import cz.mg.vulkantransformator.entities.vk.VkEntity;
 import cz.mg.vulkantransformator.translators.c.CCoreTranslator;
+import cz.mg.vulkantransformator.translators.vk.VkCoreSimplifiedTranslator;
 import cz.mg.vulkantransformator.translators.vk.VkCoreTranslator;
 
 
 public class CoreTranslator {
     public static Text translate(EntityGroup group, ChainList<VkEntity> entities){
         switch (group){
-            case C: return CCoreTranslator.translateC(entities);
-            case VK: return VkCoreTranslator.translateVk(entities);
+            case C: return CCoreTranslator.translate(entities);
+            case VK: return VkCoreTranslator.translate(entities);
             default: throw new UnsupportedOperationException("" + group);
         }
     }
 
     public static Text translateSimplified(EntityGroup group, ChainList<VkEntity> entities){
         switch (group){
-            case C: return CCoreTranslator.translateSimplifiedC(entities);
-            case VK: return VkCoreTranslator.translateSimplifiedVk(entities);
+            case C: return CCoreTranslator.translateSimplified(entities);
+            case VK: return VkCoreSimplifiedTranslator.translateSimplified(entities);
             default: throw new UnsupportedOperationException("" + group);
         }
     }
