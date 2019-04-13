@@ -3,6 +3,6 @@
 ### NOW
 
 ### DONE
-flag bits and vendor fixes and improvements
-    added constructor for vkflags
-    fixed toString
+small fixes and improvements
+    added vkmemory allocation of size 0 support
+    added message to vkexception
