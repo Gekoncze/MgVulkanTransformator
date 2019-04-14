@@ -34,12 +34,20 @@ public class VkFunctionTranslator extends VkTranslator {
     public static Text genArguments(ChainList<VkVariable> parameters, VkVariable rvalParameter){
         ChainList<Text> args = new CachedChainList<>();
         for(VkVariable parameter : parameters) args.addLast(genArgument(parameter));
-        if(!rvalParameter.isEmpty()) args.addLast(genArgument(rvalParameter));
+        if(!rvalParameter.isEmpty()) args.addLast(genReturnArgument(rvalParameter));
         Text leadingComma = args.count() > 0 ? new Text(", ") : new Text("");
         return leadingComma.append(args.toText(", "));
     }
 
     public static Text genArgument(VkVariable parameter){
+        if(parameter.isValue()){
+            return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.getNullAddress()");
+        } else {
+            return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.NULL");
+        }
+    }
+
+    public static Text genReturnArgument(VkVariable parameter){
         if(parameter.isValue()){
             return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.getSinkAddress()");
         } else {

@@ -1,21 +1,20 @@
 ### SOON
-
-### NOW
-
-
     change entity.Pointer.Array to be just entity.Array.Array (then Pointer would be redundant... maybe!)
         if possible
+        for structure getters could be lil difficult with .Array version ...
+
+### NOW
+    simplify vk functions some more - like structure setters!
 
     simplified structure setters
-        for all struture like entities added simplified setters
-        we could simplify VkChar too as String, but then would need to use different set ... !
-        for getters could be lil difficult with .Array version ...
-        simplify structure setters for arrays
+        simplify structure setters for arrays ???
             need to detect if previous field name ends with count + current field name should start with p and next letter should be capital
             special case for string array - current field name starts with pp
 
-    simplify vk functions some more - like structure setters!
+
 
 ### DONE
-major changes part #2
-    added specs constructors for some basic structures
+major changes part #3
+    fixed major issue with values passed as null - sink address was used instead of null address
+    for all struture like entities added simplified setters
+    fixed merging of vk and vk simplifed... that actually didnt merge ._."

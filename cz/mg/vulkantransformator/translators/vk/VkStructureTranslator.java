@@ -15,29 +15,39 @@ public class VkStructureTranslator extends VkTranslator {
     private static final Text propertyTemplate = TemplatesVk.load("parts/Property");
     private static final Text ppTemplate = new Text("private VkObject %VKPROPERTYNAME% = null;");
     private static final Text setPPTemplate = new Text("this.%VKPROPERTYNAME% = %VKPROPERTYNAME%;");
+    private static final Text simplifiedSet = TemplatesVk.load("parts/PropertySimplifiedSet");
+    private static final Text simplifiedSetString = TemplatesVk.load("parts/PropertySimplifiedSetString");
 
     @Override
     public Text genCode(ChainList<VkEntity> entities, VkEntity e, Text template) {
         VkStructure vk = (VkStructure) e;
         return super.genCode(entities, e, template
-                .replace("%PROPERTIES%", genPropertiesVk(vk.getFields()))
+                .replace("%PROPERTIES%", genPropertiesVk(entities, vk.getFields()))
         );
     }
 
-    public static Text genPropertiesVk(ChainList<VkVariable> fields){
+    public static Text genPropertiesVk(ChainList<VkEntity> entities, ChainList<VkVariable> fields){
         ChainList<Text> properties = new CachedChainList<>();
-        for(VkVariable field : fields) properties.addLast(genPropertyVk(field));
+        for(VkVariable field : fields) properties.addLast(genPropertyVk(entities, field));
         return properties.toText("\n");
     }
 
-    public static Text genPropertyVk(VkVariable field){
+    public static Text genPropertyVk(ChainList<VkEntity> entities, VkVariable field){
         return propertyTemplate
+                .replace("%SIMPLIFIEDSET%", genSimplifiedSet(entities, field))
                 .replace("%PP%", genPP(field))
                 .replace("%SETPP%", genSetPP(field))
                 .replace("%VKPROPERTYTYPE%", field.getTypename())
                 .replace("%VKPROPERTYNAME%", field.getName())
                 .replace("%VKPROPERTYNAMEC%", field.getName().upperFirst())
                 .replace("%ARGUMENT%", VkFunctionTranslator.genArgument(field));
+    }
+
+    public static Text genSimplifiedSet(ChainList<VkEntity> entities, VkVariable field){
+        Text java = getJavaDataType(entities, field);
+        if(java == null) return new Text("");
+        return (java.equals("String") ? simplifiedSetString : simplifiedSet)
+                .replace("%JAVATYPE%", java);
     }
 
     public static Text genPP(VkVariable field){
@@ -48,13 +58,11 @@ public class VkStructureTranslator extends VkTranslator {
         return field.getPointerCount() > 0 ? setPPTemplate : new Text("");
     }
 
-
-
-
     public static Text getJavaDataType(ChainList<VkEntity> entities, VkVariable field){
         VkEntity fieldTypeEntity = findEntity(entities, field.getTypename());
         if(fieldTypeEntity == null) return null;
         if(field.getC().getDatatype().equals("char*")) return new Text("String");
+        if(field.getTypename().equals("VkChar")) return null;
         if(field.getTypename().endsWith(".Array")) return null;
         if(field.getTypename().endsWith(".Pointer")) return null;
         if(field.getC().getArrayCount() != null) return null;

@@ -1,6 +1,6 @@
     public %RETURN%.Array %VULKANFUNCTIONNAME%(%PARAMETERS%){
-        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%resources.count.get(), null);
+        %VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%resources.count.get(), null);
         %RETURN%.Array o = new %RETURN%.Array(resources.count.get().getValue());
-        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%resources.count.get(), o);
+        %VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%resources.count.get(), o);
         return o;
     }

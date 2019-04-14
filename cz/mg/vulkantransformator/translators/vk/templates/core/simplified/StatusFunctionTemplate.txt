@@ -1,5 +1,5 @@
     public VkResult %VULKANFUNCTIONNAME%(%PARAMETERS%){
         VkResult o = new VkResult();
-        super.%VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%o);
+        %VKFUNCTIONNAME%(%ARGUMENTS%%COMMA%o);
         return o;
     }

@@ -13,7 +13,7 @@ public class VkInfoTranslator extends VkTranslator {
     public Text genCode(ChainList<VkEntity> entities, VkEntity e, Text template) {
         VkInfo vk = (VkInfo) e;
         return super.genCode(entities, e, template
-                .replace("%PROPERTIES%", VkStructureTranslator.genPropertiesVk(vk.getFields()))
+                .replace("%PROPERTIES%", VkStructureTranslator.genPropertiesVk(entities, vk.getFields()))
                 .replace("%SET%", genSet(vk))
         );
     }
