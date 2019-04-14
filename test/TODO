@@ -1,7 +1,7 @@
 ### SOON
 
 ### NOW
-    add specs constructors for some basic structures like extents!
+
 
     change entity.Pointer.Array to be just entity.Array.Array (then Pointer would be redundant... maybe!)
         if possible
@@ -17,8 +17,5 @@
     simplify vk functions some more - like structure setters!
 
 ### DONE
-major changes part #1
-    added set for structure type in empty constructor of info entity
-    simplified string array constructor
-    removed structure like entities parametric constructors
-    merged vk and simplified vk
+major changes part #2
+    added specs constructors for some basic structures

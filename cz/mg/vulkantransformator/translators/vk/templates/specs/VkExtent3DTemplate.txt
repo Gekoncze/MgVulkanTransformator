@@ -1,0 +1,6 @@
+    public VkExtent3D(int width, int height, int depth) {
+        super(sizeof());
+        getWidth().setValue(width);
+        getHeight().setValue(height);
+        getDepth().setValue(depth);
+    }
