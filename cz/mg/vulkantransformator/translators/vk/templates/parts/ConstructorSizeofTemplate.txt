@@ -9,3 +9,5 @@
     public %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
         super(vkmemory, vkaddress);
     }
+
+%%SPECS%%

@@ -3,8 +3,6 @@ package cz.mg.vulkantransformator.translators.vk;
 import cz.mg.collections.list.chainlist.CachedChainList;
 import cz.mg.collections.list.chainlist.ChainList;
 import cz.mg.collections.text.Text;
-import cz.mg.vulkantransformator.Configuration;
-import cz.mg.vulkantransformator.EntityGroup;
 import cz.mg.vulkantransformator.converters.utilities.TypenameConverter;
 import cz.mg.vulkantransformator.entities.vk.*;
 import cz.mg.vulkantransformator.translators.vk.templates.TemplatesVk;
@@ -12,8 +10,6 @@ import static cz.mg.vulkantransformator.translators.vk.VkCoreTranslator.genParam
 
 
 public class VkCoreSimplifiedTranslator {
-    private static final Text coreSimplifiedTemplate = TemplatesVk.load("core/simplified/Core");
-    private static final Text headerTemplate = TemplatesVk.load("parts/Header");
     private static final Text createFunctionSimplifiedTemplate = TemplatesVk.load("core/simplified/CreateFunction");
     private static final Text destroyFunctionSimplifiedTemplate = TemplatesVk.load("core/simplified/DestroyFunction");
     private static final Text enumerateFunctionSimplifiedTemplate = TemplatesVk.load("core/simplified/EnumerateFunction");
@@ -24,17 +20,7 @@ public class VkCoreSimplifiedTranslator {
     private static final Text getArrayFunctionSimplifiedTemplate = TemplatesVk.load("core/simplified/GetArrayFunction");
     private static final Text statusFunctionSimplifiedTemplate = TemplatesVk.load("core/simplified/StatusFunction");
 
-    public static Text translateSimplified(ChainList<VkEntity> entities){
-        return headerTemplate.append(coreSimplifiedTemplate)
-                .replace("%%PACKAGE%%", genPackage())
-                .replace("%FUNCTIONS%", genFunctionsSimplified(entities));
-    }
-
-    private static Text genPackage(){
-        return Configuration.getPath(EntityGroup.VK).replace("/", ".");
-    }
-
-    private static Text genFunctionsSimplified(ChainList<VkEntity> entities) {
+    public static Text genFunctionsSimplified(ChainList<VkEntity> entities) {
         ChainList<Text> functions = new CachedChainList<>();
         for(VkEntity entity : entities) {
             if (entity instanceof VkFunction && !(entity instanceof VkCallback)) {

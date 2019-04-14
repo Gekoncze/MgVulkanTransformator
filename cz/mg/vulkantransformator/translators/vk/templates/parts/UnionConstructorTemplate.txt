@@ -1,4 +1,0 @@
-    public %%VKNAME%%(%VKPROPERTYTYPE% %VKPROPERTYNAME%) {
-        super(sizeof());
-%SETTER%
-    }

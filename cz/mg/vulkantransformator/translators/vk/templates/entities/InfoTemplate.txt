@@ -1,11 +1,18 @@
 public class %%VKNAME%% extends VkObject {
-%%CONSTRUCTORSIZEOF%%
-
-    public %%VKNAME%%(%PARAMETERS%) {
+    public %%VKNAME%%() {
         super(sizeof());
 %SET%
-%SETS%
     }
+
+    public %%VKNAME%%(VkMemory vkmemory) {
+        super(vkmemory);
+    }
+
+    public %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+        super(vkmemory, vkaddress);
+    }
+
+%%SPECS%%
 
 %PROPERTIES%
 

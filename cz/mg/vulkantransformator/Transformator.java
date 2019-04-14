@@ -146,13 +146,6 @@ public class Transformator {
                 Text code = CoreTranslator.translate(group, entities);
                 if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
             }
-            for(EntityGroup group : EntityGroup.values()){
-                Text base = outputDitectoryPath;
-                Text relativePath = Configuration.getPath(group);
-                Text filename = group.getName().lowerCase().upperFirst().append("Simplified").append(getFileExtension(group));
-                Text code = CoreTranslator.translateSimplified(group, entities);
-                if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
-            }
         } catch(RuntimeException e){
             throw new RuntimeException("Could not save vulkan core.", e);
         }

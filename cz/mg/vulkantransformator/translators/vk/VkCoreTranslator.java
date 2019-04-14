@@ -22,6 +22,7 @@ public class VkCoreTranslator {
         return headerTemplate.append(coreTemplate)
                 .replace("%DEFINES%", genDefines(entities))
                 .replace("%FUNCTIONS%", genFunctions(entities))
+                .replace("%SIMPLIFIEDFUNCTIONS%", VkCoreSimplifiedTranslator.genFunctionsSimplified(entities))
                 .replace("%CONSTANTS%", genConstants(entities))
                 .replace("%%PACKAGE%%", genPackage());
     }

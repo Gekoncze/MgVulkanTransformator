@@ -30,7 +30,7 @@ public class %%VKNAME%% extends VkChar {
     public static class Array extends VkChar.Pointer.Array {
         private final %%VKNAME%%[] array;
 
-        public Array(String[] strings) {
+        public Array(String... strings) {
             super(strings.length);
             this.array = new %%VKNAME%%[strings.length];
             for(int i = 0; i < strings.length; i++){

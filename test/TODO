@@ -1,8 +1,24 @@
 ### SOON
 
 ### NOW
+    add specs constructors for some basic structures like extents!
 
+    change entity.Pointer.Array to be just entity.Array.Array (then Pointer would be redundant... maybe!)
+        if possible
+
+    simplified structure setters
+        for all struture like entities added simplified setters
+        we could simplify VkChar too as String, but then would need to use different set ... !
+        for getters could be lil difficult with .Array version ...
+        simplify structure setters for arrays
+            need to detect if previous field name ends with count + current field name should start with p and next letter should be capital
+            special case for string array - current field name starts with pp
+
+    simplify vk functions some more - like structure setters!
 
 ### DONE
-partial specializations
-    added partial specialization for enums, flags and flag bits
+major changes part #1
+    added set for structure type in empty constructor of info entity
+    simplified string array constructor
+    removed structure like entities parametric constructors
+    merged vk and simplified vk
