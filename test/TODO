@@ -14,7 +14,6 @@
 
 
 ### DONE
-major changes part #3
-    fixed major issue with values passed as null - sink address was used instead of null address
-    for all struture like entities added simplified setters
-    fixed merging of vk and vk simplifed... that actually didnt merge ._."
+major changes part #5
+    fixed vk resoruce cleanup
+    added simplified getters

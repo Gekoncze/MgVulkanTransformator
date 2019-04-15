@@ -1,4 +1,8 @@
 
+    public %JAVATYPE% get%VKPROPERTYNAMEC%Q() {
+        return get%VKPROPERTYNAMEC%().getValue();
+    }
+
     public void set%VKPROPERTYNAMEC%(%JAVATYPE% %VKPROPERTYNAME%) {
         get%VKPROPERTYNAMEC%().setValue(%VKPROPERTYNAME%);
     }

@@ -33,7 +33,7 @@ public class CVariable extends CEntity {
     }
 
     public Text getDatatype(){
-        return typename.append(Text.repeat("*", pointerCount));
+        return typename.append(Text.repeat("*", pointerCount + (arrayCount != null ? 1 : 0)));
     }
 
     @Override
