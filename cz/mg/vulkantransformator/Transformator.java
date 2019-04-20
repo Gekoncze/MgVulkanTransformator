@@ -14,8 +14,9 @@ import cz.mg.collections.text.Text;
 
 public class Transformator {
     private final ChainList<VkEntity> entities = new CachedChainList<>();
-    private final Text vulkanCoreFilePath;
-    private final Text outputDitectoryPath;
+    private final Version version;
+    private final Text inputPath;
+    private final Text outputPath;
 
     private final Parser[] parsers = new Parser[]{
             new TypeParser(),
@@ -31,9 +32,10 @@ public class Transformator {
             new DefineParser()
     };
 
-    public Transformator(Text vulkanCoreFilePath, Text outputDitectoryPath) {
-        this.vulkanCoreFilePath = vulkanCoreFilePath;
-        this.outputDitectoryPath = outputDitectoryPath;
+    public Transformator(Version version, Text inputPath, Text outputPath) {
+        this.version = version;
+        this.inputPath = inputPath;
+        this.outputPath = outputPath;
     }
 
     public ChainList<VkEntity> getEntities() {
@@ -42,7 +44,7 @@ public class Transformator {
 
     public void run() {
         entities.clear();
-        FileUtilities.checkIfExists(outputDitectoryPath);
+        FileUtilities.checkIfExists(outputPath);
         clearDirectories();
         createDirectories();
         addSystemTypeEntities();
@@ -52,6 +54,7 @@ public class Transformator {
         adaptDefines();
         saveEntities();
         saveCore();
+        saveHeader();
     }
 
     private void addSystemTypeEntities(){
@@ -118,7 +121,7 @@ public class Transformator {
     }
 
     private void saveEntity(VkEntity entity){
-        Text base = outputDitectoryPath;
+        Text base = outputPath;
         for(EntityGroup group : EntityGroup.values()){
             if(get(group, entity).getName() != null){
                 Text relativePath = Configuration.getPath(group);
@@ -140,7 +143,7 @@ public class Transformator {
     private void saveCore(){
         try {
             for(EntityGroup group : EntityGroup.values()){
-                Text base = outputDitectoryPath;
+                Text base = outputPath;
                 Text relativePath = Configuration.getPath(group);
                 Text filename = group.getName().lowerCase().upperFirst().append(getFileExtension(group));
                 Text code = CoreTranslator.translate(group, entities);
@@ -159,18 +162,42 @@ public class Transformator {
         }
     }
 
+    private void saveHeader(){
+        try {
+            for(EntityGroup group : EntityGroup.values()){
+                Text base = outputPath;
+                Text relativePath = Configuration.getPath(group);
+                Text filename = new Text("vulkan_core.h");
+                Text code = getLines().toText("\n");
+                if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
+            }
+        } catch(RuntimeException e){
+            throw new RuntimeException("Could not save vulkan core.", e);
+        }
+    }
+
     private void clearDirectories(){
-        Text base = outputDitectoryPath;
+        Text base = outputPath;
         for(Text rootDirectory : Configuration.ROOT_DIRECTORIES) FileUtilities.deleteDirectory(base + "/" + rootDirectory);
     }
 
     private void createDirectories(){
-        Text base = outputDitectoryPath;
+        Text base = outputPath;
         for(EntityGroup group : EntityGroup.values()) FileUtilities.createDirectory(base + "/" + Configuration.getPath(group));
     }
 
     private ChainList<Text> getLines(){
-        if(vulkanCoreFilePath == null || vulkanCoreFilePath.count() == 0) return FileUtilities.loadFileLines(Transformator.class, "vulkan_core.h");
-        return FileUtilities.loadFileLines(vulkanCoreFilePath);
+        switch(version){
+            case VERSION_1_0: return FileUtilities.loadFileLines(Transformator.class, "vulkan_1_0.h");
+            case VERSION_1_1: return FileUtilities.loadFileLines(Transformator.class, "vulkan_1_1.h");
+            case VERSION_OTHER: return FileUtilities.loadFileLines(inputPath);
+            default: throw new UnsupportedOperationException("Unsupported vulkan version.");
+        }
+    }
+
+    public enum Version {
+        VERSION_1_0,
+        VERSION_1_1,
+        VERSION_OTHER
     }
 }

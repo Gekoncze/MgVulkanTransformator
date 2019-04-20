@@ -27,4 +27,8 @@ public class VkDefine extends VkEntity<CDefine> {
     public boolean isFloat(){
         return getC().getValue().endsWith("f");
     }
+
+    public boolean isInteger(){
+        return getC().getName().equals("VK_TRUE") || getC().getName().equals("VK_FALSE");
+    }
 }

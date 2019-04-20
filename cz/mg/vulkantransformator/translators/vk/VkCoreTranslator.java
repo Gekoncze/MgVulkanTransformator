@@ -13,7 +13,8 @@ public class VkCoreTranslator {
     private static final Text coreTemplate = TemplatesVk.load("core/Core");
     private static final Text headerTemplate = TemplatesVk.load("parts/Header");
     private static final Text defineStringTemplate = new Text("    public static final String %DEFINENAME% = %DEFINEVALUE%;");
-    private static final Text defineIntegerTemplate = new Text("    public static final long %DEFINENAME% = %DEFINEVALUE%;");
+    private static final Text defineIntegerTemplate = new Text("    public static final int %DEFINENAME% = %DEFINEVALUE%;");
+    private static final Text defineLongTemplate = new Text("    public static final long %DEFINENAME% = %DEFINEVALUE%;");
     private static final Text defineFloatTemplate = new Text("    public static final float %DEFINENAME% = %DEFINEVALUE%;");
     private static final Text functionTemplate = TemplatesVk.load("core/Function");
     private static final Text valueTemplate = new Text("    public static final int %VALUENAME% = %VALUE%;");
@@ -40,7 +41,8 @@ public class VkCoreTranslator {
 
                 if(define.isFloat()) template = defineFloatTemplate;
                 else if(define.isString()) template = defineStringTemplate;
-                else template = defineIntegerTemplate;
+                else if(define.isInteger()) template = defineIntegerTemplate;
+                else template = defineLongTemplate;
 
                 defines.addLast(template
                         .replace("%DEFINENAME%", define.getName())

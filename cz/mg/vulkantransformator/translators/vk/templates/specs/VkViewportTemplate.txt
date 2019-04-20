@@ -1,0 +1,9 @@
+    public VkViewport(float x, float y, float width, float height, float minDepth, float maxDepth) {
+        super(sizeof());
+        setX(x);
+        setY(y);
+        setWidth(width);
+        setHeight(height);
+        setMinDepth(minDepth);
+        setMaxDepth(maxDepth);
+    }

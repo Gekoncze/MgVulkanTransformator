@@ -1,7 +1,7 @@
-#include <vulkan/vulkan.h>
 #include <jni.h>
 #include <stdlib.h>
 #include <string.h>
+#include "vulkan.h"
 
 jlong jniPointerToLong(const void* p);
 void* jniLongToPointer(jlong l);
