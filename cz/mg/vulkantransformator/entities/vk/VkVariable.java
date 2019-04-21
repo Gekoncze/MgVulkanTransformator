@@ -5,7 +5,7 @@ import cz.mg.collections.text.Text;
 
 
 public class VkVariable extends VkEntity<CVariable> {
-    private final Text typename;
+    private Text typename;
     private final int pointerCount;
     private final Text arrayCount;
 
@@ -18,6 +18,10 @@ public class VkVariable extends VkEntity<CVariable> {
 
     public Text getTypename() {
         return typename;
+    }
+
+    public void setTypename(Text typename) {
+        this.typename = typename;
     }
 
     public int getPointerCount() {

@@ -70,12 +70,21 @@ public class MainWindow extends javax.swing.JFrame {
         throw new RuntimeException();
     }
 
+    private String versionToDirectory(){
+        switch (getVersion()){
+            case VERSION_1_0: return "1.0";
+            case VERSION_1_1: return "1.1";
+            case VERSION_OTHER: return "other";
+            default: throw new UnsupportedOperationException("" + getVersion());
+        }
+    }
+
     private Text getInputPath(){
         return new Text(jTextFieldInputPath.getText());
     }
 
     private Text getOutputPath(){
-        return new Text(jTextFieldOutputPath.getText());
+        return new Text(jTextFieldOutputPath.getText()).replace("%VERSION%", versionToDirectory());
     }
 
     private void showError(Exception e){

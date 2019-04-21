@@ -5,7 +5,7 @@ import cz.mg.collections.text.Text;
 
 public class Configuration {
     public static final Text DEFAULT_VULKAN_CORE_PATH = new Text("");
-    public static final Text DEFAULT_OUTPUT_DIRECTORY_PATH = new Text("/home/me/Plocha/Java/MgVulkan/src");
+    public static final Text DEFAULT_OUTPUT_DIRECTORY_PATH = new Text("/home/me/Plocha/Java/MgVulkan/%VERSION%/src");
 
     public static final Text PATH_C = new Text("c/cz/mg/vulkan");
     public static final Text PATH_Vk = new Text("cz/mg/vulkan");
@@ -62,7 +62,10 @@ public class Configuration {
             new Text[]{ new Text("VK_SUBPASS_EXTERNAL"), new Text("4294967295L") },
             new Text[]{ new Text("VK_QUEUE_FAMILY_EXTERNAL"), new Text("4294967294L") },
             new Text[]{ new Text("VK_QUEUE_FAMILY_FOREIGN_EXT"), new Text("4294967293L") },
+            new Text[]{ new Text("VK_QUEUE_FAMILY_EXTERNAL_KHR"), new Text("4294967294L") }
     };
+
+    public static Transformator.Version version = Transformator.Version.VERSION_1_1;
 
     public static final Text getPath(EntityGroup group){
         switch(group){

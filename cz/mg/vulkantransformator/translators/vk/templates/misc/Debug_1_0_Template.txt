@@ -1,0 +1,7 @@
+public class %%VKNAME%% {
+    public static PFNvkDebugReportCallbackEXT getDefaultPFNvkDebugReportCallbackEXT(){
+        return new PFNvkDebugReportCallbackEXT(getDefaultPFNvkDebugReportCallbackEXTAddress());
+    }
+
+    private static native long getDefaultPFNvkDebugReportCallbackEXTAddress();
+}

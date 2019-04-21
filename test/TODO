@@ -10,23 +10,14 @@
 
 ### NOW
     simplify vk functions some more - like structure setters!
-
-    test changes
     add repository folders for different versions of mgvulkan
 
-    add support for platform dependent objects
-        probably passed as VkObject - need to detect if known type is supported
-        if not, then replace with VkObject
-        needs to be a pointer
-        přidat asi jako krok navíc v translatoru, něco jako unknown type resolver či něco
-            bude ale třeba dát možnost upravovat entity!
-            bude procházet fieldy struktur a parametr metod
 
 ### DONE
-major changes part #6
-    fixed VK_TRUE and VK_FALSE constant type from long to int
-    fixed afected templates
-    changed include from <vulkan.h> to "vulkan.h"
-    generating this file along with the c files
-    added new gui
-    added version enum to transformator
+multiple fixes
+    added support for platform/extension dependent object
+    fixed parsing variables with structure keyword
+    added skip mechanism for not yet supported extensions (like xlib, xcb, ...)
+    reverted back c source generator
+    fixed some bugs related to the older version vulkan header file
+    added %VERSION% placeholder for output directory path

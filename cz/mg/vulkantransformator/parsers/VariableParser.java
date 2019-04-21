@@ -17,7 +17,7 @@ public class VariableParser {
     */
     public static CVariable parseParameter(Text line){
         int pointerCount = line.count('*') + line.count('[');
-        line = DatatypeConverter.removeConsts(line);
+        line = DatatypeConverter.removeModifiers(line);
         Array<Text> parts = line.split(" *);,[");
         if(parts.count() == 1) return null;
         Text typename = parts.get(0);
@@ -43,7 +43,7 @@ public class VariableParser {
     */
     public static CVariable parseField(Text line){
         int pointerCount = line.count('*');
-        line = DatatypeConverter.removeConsts(line);
+        line = DatatypeConverter.removeModifiers(line);
         Array<Text> parts = line.split("* ;[]");
         Text arrayCount = parts.count() == 3 ? parts.get(2) : null;
         Text typename = parts.get(0);

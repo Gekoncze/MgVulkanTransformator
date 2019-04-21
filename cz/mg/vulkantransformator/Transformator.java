@@ -6,6 +6,8 @@ import cz.mg.vulkantransformator.converters.Converter;
 import cz.mg.vulkantransformator.entities.Entity;
 import cz.mg.vulkantransformator.entities.c.*;
 import cz.mg.vulkantransformator.entities.vk.*;
+import cz.mg.vulkantransformator.fixes.SkipConditionalEntitiesFix;
+import cz.mg.vulkantransformator.fixes.UnknownTypeFix;
 import cz.mg.vulkantransformator.translators.*;
 import cz.mg.vulkantransformator.parsers.*;
 import cz.mg.vulkantransformator.utilities.FileUtilities;
@@ -36,6 +38,7 @@ public class Transformator {
         this.version = version;
         this.inputPath = inputPath;
         this.outputPath = outputPath;
+        Configuration.version = version;
     }
 
     public ChainList<VkEntity> getEntities() {
@@ -52,6 +55,7 @@ public class Transformator {
         addMiscEntities();
         parseEntities();
         adaptDefines();
+        fixUnknownTypes();
         saveEntities();
         saveCore();
         saveHeader();
@@ -104,6 +108,11 @@ public class Transformator {
                 }
             }
         }
+    }
+
+    private void fixUnknownTypes(){
+        UnknownTypeFix fix = new UnknownTypeFix(entities);
+        fix.fix();
     }
 
     private VkEntity convertEntity(CEntity c){
@@ -163,17 +172,17 @@ public class Transformator {
     }
 
     private void saveHeader(){
-        try {
-            for(EntityGroup group : EntityGroup.values()){
-                Text base = outputPath;
-                Text relativePath = Configuration.getPath(group);
-                Text filename = new Text("vulkan_core.h");
-                Text code = getLines().toText("\n");
-                if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
-            }
-        } catch(RuntimeException e){
-            throw new RuntimeException("Could not save vulkan core.", e);
-        }
+//        try {
+//            for(EntityGroup group : EntityGroup.values()){
+//                Text base = outputPath;
+//                Text relativePath = Configuration.getPath(group);
+//                Text filename = new Text("vulkan.h");
+//                Text code = getLines().toText("\n");
+//                if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
+//            }
+//        } catch(RuntimeException e){
+//            throw new RuntimeException("Could not save vulkan core.", e);
+//        }
     }
 
     private void clearDirectories(){
@@ -187,6 +196,10 @@ public class Transformator {
     }
 
     private ChainList<Text> getLines(){
+        return new SkipConditionalEntitiesFix().fix(loadLines());
+    }
+
+    private ChainList<Text> loadLines(){
         switch(version){
             case VERSION_1_0: return FileUtilities.loadFileLines(Transformator.class, "vulkan_1_0.h");
             case VERSION_1_1: return FileUtilities.loadFileLines(Transformator.class, "vulkan_1_1.h");

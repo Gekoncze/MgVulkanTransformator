@@ -5,7 +5,7 @@ import cz.mg.collections.text.Text;
 
 
 public class CVariable extends CEntity {
-    private final Text typename;
+    private Text typename;
     private final int pointerCount;
     private final Text arrayCount;
 
@@ -20,6 +20,11 @@ public class CVariable extends CEntity {
     public Text getTypename() {
         return typename;
     }
+
+    public void setTypename(Text typename) {
+        this.typename = typename;
+    }
+
     public int getPointerCount() {
         return pointerCount;
     }

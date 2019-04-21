@@ -26,7 +26,7 @@ public class DatatypeConverter {
 //        throw new UnsupportedOperationException("Unsupported " + pointerCount + " pointer.");
 //    }
 
-    public static Text removeConsts(Text s){
+    public static Text removeModifiers(Text s){
         s = s.replace("const ", " ");
         s = s.replace(" const ", " ");
         s = s.replace("*const ", " ");
@@ -34,6 +34,15 @@ public class DatatypeConverter {
         s = s.replace("*const*", " ");
         s = s.replace("(const ", " ");
         s = s.replace("(const*", " ");
+
+        s = s.replace("struct ", " ");
+        s = s.replace(" struct ", " ");
+        s = s.replace("*struct ", " ");
+        s = s.replace(" struct*", " ");
+        s = s.replace("*struct*", " ");
+        s = s.replace("(struct ", " ");
+        s = s.replace("(struct*", " ");
+
         return s;
     }
 }
