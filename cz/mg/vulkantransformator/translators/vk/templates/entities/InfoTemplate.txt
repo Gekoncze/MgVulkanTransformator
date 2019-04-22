@@ -1,7 +1,7 @@
 public class %%VKNAME%% extends VkObject {
     public %%VKNAME%%() {
         super(sizeof());
-%SET%
+        %SET%
     }
 
     public %%VKNAME%%(VkMemory vkmemory) {

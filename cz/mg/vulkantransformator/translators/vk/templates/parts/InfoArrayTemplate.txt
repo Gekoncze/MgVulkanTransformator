@@ -1,0 +1,38 @@
+    public static class Array extends %%VKNAME%% implements cz.mg.collections.array.ReadonlyArray<%%VKNAME%%> {
+        private final int count;
+
+        public Array(int count) {
+            super(new VkMemory(count*%%VKNAME%%.sizeof()));
+            this.count = count;
+            for(int i = 0; i < count; i++) get(i).%SET%;
+        }
+
+        public Array(int count, %%VKNAME%% o){
+            super(o.getVkMemory(), o.getVkAddress());
+            this.count = count;
+        }
+
+        public Array(VkMemory vkmemory, int count) {
+            super(vkmemory);
+            this.count = count;
+        }
+
+        public Array(VkMemory vkmemory, long vkaddress, int count) {
+            super(vkmemory, vkaddress);
+            this.count = count;
+        }
+
+%%ARRAYSPECS%%
+
+%%ARRAYPARTIALSPECS%%
+
+        @Override
+        public int count(){
+            return count;
+        }
+
+        @Override
+        public %%VKNAME%% get(int i){
+            return new %%VKNAME%%(getVkMemory(), getVkAddress() + sizeof()*i);
+        }
+    }
