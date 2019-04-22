@@ -60,7 +60,7 @@ public class VkCoreSimplifiedTranslator {
     }
 
     private static boolean isCreateFunctionSimplified(ChainList<VkEntity> entities, VkFunction vk){
-        if(vk.getParameters().count() >= 1 && vk.getCallName().startsWith("vkCreate")){
+        if(vk.getParameters().count() >= 1 && (vk.getCallName().startsWith("vkCreate") || vk.getCallName().startsWith("vkAllocateMemory"))){
             VkVariable last = (VkVariable) vk.getParameters().getLast();
             boolean isLastHandle = isHandle(entities, last.getTypename());
             if(isLastHandle) return true;
@@ -69,7 +69,7 @@ public class VkCoreSimplifiedTranslator {
     }
 
     private static boolean isDestroyFunctionSimplified(ChainList<VkEntity> entities, VkFunction vk){
-        if(vk.getParameters().count() >= 2 && vk.getCallName().startsWith("vkDestroy")){
+        if(vk.getParameters().count() >= 2 && (vk.getCallName().startsWith("vkDestroy") || vk.getCallName().startsWith("vkFreeMemory"))){
             VkVariable beforeLast = (VkVariable) vk.getParameters().getLastItem().getPrevious();
             boolean isBeforeLastHandle = isHandle(entities, beforeLast.getTypename());
             if(isBeforeLastHandle) return true;
