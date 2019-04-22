@@ -90,7 +90,7 @@ public class VkCoreSimplifiedTranslator {
     }
 
     private static boolean isGetFunctionSimplified(ChainList<VkEntity> entities, VkFunction vk){
-        if(vk.getParameters().count() >= 2 && vk.getCallName().startsWith("vkGet")){
+        if(vk.getParameters().count() >= 2 && (vk.getCallName().startsWith("vkGet") || (vk.getCallName().startsWith("vkAllocate") && !vk.getCallName().startsWith("vkAllocateMemory")))){
             VkVariable last = (VkVariable) vk.getParameters().getLast();
             boolean isLastOk = !last.getTypename().equals("VkObject");
             if(isLastOk) return true;
@@ -118,7 +118,7 @@ public class VkCoreSimplifiedTranslator {
     }
 
     private static boolean isProtectedGetFunctionSimplified(ChainList<VkEntity> entities, VkFunction vk){
-        if(vk.getParameters().count() >= 2 && vk.getCallName().startsWith("vkGet")){
+        if(vk.getParameters().count() >= 2 && (vk.getCallName().startsWith("vkGet") || (vk.getCallName().startsWith("vkAllocate") && !vk.getCallName().startsWith("vkAllocateMemory")))){
             VkVariable last = (VkVariable) vk.getParameters().getLast();
             boolean isLastOk = !last.getTypename().equals("VkObject");
             if(isLastOk) return true;
