@@ -26,6 +26,8 @@ public class VkCoreSimplifiedTranslator {
             if (entity instanceof VkFunction && !(entity instanceof VkCallback)) {
                 Text f = genFunctionSimplified(entities, (VkFunction) entity);
                 if(f != null) functions.addLast(f);
+                Text ff = loadExtraSimplification((VkFunction) entity);
+                if(ff != null) functions.addLast(ff);
             }
         }
         return functions.toText("\n\n");
@@ -45,6 +47,15 @@ public class VkCoreSimplifiedTranslator {
             if(isGetFunctionSimplified(entities, vk)) return genGetFunctionSimplified(vk);
         }
         return null;
+    }
+
+    private static Text loadExtraSimplification(VkFunction function){
+        try {
+            Text filename = new Text("functions/").append(function.getCallName());
+            return TemplatesVk.load(filename).replaceEnd("\n", "");
+        } catch(RuntimeException e){
+            return null;
+        }
     }
 
     private static boolean isEnumerateFunctionSimplified(ChainList<VkEntity> entities, VkFunction vk){
