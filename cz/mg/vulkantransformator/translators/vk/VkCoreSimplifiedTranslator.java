@@ -24,23 +24,32 @@ public class VkCoreSimplifiedTranslator {
         ChainList<Text> functions = new CachedChainList<>();
         for(VkEntity entity : entities) {
             if (entity instanceof VkFunction && !(entity instanceof VkCallback)) {
-                Text f = genFunctionSimplified(entities, (VkFunction) entity);
-                if(f != null) functions.addLast(f);
-                Text ff = loadExtraSimplification((VkFunction) entity);
-                if(ff != null) functions.addLast(ff);
+                Text pf = genProtectedFunction(entities, (VkFunction) entity);
+                if(pf != null) functions.addLast(pf);
+                Text pfs = genProtectedFunctionSimplified(entities, (VkFunction) entity);
+                if(pfs != null) functions.addLast(pfs);
+                Text ef = loadExtraSimplification((VkFunction) entity);
+                if(ef != null) functions.addLast(ef);
             }
         }
         return functions.toText("\n\n");
     }
 
-    private static Text genFunctionSimplified(ChainList<VkEntity> entities, VkFunction vk){
+    private static Text genProtectedFunction(ChainList<VkEntity> entities, VkFunction vk){
+        if(vk.getReturnType().getTypename().equals("VkResult") && !isStatusFunctionSimplified(entities, vk)){
+            return genProtectedFunctionSimplified(vk);
+        }
+        return null;
+    }
+
+    private static Text genProtectedFunctionSimplified(ChainList<VkEntity> entities, VkFunction vk){
         if(vk.getReturnType().getTypename().equals("VkResult")){
             if(isEnumerateFunctionSimplified(entities, vk)) return genEnumerateFunctionSimplified(vk);
             if(isCreateFunctionSimplified(entities, vk)) return genCreateFunctionSimplified(vk);
             if(isStatusFunctionSimplified(entities, vk)) return genStatusFunctionSimplified(vk);
             if(isProtectedGetArrayFunctionSimplified(entities, vk)) return genProtectedGetArrayFunctionSimplified(vk);
             if(isProtectedGetFunctionSimplified(entities, vk)) return genProtectedGetFunctionSimplified(vk);
-            return genProtectedFunctionSimplified(vk);
+            return null;
         } else if(vk.getReturnType().isEmpty()) {
             if(isDestroyFunctionSimplified(entities, vk)) return genDestroyFunctionSimplified(vk);
             if(isGetArrayFunctionSimplified(entities, vk)) return genGetArrayFunctionSimplified(vk);
