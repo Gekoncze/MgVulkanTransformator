@@ -7,3 +7,6 @@
 
 
 ### DONE
+improvements for possibly better performance
+    made native methods protected
+    added direct value getters and setters for system type arrays

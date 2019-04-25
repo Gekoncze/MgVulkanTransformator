@@ -1,4 +1,12 @@
         public Array(long... values){
             this(values.length);
-            for(int i = 0; i < values.length; i++) get(i).setValue(values[i]);
+            for(int i = 0; i < values.length; i++) setValueAt(i, values[i]);
+        }
+
+        public long getValueAt(int i){
+            return getValue(getVkAddress() + sizeof()*i);
+        }
+
+        public void setValueAt(int i, long value){
+            setValue(getVkAddress() + sizeof()*i, value);
         }

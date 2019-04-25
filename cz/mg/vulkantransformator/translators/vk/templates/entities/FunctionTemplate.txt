@@ -13,5 +13,5 @@ public class %%VKNAME%% extends VkFunctionPointer {
         call(getValue()%ARGUMENTS%);
     }
 
-    private static native void call(long vkaddress%JAVAPARAMETERS%);
+    protected static native void call(long vkaddress%JAVAPARAMETERS%);
 }
