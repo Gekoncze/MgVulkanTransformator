@@ -5,7 +5,7 @@ public class %%VKNAME%% extends VkChar.Array {
         setValueAt(string.length(), (byte) 0);
     }
 
-    public %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+    protected %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
         super(vkmemory, vkaddress, countNative(vkaddress));
     }
 

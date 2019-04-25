@@ -1,5 +1,20 @@
 public class %%VKNAME%% extends %VKBASE% {
-%%CONSTRUCTOR%%
+    public %%VKNAME%%() {
+    }
+
+    protected %%VKNAME%%(VkMemory vkmemory) {
+        super(vkmemory);
+    }
+
+    protected %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+        super(vkmemory, vkaddress);
+    }
+
+    public %%VKNAME%%(VkPointer pointer) {
+        super(pointer);
+    }
+
+%%SPECS%%
 
     public %%VKNAME%%(long handle) {
         setValue(handle);

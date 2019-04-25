@@ -3,7 +3,22 @@ import cz.mg.collections.list.chainlist.ChainList;
 public class %%VKNAME%% extends VkFlagBits {
 %FIELDS%
 
-%%CONSTRUCTOR%%
+    public %%VKNAME%%() {
+    }
+
+    protected %%VKNAME%%(VkMemory vkmemory) {
+        super(vkmemory);
+    }
+
+    protected %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+        super(vkmemory, vkaddress);
+    }
+
+    public %%VKNAME%%(VkPointer pointer) {
+        super(pointer);
+    }
+
+%%SPECS%%
 
     public %%VKNAME%%(int value) {
         setValue(value);

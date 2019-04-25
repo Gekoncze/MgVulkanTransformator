@@ -1,10 +1,23 @@
 public class %%VKNAME%% extends VkEnum {
 %FIELDS%
 
-%%CONSTRUCTOR%%
+    public %%VKNAME%%() {
+    }
+
+    protected %%VKNAME%%(VkMemory vkmemory) {
+        super(vkmemory);
+    }
+
+    protected %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+        super(vkmemory, vkaddress);
+    }
 
     public %%VKNAME%%(int value) {
         setValue(value);
+    }
+
+    public %%VKNAME%%(VkPointer pointer) {
+        super(pointer);
     }
 
     @Override

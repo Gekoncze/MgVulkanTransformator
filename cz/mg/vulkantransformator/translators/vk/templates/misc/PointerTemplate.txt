@@ -10,11 +10,11 @@ public class VkPointer extends VkObject {
         setValue(value);
     }
 
-    public VkPointer(VkMemory vkmemory) {
+    protected VkPointer(VkMemory vkmemory) {
         super(vkmemory);
     }
 
-    public VkPointer(VkMemory vkmemory, long vkaddress) {
+    protected VkPointer(VkMemory vkmemory, long vkaddress) {
         super(vkmemory, vkaddress);
     }
 
@@ -46,17 +46,12 @@ public class VkPointer extends VkObject {
             this.count = count;
         }
 
-        public Array(int count, VkPointer o){
-            super(o.getVkMemory(), o.getVkAddress());
-            this.count = count;
-        }
-
-        public Array(VkMemory vkmemory, int count) {
+        protected Array(VkMemory vkmemory, int count) {
             super(vkmemory);
             this.count = count;
         }
 
-        public Array(VkMemory vkmemory, long vkaddress, int count) {
+        protected Array(VkMemory vkmemory, long vkaddress, int count) {
             super(vkmemory, vkaddress);
             this.count = count;
         }

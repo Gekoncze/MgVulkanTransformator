@@ -1,13 +1,10 @@
 ### LATER MAYBE
-    change entity.Pointer.Array to be just entity.Array.Array (then Pointer would be redundant... maybe!)
-        if possible
-        for structure getters could be lil difficult with .Array version ...
+
 
 ### NOW
 
 
 ### DONE
-VkObject.Pointer removed
-    removed array from function pointer
-    removed Pointer and Poitner.Array from entities
-    replaced Pointer.Array in entities with Array.Array
+entities improvements
+    made memory related cosntructors protected
+    added constructor with VkPointer as parameter

@@ -12,6 +12,10 @@ public class %%VKNAME%% extends VkObject {
         super(vkmemory, vkaddress);
     }
 
+    public %%VKNAME%%(VkPointer pointer) {
+        super(pointer);
+    }
+
 %%SPECS%%
 
 %PROPERTIES%

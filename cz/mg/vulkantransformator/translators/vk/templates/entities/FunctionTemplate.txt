@@ -1,5 +1,16 @@
 public class %%VKNAME%% extends VkFunctionPointer {
-%%CONSTRUCTOR%%
+    public %%VKNAME%%() {
+    }
+
+    protected %%VKNAME%%(VkMemory vkmemory) {
+        super(vkmemory);
+    }
+
+    protected %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+        super(vkmemory, vkaddress);
+    }
+
+%%SPECS%%
 
     public %%VKNAME%%(long value) {
         setValue(value);

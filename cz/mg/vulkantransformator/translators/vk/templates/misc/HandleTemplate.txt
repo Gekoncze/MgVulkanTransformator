@@ -11,6 +11,9 @@ public abstract class %%VKNAME%% extends VkObject {
         super(vkmemory, vkaddress);
     }
 
+    public %%VKNAME%%(VkPointer pointer) {
+        super(pointer);
+    }
 
     public abstract long getValue();
     public abstract void setValue(long value);

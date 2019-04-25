@@ -10,11 +10,11 @@ public class %%VKNAME%% extends VkObject {
         setValue(value);
     }
 
-    public %%VKNAME%%(VkMemory vkmemory) {
+    protected %%VKNAME%%(VkMemory vkmemory) {
         super(vkmemory);
     }
 
-    public %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+    protected %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
         super(vkmemory, vkaddress);
     }
 
