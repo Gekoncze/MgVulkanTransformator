@@ -38,4 +38,22 @@
         protected long addressAt(int i){
             return VkPointer.plus(getVkAddress(), sizeof()*i);
         }
+
+        public static class Array2 extends VkPointer.Array {
+            public Array2(int count) {
+                super(count);
+            }
+
+            public Array2(int count, VkPointer o){
+                super(count, o);
+            }
+
+            public Array2(VkMemory vkmemory, int count) {
+                super(vkmemory, count);
+            }
+
+            public Array2(VkMemory vkmemory, long vkaddress, int count) {
+                super(vkmemory, vkaddress, count);
+            }
+        }
     }

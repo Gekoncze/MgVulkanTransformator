@@ -22,7 +22,7 @@ public class %%VKNAME%% extends VkChar.Array {
 
     protected static native int countNative(long vkaddress);
 
-    public static class Array extends VkChar.Pointer.Array {
+    public static class Array extends VkChar.Array.Array2 {
         private final %%VKNAME%%[] array;
 
         public Array(String... strings) {

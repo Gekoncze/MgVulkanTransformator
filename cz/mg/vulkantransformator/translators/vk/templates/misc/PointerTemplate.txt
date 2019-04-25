@@ -1,20 +1,20 @@
-public class %%VKNAME%% extends VkObject {
+public class VkPointer extends VkObject {
     public static final long NULL = 0;
 
-    public %%VKNAME%%() {
+    public VkPointer() {
         super(sizeof());
     }
 
-    public %%VKNAME%%(long value) {
+    public VkPointer(long value) {
         super(sizeof());
         setValue(value);
     }
 
-    public %%VKNAME%%(VkMemory vkmemory) {
+    public VkPointer(VkMemory vkmemory) {
         super(vkmemory);
     }
 
-    public %%VKNAME%%(VkMemory vkmemory, long vkaddress) {
+    public VkPointer(VkMemory vkmemory, long vkaddress) {
         super(vkmemory, vkaddress);
     }
 
@@ -38,5 +38,45 @@ public class %%VKNAME%% extends VkObject {
         return "0x" + Long.toHexString(getValue());
     }
 
-%%ARRAY%%
+    public static class Array extends VkPointer implements cz.mg.collections.array.ReadonlyArray<VkPointer> {
+        private final int count;
+
+        public Array(int count) {
+            super(new VkMemory(count*VkPointer.sizeof()));
+            this.count = count;
+        }
+
+        public Array(int count, VkPointer o){
+            super(o.getVkMemory(), o.getVkAddress());
+            this.count = count;
+        }
+
+        public Array(VkMemory vkmemory, int count) {
+            super(vkmemory);
+            this.count = count;
+        }
+
+        public Array(VkMemory vkmemory, long vkaddress, int count) {
+            super(vkmemory, vkaddress);
+            this.count = count;
+        }
+
+%%ARRAYSPECS%%
+
+%%ARRAYPARTIALSPECS%%
+
+        @Override
+        public int count(){
+            return count;
+        }
+
+        @Override
+        public VkPointer get(int i){
+            return new VkPointer(getVkMemory(), addressAt(i));
+        }
+
+        protected long addressAt(int i){
+            return VkPointer.plus(getVkAddress(), sizeof()*i);
+        }
+    }
 }

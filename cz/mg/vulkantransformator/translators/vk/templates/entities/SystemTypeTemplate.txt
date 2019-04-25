@@ -24,6 +24,4 @@ public class %%VKNAME%% extends VkObject {
     }
 
 %%ARRAY%%
-
-%%POINTER%%
 }

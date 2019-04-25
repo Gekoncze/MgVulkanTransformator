@@ -6,6 +6,4 @@ public class %%VKNAME%% extends %BASE% {
     }
 
 %%ARRAY%%
-
-%%POINTER%%
 }

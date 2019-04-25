@@ -12,7 +12,6 @@ import cz.mg.collections.text.Text;
 
 public abstract class VkTranslator extends Translator {
     public static final Text arrayTemplate = TemplatesVk.load("parts/Array").replaceEnd("\n", "");
-    public static final Text pointerTemplate = TemplatesVk.load("parts/Pointer").replaceEnd("\n", "");
     public static final Text constructorTemplate = TemplatesVk.load("parts/Constructor").replaceEnd("\n", "");
     public static final Text constructorSizeofTemplate = TemplatesVk.load("parts/ConstructorSizeof").replaceEnd("\n", "");
 
@@ -25,7 +24,6 @@ public abstract class VkTranslator extends Translator {
         return super.genCode(entities, entity, template
                 .replace("%%PACKAGE%%", genPackage())
                 .replace("%%ARRAY%%", arrayTemplate)
-                .replace("%%POINTER%%", pointerTemplate)
                 .replace("%%CONSTRUCTOR%%", constructorTemplate)
                 .replace("%%CONSTRUCTORSIZEOF%%", constructorSizeofTemplate)
                 .replace("%%SPECS%%", genSpecs(entity))

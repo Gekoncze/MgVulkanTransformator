@@ -19,6 +19,4 @@ public class %%VKNAME%% extends VkObject {
     public static native long sizeof();
 
 %%ARRAY%%
-
-%%POINTER%%
 }

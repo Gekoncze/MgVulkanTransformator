@@ -41,6 +41,4 @@ public class %%VKNAME%% extends VkObject {
     public String toString() {
         return "0x" + Long.toHexString(getValue());
     }
-
-%%ARRAY%%
 }
