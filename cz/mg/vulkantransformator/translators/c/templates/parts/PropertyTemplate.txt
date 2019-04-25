@@ -1,4 +1,4 @@
-jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_get%VKPROPERTYNAME%(JNIEnv* env, jclass jc, jlong address)
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_get%VKPROPERTYNAME%Native(JNIEnv* env, jclass jc, jlong address)
 {
     (void)env;
     (void)jc;
@@ -6,7 +6,7 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_get%VKPROPERTYNAME%(JNIEnv* env, jclass jc,
     return jniPointerToLong(%A1%o->%CPROPERTYNAME%);
 }
 
-void Java_%%CVKPACKAGE%%_%%VKNAME%%_set%VKPROPERTYNAME%(JNIEnv* env, jclass jc, jlong address, jlong valueAddress)
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_set%VKPROPERTYNAME%Native(JNIEnv* env, jclass jc, jlong address, jlong valueAddress)
 {
     (void)env;
     (void)jc;

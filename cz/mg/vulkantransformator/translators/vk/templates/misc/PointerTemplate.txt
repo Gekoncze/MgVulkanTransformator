@@ -67,10 +67,10 @@ public class VkPointer extends VkObject {
 
         @Override
         public VkPointer get(int i){
-            return new VkPointer(getVkMemory(), addressAt(i));
+            return new VkPointer(getVkMemory(), address(i));
         }
 
-        protected long addressAt(int i){
+        protected long address(int i){
             return VkPointer.plus(getVkAddress(), sizeof()*i);
         }
     }

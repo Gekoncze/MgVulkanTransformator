@@ -2,9 +2,7 @@
 
 
 ### NOW
-
+    make VkWriteDescriptorSet into a create info object!
+    add simplified functions - ie creating new instances automatically OR add functions for direct value transfer ???
 
 ### DONE
-entities improvements
-    made memory related cosntructors protected
-    added constructor with VkPointer as parameter
