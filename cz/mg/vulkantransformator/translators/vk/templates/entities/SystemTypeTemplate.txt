@@ -7,16 +7,16 @@ public class %%VKNAME%% extends VkObject {
     }
 
     public %JAVATYPE% getValue(){
-        return getValue(getVkAddress());
+        return getValueNative(getVkAddress());
     }
 
     public void setValue(%JAVATYPE% value){
-        setValue(getVkAddress(), value);
+        setValueNative(getVkAddress(), value);
     }
 
     public static native long sizeof();
-    protected static native %JAVATYPE% getValue(long vkaddress);
-    protected static native void setValue(long vkaddress, %JAVATYPE% value);
+    protected static native %JAVATYPE% getValueNative(long vkaddress);
+    protected static native void setValueNative(long vkaddress, %JAVATYPE% value);
 
     @Override
     public String toString() {

@@ -4,9 +4,9 @@
         }
 
         public float getValueAt(int i){
-            return getValue(getVkAddress() + sizeof()*i);
+            return getValueNative(addressAt(i));
         }
 
         public void setValueAt(int i, float value){
-            setValue(getVkAddress() + sizeof()*i, value);
+            setValueNative(addressAt(i), value);
         }

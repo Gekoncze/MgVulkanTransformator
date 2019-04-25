@@ -41,7 +41,7 @@ public class VkFunctionTranslator extends VkTranslator {
 
     public static Text genArgument(VkVariable parameter){
         if(parameter.isValue()){
-            return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.getNullAddress()");
+            return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.getNullAddressNative()");
         } else {
             return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.NULL");
         }
@@ -49,7 +49,7 @@ public class VkFunctionTranslator extends VkTranslator {
 
     public static Text genReturnArgument(VkVariable parameter){
         if(parameter.isValue()){
-            return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.getSinkAddress()");
+            return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.getSinkAddressNative()");
         } else {
             return parameter.getName().append(" != null ? ").append(parameter.getName()).append(".getVkAddress() : VkPointer.NULL");
         }

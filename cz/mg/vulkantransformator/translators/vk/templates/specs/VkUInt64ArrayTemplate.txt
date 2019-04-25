@@ -4,9 +4,9 @@
         }
 
         public long getValueAt(int i){
-            return getValue(getVkAddress() + sizeof()*i);
+            return getValueNative(addressAt(i));
         }
 
         public void setValueAt(int i, long value){
-            setValue(getVkAddress() + sizeof()*i, value);
+            setValueNative(addressAt(i), value);
         }

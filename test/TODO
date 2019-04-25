@@ -7,6 +7,13 @@
 
 
 ### DONE
-improvements for possibly better performance
-    made native methods protected
-    added direct value getters and setters for system type arrays
+pointer, function pointer and array improvements
+    replaced java adition of pointers with native (hopefully safer) implementation
+    wrapped some array code in addressAt method
+    fixed constructor for constant arrays to use setValueAt
+    added getValueAt and setValueAt to pointer array
+    removed boolean from VkBool32
+    made more native methods protected instead of private
+    renamed native methods to have Native suffix (excluding public ones)
+    added VkChar.Array specialization
+    multiple fixes in VkString

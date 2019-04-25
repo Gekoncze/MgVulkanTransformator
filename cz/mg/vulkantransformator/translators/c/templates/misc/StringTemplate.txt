@@ -1,4 +1,4 @@
-jint Java_%%CVKPACKAGE%%_%%VKNAME%%_count(JNIEnv* env, jclass jc, jlong address)
+jint Java_%%CVKPACKAGE%%_%%VKNAME%%_countNative(JNIEnv* env, jclass jc, jlong address)
 {
     (void)env;
     (void)jc;

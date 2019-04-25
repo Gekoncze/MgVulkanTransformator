@@ -5,7 +5,7 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_sizeof(JNIEnv* env, jclass jc)
     return sizeof(PFN_vkVoidFunction);
 }
 
-jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getValue(JNIEnv* env, jclass jc, jlong address)
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getValueNative(JNIEnv* env, jclass jc, jlong address)
 {
     (void)env;
     (void)jc;
@@ -13,7 +13,7 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getValue(JNIEnv* env, jclass jc, jlong addr
     return jniFunctionPointerToLong(*pointerAddress);
 }
 
-void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValue(JNIEnv* env, jclass jc, jlong address, jlong value)
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValueNative(JNIEnv* env, jclass jc, jlong address, jlong value)
 {
     (void)env;
     (void)jc;
@@ -21,7 +21,7 @@ void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValue(JNIEnv* env, jclass jc, jlong addre
     *pointerAddress = jniLongToFunctionPointer(value);
 }
 
-void Java_%%CVKPACKAGE%%_%%VKNAME%%_load(JNIEnv* env, jclass jc, jlong address, jlong instance, jlong string)
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_loadNative(JNIEnv* env, jclass jc, jlong address, jlong instance, jlong string)
 {
     (void)env;
     (void)jc;

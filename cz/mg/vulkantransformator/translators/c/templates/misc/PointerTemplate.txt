@@ -5,7 +5,14 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_sizeof(JNIEnv* env, jclass jc)
     return sizeof(void*);
 }
 
-jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getValue(JNIEnv* env, jclass jc, jlong address)
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_plus(JNIEnv* env, jclass jc, jlong address, jlong offset)
+{
+    (void)env;
+    (void)jc;
+    return jniPointerToLong(jniLongToPointer(address) + offset);
+}
+
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getValueNative(JNIEnv* env, jclass jc, jlong address)
 {
     (void)env;
     (void)jc;
@@ -13,7 +20,7 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getValue(JNIEnv* env, jclass jc, jlong addr
     return jniPointerToLong(*pointerAddress);
 }
 
-void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValue(JNIEnv* env, jclass jc, jlong address, jlong value)
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValueNative(JNIEnv* env, jclass jc, jlong address, jlong value)
 {
     (void)env;
     (void)jc;
@@ -21,7 +28,7 @@ void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValue(JNIEnv* env, jclass jc, jlong addre
     *pointerAddress = jniLongToPointer(value);
 }
 
-jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getNullValue(JNIEnv* env, jclass jc)
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getNullValueNative(JNIEnv* env, jclass jc)
 {
     (void)env;
     (void)jc;
@@ -30,7 +37,7 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getNullValue(JNIEnv* env, jclass jc)
 
 void* null;
 
-jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getNullAddress(JNIEnv* env, jclass jc)
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getNullAddressNative(JNIEnv* env, jclass jc)
 {
     (void)env;
     (void)jc;
@@ -40,7 +47,7 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getNullAddress(JNIEnv* env, jclass jc)
 
 void* sink;
 
-jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getSinkAddress(JNIEnv* env, jclass jc)
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_getSinkAddressNative(JNIEnv* env, jclass jc)
 {
     (void)env;
     (void)jc;

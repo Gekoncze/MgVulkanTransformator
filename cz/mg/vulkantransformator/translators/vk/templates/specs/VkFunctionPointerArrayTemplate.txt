@@ -2,7 +2,7 @@
             this(values.length);
             for(int i = 0; i < values.length; i++) setValueAt(i, values[i]);
         }
-
+        
         public long getValueAt(int i){
             return getValueNative(addressAt(i));
         }

@@ -5,7 +5,7 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_sizeof(JNIEnv* env, jclass jc)
     return sizeof(%%CNAME%%);
 }
 
-%JNITYPE% Java_%%CVKPACKAGE%%_%%VKNAME%%_getValue(JNIEnv* env, jclass jc, jlong address)
+%JNITYPE% Java_%%CVKPACKAGE%%_%%VKNAME%%_getValueNative(JNIEnv* env, jclass jc, jlong address)
 {
     (void)env;
     (void)jc;
@@ -14,7 +14,7 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_sizeof(JNIEnv* env, jclass jc)
     return value;
 }
 
-void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValue(JNIEnv* env, jclass jc, jlong address, %JNITYPE% value)
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_setValueNative(JNIEnv* env, jclass jc, jlong address, %JNITYPE% value)
 {
     (void)env;
     (void)jc;

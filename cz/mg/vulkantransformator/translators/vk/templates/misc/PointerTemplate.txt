@@ -19,18 +19,19 @@ public class %%VKNAME%% extends VkObject {
     }
 
     public long getValue() {
-        return getValue(getVkAddress());
+        return getValueNative(getVkAddress());
     }
 
     public void setValue(long value) {
-        setValue(getVkAddress(), value);
+        setValueNative(getVkAddress(), value);
     }
 
     public static native long sizeof();
-    private static native long getValue(long vkaddress);
-    private static native void setValue(long vkaddress, long value);
-    public static native long getNullAddress();
-    public static native long getSinkAddress();
+    public static native long plus(long address, long offset);
+    protected static native long getValueNative(long vkaddress);
+    protected static native void setValueNative(long vkaddress, long value);
+    protected static native long getNullAddressNative();
+    protected static native long getSinkAddressNative();
 
     @Override
     public String toString() {
