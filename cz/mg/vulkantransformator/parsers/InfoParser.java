@@ -22,7 +22,9 @@ public class InfoParser implements Parser {
         Text line = lines.get(i);
         if(!line.startsWith("    ")){
             Text nextLine = (i+1) < lines.count() ? lines.get(i+1) : new Text("");
-            if(line.startsWith("typedef struct ") && nextLine.contains("VkStructureType") && line.contains("Info")){
+            boolean a = line.startsWith("typedef struct ") && nextLine.contains("VkStructureType") && line.contains("Info");
+            boolean b = line.startsWith("typedef struct VkWriteDescriptorSet");
+            if(a || b){
                 Array<Text> parts = line.split();
                 Text name = parts.get(2).replace("{", "");
                 ChainList<CVariable> fields = VariableParser.parseFields(parseChildren(lines, i));

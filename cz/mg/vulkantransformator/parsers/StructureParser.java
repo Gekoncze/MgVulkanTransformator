@@ -23,6 +23,7 @@ public class StructureParser implements Parser {
         Text line = lines.get(i);
         if(!line.startsWith("    ")){
             Text nextLine = (i+1) < lines.count() ? lines.get(i+1) : new Text("");
+            if(line.contains("VkWriteDescriptorSet")) return null;
             if(line.startsWith("typedef struct ") && !(nextLine.contains("VkStructureType") && line.contains("Info"))){
                 Array<Text> parts = line.split();
                 Text name = parts.get(2).replace("{", "");
