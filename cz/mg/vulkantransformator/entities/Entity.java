@@ -16,4 +16,9 @@ public abstract class Entity {
     }
 
     public abstract EntityType getEntityType();
+
+    @Override
+    public String toString() {
+        return name.toString() + getEntityType().toString();
+    }
 }

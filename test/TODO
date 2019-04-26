@@ -1,8 +1,8 @@
 ### LATER MAYBE
-
+    add simplified functions - ie creating new instances automatically OR add functions for direct value transfer ???
+    then I might get rid of thread local variables ... !
 
 ### NOW
-    add simplified functions - ie creating new instances automatically OR add functions for direct value transfer ???
+
 
 ### DONE
-parse VkWriteDescriptorSet as info entity

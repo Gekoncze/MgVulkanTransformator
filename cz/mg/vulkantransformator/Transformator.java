@@ -15,6 +15,7 @@ import cz.mg.collections.text.Text;
 
 
 public class Transformator {
+    private final ChainList<CEntity> centities = new CachedChainList<>();
     private final ChainList<VkEntity> entities = new CachedChainList<>();
     private final Version version;
     private final Text inputPath;
@@ -54,22 +55,22 @@ public class Transformator {
         addAditionalTypeEntities();
         addMiscEntities();
         parseEntities();
-        adaptDefines();
+        convertEntities();
+        fixDefines();
         fixUnknownTypes();
         saveEntities();
         saveCore();
-        saveHeader();
     }
 
     private void addSystemTypeEntities(){
         for(Text systemType : Configuration.SYSTEM_TYPES){
-            entities.addLast(convertEntity(new CSystemType(systemType)));
+            centities.addLast(new CSystemType(systemType));
         }
     }
 
     private void addAditionalTypeEntities(){
         for(Text[] aditionalType : Configuration.ADITIONAL_TYPES){
-            entities.addLast(convertEntity(new CType(aditionalType[0], aditionalType[1])));
+            centities.addLast(new CType(aditionalType[0], aditionalType[1]));
         }
     }
 
@@ -86,10 +87,7 @@ public class Transformator {
             for(Parser parser : parsers){
                 try {
                     CEntity centity = parser.parse(lines, i);
-                    if(centity != null){
-                        entities.addLast(convertEntity(centity));
-                        break;
-                    }
+                    if(centity != null) centities.addLast(centity);
                 } catch(RuntimeException e){
                     throw new RuntimeException("At line " + (i+1) + ": " + lines.get(i), e);
                 }
@@ -97,7 +95,17 @@ public class Transformator {
         }
     }
 
-    private void adaptDefines(){
+    private void convertEntities(){
+        for(CEntity centity : centities){
+            try {
+                entities.addLast(convertEntity(centity));
+            } catch(RuntimeException e){
+                throw new RuntimeException("Could not convert entity " + centity.getName() + ".", e);
+            }
+        }
+    }
+
+    private void fixDefines(){
         for(VkEntity entity : entities){
             if(entity instanceof VkDefine){
                 VkDefine define = (VkDefine) entity;
@@ -116,7 +124,7 @@ public class Transformator {
     }
 
     private VkEntity convertEntity(CEntity c){
-        return Converter.convertEntity(c);
+        return Converter.convertEntity(centities, c);
     }
 
     private void saveEntities(){
@@ -169,20 +177,6 @@ public class Transformator {
             case VK: return new Text(".java");
             default: throw new UnsupportedOperationException("" + group);
         }
-    }
-
-    private void saveHeader(){
-//        try {
-//            for(EntityGroup group : EntityGroup.values()){
-//                Text base = outputPath;
-//                Text relativePath = Configuration.getPath(group);
-//                Text filename = new Text("vulkan.h");
-//                Text code = getLines().toText("\n");
-//                if(code != null) FileUtilities.saveFile(base + "/" + relativePath + "/" + filename, code);
-//            }
-//        } catch(RuntimeException e){
-//            throw new RuntimeException("Could not save vulkan core.", e);
-//        }
     }
 
     private void clearDirectories(){

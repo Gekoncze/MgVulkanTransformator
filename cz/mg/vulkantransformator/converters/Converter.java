@@ -7,11 +7,11 @@ import cz.mg.vulkantransformator.entities.vk.VkEntity;
 
 
 public interface Converter<C extends CEntity, VK extends VkEntity> {
-    public VK convert(C c);
+    public VK convert(ChainList<CEntity> entities, C c);
 
-    public default ChainList<VK> convert(ChainList<C> cc){
+    public default ChainList<VK> convert(ChainList<CEntity> entities, ChainList<C> cc){
         ChainList<VK> vv = new ChainList<>();
-        for(C c : cc) vv.addLast(convert(c));
+        for(C c : cc) vv.addLast(convert(entities, c));
         return vv;
     }
 
@@ -33,7 +33,7 @@ public interface Converter<C extends CEntity, VK extends VkEntity> {
         }
     }
 
-    public static VkEntity convertEntity(CEntity c){
-        return create(c.getEntityType()).convert(c);
+    public static VkEntity convertEntity(ChainList<CEntity> entities, CEntity c){
+        return create(c.getEntityType()).convert(entities, c);
     }
 }
