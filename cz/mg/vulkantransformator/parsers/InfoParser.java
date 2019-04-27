@@ -23,7 +23,7 @@ public class InfoParser implements Parser {
         if(!line.startsWith("    ")){
             Text nextLine = (i+1) < lines.count() ? lines.get(i+1) : new Text("");
             boolean a = line.startsWith("typedef struct ") && nextLine.contains("VkStructureType") && line.contains("Info");
-            boolean b = line.startsWith("typedef struct VkWriteDescriptorSet");
+            boolean b = line.startsWith("typedef struct VkWriteDescriptorSet") || line.startsWith("typedef struct VkImageMemoryBarrier") || line.startsWith("typedef struct VkBufferMemoryBarrier") || line.startsWith("typedef struct VkMemoryBarrier");
             if(a || b){
                 Array<Text> parts = line.split();
                 Text name = parts.get(2).replace("{", "");

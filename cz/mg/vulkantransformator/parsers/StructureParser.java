@@ -23,6 +23,12 @@ public class StructureParser implements Parser {
         Text line = lines.get(i);
         if(!line.startsWith("    ")){
             Text nextLine = (i+1) < lines.count() ? lines.get(i+1) : new Text("");
+
+            if(line.startsWith("typedef struct VkWriteDescriptorSet")) return null;
+            if(line.startsWith("typedef struct VkImageMemoryBarrier")) return null;
+            if(line.startsWith("typedef struct VkBufferMemoryBarrier")) return null;
+            if(line.startsWith("typedef struct VkMemoryBarrier")) return null;
+
             if(line.contains("VkWriteDescriptorSet")) return null;
             if(line.startsWith("typedef struct ") && !(nextLine.contains("VkStructureType") && line.contains("Info"))){
                 Array<Text> parts = line.split();
