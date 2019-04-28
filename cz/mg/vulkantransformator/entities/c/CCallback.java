@@ -6,8 +6,8 @@ import cz.mg.collections.text.Text;
 
 
 public class CCallback extends CFunction {
-    public CCallback(Text name, CVariable returnType, ChainList<CVariable> parameters) {
-        super(name, returnType, parameters);
+    public CCallback(Text name, Text callName, CVariable returnType, ChainList<CVariable> parameters) {
+        super(name, callName, returnType, parameters);
     }
 
     @Override

@@ -5,7 +5,6 @@ import cz.mg.vulkantransformator.converters.utilities.TypenameConverter;
 import cz.mg.vulkantransformator.entities.c.CEntity;
 import cz.mg.vulkantransformator.entities.c.CFunction;
 import cz.mg.vulkantransformator.entities.vk.VkFunction;
-import cz.mg.collections.text.Text;
 
 
 public class FunctionConverter implements Converter<CFunction, VkFunction> {
@@ -16,13 +15,9 @@ public class FunctionConverter implements Converter<CFunction, VkFunction> {
         return new VkFunction(
                 c,
                 TypenameConverter.cTypenameToVk(c.getName()),
-                convertCNameToVkCallName(c.getName()),
+                c.getCallName(),
                 CONVERTER.convert(entities, c.getReturnType()),
                 CONVERTER.convert(entities, c.getParameters())
         );
-    }
-
-    public static Text convertCNameToVkCallName(Text vkName){
-        return vkName.replaceBegin("PFN_", "");
     }
 }

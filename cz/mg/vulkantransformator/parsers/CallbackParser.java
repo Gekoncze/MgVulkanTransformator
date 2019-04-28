@@ -67,10 +67,11 @@ public class CallbackParser implements Parser {
     }
 
     private CCallback parseCallback(ChainList<Text> lines, int i){
-        Array<Text> parts = lines.get(i).split(" ()*");
+        Array<Text> parts = lines.get(i).split(" ()");
         CVariable returnType = FunctionParser.parseReturn(parts.get(1));
         Text name = FunctionParser.parseName(parts.get(3));
+        Text callName = name.replaceBegin("PFN_", "");
         ChainList<CVariable> parameters = VariableParser.parseParameters(parseChildren(lines, i));
-        return new CCallback(name, returnType, parameters);
+        return new CCallback(name, callName, returnType, parameters);
     }
 }

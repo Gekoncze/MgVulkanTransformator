@@ -37,12 +37,13 @@ public class FunctionParser implements Parser {
 
         ChainList<CVariable> variables = VariableParser.parseParameters(parameters.divide(", "));
 
-        parts = header.split(" *");
+        parts = header.split(" ");
         CVariable returnType = parseReturn(parts.get(1));
         Text name = parseName(parts.get(3));
+        Text callName = name.replaceBegin("PFN_", "");
 
-        if(name.equals("PFN_vkVoidFunction")) return new CCallback(name, returnType, variables);
-        return new CFunction(name, returnType, variables);
+        if(name.equals("PFN_vkVoidFunction")) return new CCallback(name, callName, returnType, variables);
+        return new CFunction(name, callName, returnType, variables);
     }
 
     public static CVariable parseReturn(Text part){
@@ -52,6 +53,6 @@ public class FunctionParser implements Parser {
     }
 
     public static Text parseName(Text part){
-        return part.replaceLast(")", "");
+        return part.replaceLast(")", "").replaceFirst("*", "");
     }
 }

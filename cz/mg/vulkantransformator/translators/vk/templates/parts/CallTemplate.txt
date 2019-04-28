@@ -1,0 +1,5 @@
+    public void call(%PARAMETERS%){
+        callNative(getValue()%ARGUMENTS%);
+    }
+
+    protected static native void callNative(long vkaddress%NATIVEPARAMETERS%);

@@ -6,13 +6,19 @@ import cz.mg.collections.text.Text;
 
 
 public class CFunction extends CEntity {
+    private final Text callName;
     private final CVariable returnType;
     private final ChainList<CVariable> parameters;
 
-    public CFunction(Text name, CVariable returnType, ChainList<CVariable> parameters) {
+    public CFunction(Text name, Text callName, CVariable returnType, ChainList<CVariable> parameters) {
         super(name);
+        this.callName = callName;
         this.returnType = returnType;
         this.parameters = parameters;
+    }
+
+    public Text getCallName() {
+        return callName;
     }
 
     public CVariable getReturnType() {

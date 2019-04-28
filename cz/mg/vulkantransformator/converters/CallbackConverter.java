@@ -15,6 +15,7 @@ public class CallbackConverter implements Converter<CCallback, VkCallback> {
         return new VkCallback(
                 c,
                 TypenameConverter.cTypenameToVk(c.getName()),
+                c.getCallName(),
                 CONVERTER.convert(entities, c.getReturnType()),
                 CONVERTER.convert(entities, c.getParameters())
         );

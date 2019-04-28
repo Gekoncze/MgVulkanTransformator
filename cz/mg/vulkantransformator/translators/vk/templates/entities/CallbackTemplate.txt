@@ -10,13 +10,17 @@ public class %%VKNAME%% extends VkFunctionPointer {
         super(vkmemory, vkaddress);
     }
 
+%%SPECS%%
+
     public %%VKNAME%%(long value) {
         setValue(value);
     }
 
-    public void call(%PARAMETERS%){
-        call(getValue()%ARGUMENTS%);
+    public %%VKNAME%%(VkInstance instance) {
+        super(instance, new VkString("%FUNCTIONNAME%"));
     }
 
-    protected static native void call(long vkaddress%JAVAPARAMETERS%);
+%CALL%
+
+%SIMPLIFIEDCALL%
 }

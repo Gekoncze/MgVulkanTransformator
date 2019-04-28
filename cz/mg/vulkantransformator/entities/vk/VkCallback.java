@@ -6,7 +6,7 @@ import cz.mg.collections.text.Text;
 
 
 public class VkCallback extends VkFunction<CCallback> {
-    public VkCallback(CCallback c, Text name, VkVariable returnType, ChainList<VkVariable> parameters) {
-        super(c, name, null, returnType, parameters);
+    public VkCallback(CCallback c, Text name, Text callName, VkVariable returnType, ChainList<VkVariable> parameters) {
+        super(c, name, callName, returnType, parameters);
     }
 }
