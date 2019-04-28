@@ -1,8 +1,0 @@
-void Java_%%CVKPACKAGE%%_%%VKNAME%%_callSimplifiedNative(JNIEnv* env, jclass jc, jlong address%PARAMETERS%){
-    (void)env;
-    (void)jc;
-    %%CNAME%% f = (%%CNAME%%)jniLongToFunctionPointer(address);
-    f(
-%ARGUMENTS%
-    );
-}

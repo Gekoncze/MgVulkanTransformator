@@ -7,6 +7,6 @@
         set%VKPROPERTYNAMEC%Native(getVkAddress(), %ARGUMENT%);
         %SETPP%
     }
-%SIMPLIFIEDSET%
+%SIMPLIFIED%
     protected static native long get%VKPROPERTYNAMEC%Native(long address);
     protected static native void set%VKPROPERTYNAMEC%Native(long address, long %VKPROPERTYNAME%);

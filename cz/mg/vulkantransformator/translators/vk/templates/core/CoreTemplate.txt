@@ -1,46 +1,8 @@
-import cz.mg.collections.list.chainlist.ChainList;
-
 public class Vk {
-    private static class Resources implements AutoCloseable {
-        private final ChainList<VkObject> resources = new ChainList<>();
-
-        private synchronized VkObject add(VkObject resource){
-            resources.addLast(resource);
-            return resource;
-        }
-
-        public final ThreadLocal<VkResult> result = ThreadLocal.withInitial(new java.util.function.Supplier<VkResult>() {
-            @Override
-            public VkResult get() {
-                return (VkResult) add(new VkResult());
-            }
-        });
-
-        public final ThreadLocal<VkUInt32> count = ThreadLocal.withInitial(new java.util.function.Supplier<VkUInt32>() {
-            @Override
-            public VkUInt32 get() {
-                return (VkUInt32) add(new VkUInt32());
-            }
-        });
-
-        @Override
-        public void close() {
-            try {
-                for(VkObject resource : resources) VkResourceManager.getInstance().forceFree(resource.getVkMemory());
-                resources.clear();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    private final Resources resources = new Resources();
-    private VkAllocationCallbacks pAllocator = null;
     private VkInstance instance = null;
 
     public Vk(){
         System.loadLibrary("MgVulkanC");
-        VkResourceManager.getInstance().add(this, resources);
     }
 
     public Vk(String mgVulkanLibraryFilename){
@@ -53,14 +15,6 @@ public class Vk {
 
     public void setInstance(VkInstance instance){
         this.instance = instance;
-    }
-
-    public VkAllocationCallbacks getAllocator() {
-        return pAllocator;
-    }
-
-    public void setAllocator(VkAllocationCallbacks pAllocator) {
-        this.pAllocator = pAllocator;
     }
 
     public static int VK_MAKE_VERSION(int major, int minor, int patch){
@@ -82,9 +36,9 @@ public class Vk {
     public static int VK_API_VERSION_1_0 = VK_MAKE_VERSION(1, 0, 0);
     public static int VK_API_VERSION_1_1 = VK_MAKE_VERSION(1, 1, 0);
 
-%FUNCTIONS%
+%FUNCTIONFIELDS%
 
-%SIMPLIFIEDFUNCTIONS%
+%FUNCTIONS%
 
 %CONSTANTS%
 

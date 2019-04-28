@@ -1,5 +1,0 @@
-    public %RETURN% %VULKANFUNCTIONNAME%(%PARAMETERS%){
-        %RETURN% o = new %RETURN%();
-        %VKFUNCTIONNAME%(%ARGUMENTS%, pAllocator, o);
-        return o;
-    }

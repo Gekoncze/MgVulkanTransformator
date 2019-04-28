@@ -49,7 +49,7 @@ public class FunctionParser implements Parser {
     public static CVariable parseReturn(Text part){
         int pointerCount = part.count('*');
         part = part.replace("*", " ").trim();
-        return new CVariable(RVAL, part, pointerCount, null);
+        return new CVariable(RVAL, part, pointerCount, null, CVariable.Usage.RETURN);
     }
 
     public static Text parseName(Text part){

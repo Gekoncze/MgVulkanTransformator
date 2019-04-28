@@ -44,7 +44,7 @@ public class VkVariable extends VkEntity<CVariable> {
         return simplifiedJniType;
     }
 
-    public boolean isEmpty(){
+    public boolean isVoid(){
         return typename.equals("VkObject") && pointerCount == 0;
     }
 

@@ -13,8 +13,8 @@ public class VkStructureTranslator extends VkTranslator {
     private static final Text propertyTemplate = TemplatesVk.load("parts/Property");
     private static final Text ppTemplate = new Text("private VkObject %VKPROPERTYNAME% = null;");
     private static final Text setPPTemplate = new Text("this.%VKPROPERTYNAME% = %VKPROPERTYNAME%;");
-    private static final Text simplifiedSet = TemplatesVk.load("parts/PropertySimplifiedSet");
-    private static final Text simplifiedSetString = TemplatesVk.load("parts/PropertySimplifiedSetString");
+    private static final Text simplifiedProperty = TemplatesVk.load("parts/PropertySimplified");
+    private static final Text simplifiedPropertyString = TemplatesVk.load("parts/PropertySimplifiedString");
 
     @Override
     public Text genCode(ChainList<VkEntity> entities, VkEntity e, Text template) {
@@ -32,7 +32,7 @@ public class VkStructureTranslator extends VkTranslator {
 
     public static Text genPropertyVk(ChainList<VkEntity> entities, VkVariable field){
         return propertyTemplate
-                .replace("%SIMPLIFIEDSET%", genSimplifiedSet(entities, field))
+                .replace("%SIMPLIFIED%", genPropertySimplified(entities, field))
                 .replace("%PP%", genPP(field))
                 .replace("%SETPP%", genSetPP(field))
                 .replace("%VKPROPERTYTYPE%", field.getTypename())
@@ -41,11 +41,14 @@ public class VkStructureTranslator extends VkTranslator {
                 .replace("%ARGUMENT%", VkFunctionTranslator.genArgument(field));
     }
 
-    public static Text genSimplifiedSet(ChainList<VkEntity> entities, VkVariable field){
-        Text java = field.getSimplifiedJavaType();
-        if(java == null) return new Text("");
-        return (java.equals("String") ? simplifiedSetString : simplifiedSet)
-                .replace("%JAVATYPE%", java);
+    public static Text genPropertySimplified(ChainList<VkEntity> entities, VkVariable field){
+        if(field.getC().isString()){
+            return simplifiedPropertyString;
+        } else {
+            Text java = field.getSimplifiedJavaType();
+            if(java == null) return new Text("");
+            return simplifiedProperty.replace("%JAVATYPE%", java);
+        }
     }
 
     public static Text genPP(VkVariable field){

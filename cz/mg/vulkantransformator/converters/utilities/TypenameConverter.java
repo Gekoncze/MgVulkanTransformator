@@ -11,6 +11,7 @@ public class TypenameConverter {
     private static final String[] EXTENSIONS = new String[]{
             "EXT",
             "KHR",
+            "KHX",
             "NVX",
             "NV",
     };

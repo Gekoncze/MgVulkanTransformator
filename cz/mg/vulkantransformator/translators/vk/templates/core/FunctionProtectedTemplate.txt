@@ -1,0 +1,5 @@
+    public void %FUNCTIONNAME%(%PARAMETERS%){
+        if(%FUNCTIONNAMEP% == null) %FUNCTIONNAMEP% = new %FUNCTIONTYPENAME%(instance);
+        int result = %FUNCTIONNAMEP%.call(%ARGUMENTS%);
+        if(result != VK_SUCCESS) throw new VkException(result, "%VKFUNCTIONNAME%");
+    }

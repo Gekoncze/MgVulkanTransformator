@@ -1,5 +1,0 @@
-    public %RETURNTYPE% call(%PARAMETERS%){
-        %RETURN%callSimplifiedNative(getValue()%ARGUMENTS%);
-    }
-
-    protected static native %NATIVERETURN% callSimplifiedNative(long vkaddress%NATIVEPARAMETERS%);

@@ -22,7 +22,7 @@ public class VariableParser {
         if(parts.count() == 1) return null;
         Text typename = parts.get(0);
         Text name = parts.get(1);
-        return new CVariable(name, typename, pointerCount, null);
+        return new CVariable(name, typename, pointerCount, null, CVariable.Usage.PARAMETER);
     }
 
     public static ChainList<CVariable> parseParameters(ReadonlyCollection<Text> lines){
@@ -48,7 +48,7 @@ public class VariableParser {
         Text arrayCount = parts.count() == 3 ? parts.get(2) : null;
         Text typename = parts.get(0);
         Text name = parts.get(1);
-        return new CVariable(name, typename, pointerCount, arrayCount);
+        return new CVariable(name, typename, pointerCount, arrayCount, CVariable.Usage.FIELD);
     }
 
     public static ChainList<CVariable> parseFields(ReadonlyCollection<Text> lines){

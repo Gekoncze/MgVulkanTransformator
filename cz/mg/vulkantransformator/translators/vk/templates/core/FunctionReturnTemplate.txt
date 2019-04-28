@@ -1,0 +1,4 @@
+    public %RETURNTYPE% %FUNCTIONNAME%(%PARAMETERS%){
+        if(%FUNCTIONNAMEP% == null) %FUNCTIONNAMEP% = new %FUNCTIONTYPENAME%(instance);
+        return %FUNCTIONNAMEP%.call(%ARGUMENTS%);
+    }

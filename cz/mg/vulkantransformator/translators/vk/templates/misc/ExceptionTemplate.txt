@@ -2,9 +2,9 @@ public class VkException extends RuntimeException {
     private final int result;
     private final String functionName;
 
-    public VkException(VkResult result, String functionName){
+    public VkException(int result, String functionName){
         super(functionName + ": " + result);
-        this.result = result.getValue();
+        this.result = result;
         this.functionName = functionName;
     }
 

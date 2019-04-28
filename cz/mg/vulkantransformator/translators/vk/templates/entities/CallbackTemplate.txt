@@ -20,7 +20,5 @@ public class %%VKNAME%% extends VkFunctionPointer {
         super(instance, new VkString("%FUNCTIONNAME%"));
     }
 
-%CALL%
-
-%SIMPLIFIEDCALL%
+%FUNCTION%
 }

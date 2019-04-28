@@ -8,13 +8,15 @@ public class CVariable extends CEntity {
     private Text typename;
     private final int pointerCount;
     private final Text arrayCount;
+    private final Usage usage;
 
-    public CVariable(Text name, Text typename, int pointerCount, Text arrayCount) {
+    public CVariable(Text name, Text typename, int pointerCount, Text arrayCount, Usage usage) {
         super(name);
         if(pointerCount > 2) throw new UnsupportedOperationException();
         this.typename = typename;
         this.pointerCount = pointerCount;
         this.arrayCount = arrayCount;
+        this.usage = usage;
     }
 
     public Text getTypename() {
@@ -33,8 +35,24 @@ public class CVariable extends CEntity {
         return arrayCount;
     }
 
+    public Usage getUsage() {
+        return usage;
+    }
+
     public boolean isVoid(){
         return typename.equals("void") && pointerCount == 0;
+    }
+
+    public boolean isVoidPointer(){
+        return typename.equals("void") && pointerCount == 1;
+    }
+
+    public boolean isFunctionPointer(){
+        return typename.equals("PFN_vkVoidFunction") && pointerCount == 0;
+    }
+
+    public boolean isString(){
+        return getDatatype().equals("char*");
     }
 
     public Text getDatatype(){
@@ -44,5 +62,11 @@ public class CVariable extends CEntity {
     @Override
     public EntityType getEntityType() {
         return EntityType.VARIABLE;
+    }
+
+    public enum Usage {
+        FIELD,
+        PARAMETER,
+        RETURN
     }
 }

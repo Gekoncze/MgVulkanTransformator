@@ -16,16 +16,31 @@ public class VkCoreTranslator {
     private static final Text defineIntegerTemplate = new Text("    public static final int %DEFINENAME% = %DEFINEVALUE%;");
     private static final Text defineLongTemplate = new Text("    public static final long %DEFINENAME% = %DEFINEVALUE%;");
     private static final Text defineFloatTemplate = new Text("    public static final float %DEFINENAME% = %DEFINEVALUE%;");
-    private static final Text functionTemplate = TemplatesVk.load("core/Function");
     private static final Text valueTemplate = new Text("    public static final int %VALUENAME% = %VALUE%;");
+    private static final Text functionFieldTemplate = new Text("    private %FUNCTIONTYPENAME% %FUNCTIONNAMEP% = null;");
 
     public static Text translate(ChainList<VkEntity> entities){
         return headerTemplate.append(coreTemplate)
                 .replace("%DEFINES%", genDefines(entities))
-                .replace("%FUNCTIONS%", genFunctions(entities))
-                .replace("%SIMPLIFIEDFUNCTIONS%", VkCoreSimplifiedTranslator.genFunctionsSimplified(entities))
+                .replace("%FUNCTIONFIELDS%", genFunctionFields(entities))
+                .replace("%FUNCTIONS%", VkCoreFunctionTranslator.genFunctions(entities))
                 .replace("%CONSTANTS%", genConstants(entities))
                 .replace("%%PACKAGE%%", genPackage());
+    }
+
+    public static Text genFunctionFields(ChainList<VkEntity> entities){
+        ChainList<Text> fields = new CachedChainList<>();
+        for(VkEntity entity : entities) {
+            if (entity instanceof VkFunction && !(entity instanceof VkCallback)) {
+                VkFunction vk = (VkFunction) entity;
+                fields.addLast(
+                        functionFieldTemplate
+                                .replace("%FUNCTIONTYPENAME%", vk.getName())
+                                .replace("%FUNCTIONNAMEP%", vk.getC().getName() + "_f")
+                );
+            }
+        }
+        return new Text(fields.toString("\n"));
     }
 
     private static Text genPackage(){
@@ -51,45 +66,6 @@ public class VkCoreTranslator {
             }
         }
         return defines.toText("\n");
-    }
-
-    private static Text genFunctions(ChainList<VkEntity> entities){
-        ChainList<Text> functions = new CachedChainList<>();
-        for(VkEntity entity : entities) {
-            if (entity instanceof VkFunction && !(entity instanceof VkCallback)) {
-                VkFunction vk = (VkFunction) entity;
-                functions.addLast(functionTemplate
-                        .replace("%FUNCTIONTYPENAME%", vk.getName())
-                        .replace("%FUNCTIONNAME%", vk.getCallName())
-                        .replace("%FUNCTIONNAMEP%", vk.getC().getName() + "_p")
-                        .replace("%PARAMETERS%", genParameters(vk.getParameters(), vk.getReturnType()))
-                        .replace("%ARGUMENTS%", genArguments(vk.getParameters(), vk.getReturnType()))
-                );
-            }
-        }
-        return new Text(functions.toString("\n\n"));
-    }
-
-    public static Text genParameters(ChainList<VkVariable> parameters, VkVariable returnParameter){
-        ChainList<Text> params = new CachedChainList<>();
-        for(VkVariable parameter : parameters) params.addLast(genParameter(parameter));
-        if(returnParameter != null) if(!returnParameter.isEmpty()) params.addLast(genParameter(returnParameter));
-        return params.toText(", ");
-    }
-
-    public static Text genParameter(VkVariable parameter){
-        return parameter.getTypename().append(" ").append(parameter.getName());
-    }
-
-    public static Text genArguments(ChainList<VkVariable> parameters, VkVariable returnParameter){
-        ChainList<Text> args = new CachedChainList<>();
-        for(VkVariable parameter : parameters) args.addLast(genArgument(parameter));
-        if(!returnParameter.isEmpty()) args.addLast(genArgument(returnParameter));
-        return args.toText(", ");
-    }
-
-    public static Text genArgument(VkVariable parameter){
-        return parameter.getName();
     }
 
     private static Text genConstants(ChainList<VkEntity> entities){

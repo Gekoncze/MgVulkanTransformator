@@ -1,0 +1,8 @@
+jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_callNative(JNIEnv* env, jclass jc, jlong address%PARAMETERS%){
+    (void)env;
+    (void)jc;
+    %%CNAME%% f = (%%CNAME%%)jniLongToFunctionPointer(address);
+    return jniFunctionPointerToLong(f(
+%ARGUMENTS%
+    ));
+}

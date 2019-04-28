@@ -1,11 +1,7 @@
-### LATER MAYBE
-    add simplified functions - ie creating new instances automatically OR add functions for direct value transfer ???
-    then I might get rid of thread local variables ... !
+### LATER
+
 
 ### NOW
 
 
 ### DONE
-simplifid functions
-    added simplified function call methods
-    simplified function and callback translators
