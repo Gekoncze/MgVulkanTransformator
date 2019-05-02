@@ -36,7 +36,7 @@ public class %%VKNAME%% extends VkHandle {
 
     @Override
     public String toString() {
-        return "" + getValue();
+        return "0x" + Long.toHexString(getValue());
     }
 
 %%ARRAY%%
