@@ -1,5 +1,9 @@
     public VkOffset2D(int x, int y){
         super(sizeof());
+        set(x, y);
+    }
+
+    public void set(int x, int y){
         getX().setValue(x);
         getY().setValue(y);
     }

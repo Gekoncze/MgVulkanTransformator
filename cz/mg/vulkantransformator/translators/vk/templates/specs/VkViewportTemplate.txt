@@ -1,5 +1,9 @@
     public VkViewport(float x, float y, float width, float height, float minDepth, float maxDepth) {
         super(sizeof());
+        set(x, y, width, height, minDepth, maxDepth);
+    }
+
+    public void set(float x, float y, float width, float height, float minDepth, float maxDepth){
         setX(x);
         setY(y);
         setWidth(width);

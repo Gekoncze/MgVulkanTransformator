@@ -5,6 +5,13 @@ jlong Java_%%CVKPACKAGE%%_%%VKNAME%%_sizeof(JNIEnv* env, jclass jc)
     return sizeof(%%CNAME%%);
 }
 
+void Java_%%CVKPACKAGE%%_%%VKNAME%%_setNative(JNIEnv* env, jclass jc, jlong o1, jlong o2)
+{
+    (void)env;
+    (void)jc;
+    memcpy(jniLongToPointer(o1), jniLongToPointer(o2), sizeof(%%CNAME%%));
+}
+
 %JNITYPE% Java_%%CVKPACKAGE%%_%%VKNAME%%_getValueNative(JNIEnv* env, jclass jc, jlong address)
 {
     (void)env;

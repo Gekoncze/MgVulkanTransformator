@@ -1,5 +1,9 @@
     public VkOffset3D(int x, int y, int z){
         super(sizeof());
+        set(x, y, z);
+    }
+
+    public void set(int x, int y, int z){
         getX().setValue(x);
         getY().setValue(y);
         getZ().setValue(z);

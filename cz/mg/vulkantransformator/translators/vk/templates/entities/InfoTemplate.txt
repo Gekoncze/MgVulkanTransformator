@@ -20,7 +20,12 @@ public class %%VKNAME%% extends VkObject {
 
 %PROPERTIES%
 
+    public void set(%%VKNAME%% o){
+        setNative(getVkAddress(), o.getVkAddress());
+    }
+
     public static native long sizeof();
+    protected static native void setNative(long o1, long o2);
 
 %%ARRAY%%
 }

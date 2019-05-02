@@ -1,5 +1,9 @@
     public VkRect2D(int x, int y, int width, int height) {
         super(sizeof());
+        set(x, y, width, height);
+    }
+
+    public void set(int x, int y, int width, int height){
         getOffset().getX().setValue(x);
         getOffset().getY().setValue(y);
         getExtent().getWidth().setValue(width);

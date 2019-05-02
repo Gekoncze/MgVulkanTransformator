@@ -1,5 +1,14 @@
     public VkClearValue(float r, float g, float b, float a) {
         super(sizeof());
+        set(r, g, b, a);
+    }
+
+    public VkClearValue(float d, int s) {
+        super(sizeof());
+        set(d, s);
+    }
+
+    public void set(float r, float g, float b, float a){
         VkFloat.Array floats = new VkFloat.Array(getColor().getFloat32(), 4);
         floats.get(0).setValue(r);
         floats.get(1).setValue(g);
@@ -7,8 +16,7 @@
         floats.get(3).setValue(a);
     }
 
-    public VkClearValue(float d, int s) {
-        super(sizeof());
+    public void set(float d, int s){
         getDepthStencil().setDepth(d);
         getDepthStencil().setStencil(s);
     }
