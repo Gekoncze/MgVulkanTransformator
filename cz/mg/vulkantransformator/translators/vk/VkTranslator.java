@@ -47,12 +47,13 @@ public abstract class VkTranslator extends Translator {
     }
 
     private Text genArrayPartialSpecs(VkEntity entity){
-        try {
-            if(entity.getEntityType() == EntityType.ENUM || entity.getEntityType() == EntityType.FLAG_BITS || entity.getEntityType() == EntityType.FLAGS){
-                Text filename = new Text("specs/partial/Constant");
-                return TemplatesVk.load(filename).replaceEnd("\n", "");
-            }
-        } catch(RuntimeException e){}
+        if(entity.getEntityType() == EntityType.ENUM || entity.getEntityType() == EntityType.FLAG_BITS || entity.getEntityType() == EntityType.FLAGS){
+            Text filename = new Text("specs/partial/Constant");
+            return TemplatesVk.load(filename).replaceEnd("\n", "");
+        } else if(entity.getEntityType() == EntityType.HANDLE){
+            Text filename = new Text("specs/partial/ObjectsConstructor");
+            return TemplatesVk.load(filename).replaceEnd("\n", "");
+        }
         return new Text("");
     }
 
