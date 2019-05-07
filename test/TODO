@@ -5,3 +5,6 @@
 
 
 ### DONE
+simplified structure array fields + small fix
+    fixed info array constructor
+    added simplified getter for structure array fields

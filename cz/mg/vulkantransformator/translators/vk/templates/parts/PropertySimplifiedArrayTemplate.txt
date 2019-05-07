@@ -1,0 +1,4 @@
+
+    public %PROPERTYTYPE%.Array get%PROPERTYNAMEC%Q() {
+        return new %PROPERTYTYPE%.Array(get%PROPERTYNAMEC%(), get%PROPERTYNAMECC%Q());
+    }

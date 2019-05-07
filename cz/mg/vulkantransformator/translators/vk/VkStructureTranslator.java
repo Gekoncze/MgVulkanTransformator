@@ -11,9 +11,10 @@ import cz.mg.vulkantransformator.translators.vk.templates.TemplatesVk;
 
 public class VkStructureTranslator extends VkTranslator {
     private static final Text propertyTemplate = TemplatesVk.load("parts/Property");
-    private static final Text ppTemplate = new Text("private VkObject %VKPROPERTYNAME% = null;");
-    private static final Text setPPTemplate = new Text("this.%VKPROPERTYNAME% = %VKPROPERTYNAME%;");
+    private static final Text ppTemplate = new Text("private VkObject %PROPERTYNAME% = null;");
+    private static final Text setPPTemplate = new Text("this.%PROPERTYNAME% = %PROPERTYNAME%;");
     private static final Text simplifiedProperty = TemplatesVk.load("parts/PropertySimplified");
+    private static final Text simplifiedPropertyArray = TemplatesVk.load("parts/PropertySimplifiedArray");
     private static final Text simplifiedPropertyString = TemplatesVk.load("parts/PropertySimplifiedString");
 
     @Override
@@ -26,29 +27,36 @@ public class VkStructureTranslator extends VkTranslator {
 
     public static Text genPropertiesVk(ChainList<VkEntity> entities, ChainList<VkVariable> fields){
         ChainList<Text> properties = new CachedChainList<>();
-        for(VkVariable field : fields) properties.addLast(genPropertyVk(entities, field));
+        VkVariable lastField = null;
+        for(VkVariable field : fields){
+            properties.addLast(genPropertyVk(entities, field, lastField));
+            lastField = field;
+        }
         return properties.toText("\n");
     }
 
-    public static Text genPropertyVk(ChainList<VkEntity> entities, VkVariable field){
+    public static Text genPropertyVk(ChainList<VkEntity> entities, VkVariable field, VkVariable lastField){
         return propertyTemplate
-                .replace("%SIMPLIFIED%", genPropertySimplified(entities, field))
+                .replace("%SIMPLIFIED%", genPropertySimplified(entities, field, lastField))
                 .replace("%PP%", genPP(field))
                 .replace("%SETPP%", genSetPP(field))
-                .replace("%VKPROPERTYTYPE%", field.getTypename())
-                .replace("%VKPROPERTYNAME%", field.getName())
-                .replace("%VKPROPERTYNAMEC%", field.getName().upperFirst())
+                .replace("%PROPERTYTYPE%", field.getTypename())
+                .replace("%PROPERTYNAME%", field.getName())
+                .replace("%PROPERTYNAMEC%", field.getName().upperFirst())
                 .replace("%ARGUMENT%", VkFunctionTranslator.genArgument(field));
     }
 
-    public static Text genPropertySimplified(ChainList<VkEntity> entities, VkVariable field){
+    public static Text genPropertySimplified(ChainList<VkEntity> entities, VkVariable field, VkVariable lastField){
+        Text java = field.getSimplifiedJavaType();
         if(field.getC().isString()){
             return simplifiedPropertyString;
-        } else {
-            Text java = field.getSimplifiedJavaType();
-            if(java == null) return new Text("");
+        } else if(java != null) {
             return simplifiedProperty.replace("%JAVATYPE%", java);
+        } else if(lastField != null && lastField.getTypename().equals("VkUInt32") && lastField.getName().endsWith("Count") && (field.getPointerCount() == 1 || field.getArrayCount() != null)){
+            return simplifiedPropertyArray
+                    .replace("%PROPERTYNAMECC%", lastField.getName().upperFirst());
         }
+        return new Text("");
     }
 
     public static Text genPP(VkVariable field){

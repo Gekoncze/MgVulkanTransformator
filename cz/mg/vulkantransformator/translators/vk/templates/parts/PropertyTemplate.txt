@@ -1,12 +1,12 @@
-    public %VKPROPERTYTYPE% get%VKPROPERTYNAMEC%() {
-        return new %VKPROPERTYTYPE%(getVkMemory(), get%VKPROPERTYNAMEC%Native(getVkAddress()));
+    public %PROPERTYTYPE% get%PROPERTYNAMEC%() {
+        return new %PROPERTYTYPE%(getVkMemory(), get%PROPERTYNAMEC%Native(getVkAddress()));
     }
 
     %PP%
-    public void set%VKPROPERTYNAMEC%(%VKPROPERTYTYPE% %VKPROPERTYNAME%) {
-        set%VKPROPERTYNAMEC%Native(getVkAddress(), %ARGUMENT%);
+    public void set%PROPERTYNAMEC%(%PROPERTYTYPE% %PROPERTYNAME%) {
+        set%PROPERTYNAMEC%Native(getVkAddress(), %ARGUMENT%);
         %SETPP%
     }
 %SIMPLIFIED%
-    protected static native long get%VKPROPERTYNAMEC%Native(long address);
-    protected static native void set%VKPROPERTYNAMEC%Native(long address, long %VKPROPERTYNAME%);
+    protected static native long get%PROPERTYNAMEC%Native(long address);
+    protected static native void set%PROPERTYNAMEC%Native(long address, long %PROPERTYNAME%);

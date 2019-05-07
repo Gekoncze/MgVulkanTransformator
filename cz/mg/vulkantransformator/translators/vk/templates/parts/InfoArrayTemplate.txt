@@ -7,7 +7,7 @@
             for(int i = 0; i < count; i++) get(i).%SET%;
         }
 
-        public Array(int count, %%VKNAME%% o){
+        public Array(%%VKNAME%% o, int count){
             super(o.getVkMemory(), o.getVkAddress());
             this.count = count;
         }

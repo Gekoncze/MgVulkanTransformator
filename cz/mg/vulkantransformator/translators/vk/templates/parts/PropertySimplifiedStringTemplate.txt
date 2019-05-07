@@ -1,8 +1,8 @@
 
-    public String get%VKPROPERTYNAMEC%Q() {
-        return new VkString(get%VKPROPERTYNAMEC%()).toString();
+    public String get%PROPERTYNAMEC%Q() {
+        return new VkString(get%PROPERTYNAMEC%()).toString();
     }
 
-    public void set%VKPROPERTYNAMEC%(String %VKPROPERTYNAME%) {
-        set%VKPROPERTYNAMEC%(new VkString(%VKPROPERTYNAME%));
+    public void set%PROPERTYNAMEC%(String %PROPERTYNAME%) {
+        set%PROPERTYNAMEC%(new VkString(%PROPERTYNAME%));
     }
